@@ -1,0 +1,8 @@
+# .gitattributes
+# LFS track specific file types
+*.dll filter=lfs diff=lfs merge=lfs -text
+*.dylib filter=lfs diff=lfs merge=lfs -text
+*.so filter=lfs diff=lfs merge=lfs -text
+*.dsym filter=lfs diff=lfs merge=lfs -text
+# Files that exceed GitHub's file size limit
+Project-S/Library/PackageCache/com.unity.burst@1.8.11/.Runtime/libburst-llvm-15.dylib filter=lfs diff=lfs merge=lfs -text
