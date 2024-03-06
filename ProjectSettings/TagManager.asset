@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SaundHandler
   - RoomSelecter
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -18,6 +18,11 @@ public class RoomDetails : MonoBehaviour
     private Transform _roomInPoints;
     public Transform RoomInPoints => _roomInPoints;
 
+    [Header("•”‰®‚ÌŒû")]
+    [SerializeField]
+    private Transform _roomExitPoints;
+    public Transform RoomExitPoints => _roomExitPoints;
+
     [Header("•”‰®‚ÌŠO")]
     [SerializeField]
     private Transform _roomOutPoints;
