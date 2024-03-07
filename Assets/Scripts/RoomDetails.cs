@@ -12,6 +12,10 @@ public class RoomDetails : MonoBehaviour
     [SerializeField]
     private bool _isRoomAcceptance;
     public bool IsRoomAcceptance => _isRoomAcceptance;
+    [Header("ŠK’i‚©”Û‚©")]
+    [SerializeField]
+    private bool _isStair;
+    public bool IsStair => _isStair;
 
     [Header("•”‰®‚Ì’†")]
     [SerializeField]

@@ -110,10 +110,11 @@ public class StayRoomState : IRoomAIState
             RaycastHit hit;
             if (!Physics.Raycast(_npc.transform.position, randomDirection, out hit, _rayDistance * 2))
             {
+                // ämó¶Ç≈í‚é~
                 int selectRnd = Random.Range(0, 3);
                 if (selectRnd == 0)
                 {
-
+                    _remainState = 0;
                 }
                 else
                 {
