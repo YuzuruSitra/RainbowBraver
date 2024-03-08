@@ -33,19 +33,20 @@ public class CalcWayPoint
             _roomOutPoints.Add(CalculateWayPoint(i, room0OutPoint));
         }
         _allRoomCount = newRoomCount;
+        
     }
 
     private Vector3 CalculateWayPoint(int roomIndex, Vector3 basePoint)
     {
         float offsetX = (roomIndex % _floorRoomCount) * _roomWidth;
-        float offsetY = (roomIndex / _floorRoomCount) * _roomHeight;
-        if (roomIndex >= _floorRoomCount) offsetX -= _roomWidth;
+        float offsetY = roomIndex / (_floorRoomCount + 1) * _roomHeight;
+        if (roomIndex > _floorRoomCount) offsetX -= _roomWidth;
         Vector3 roomInPoint = Vector3.zero;
-
         roomInPoint.x = basePoint.x + offsetX;
         roomInPoint.y = basePoint.y + offsetY;
         roomInPoint.z = basePoint.z;
 
         return roomInPoint;
     }
+
 }

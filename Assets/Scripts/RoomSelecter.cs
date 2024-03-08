@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // ルートの選定
-public class RoomSelecter: MonoBehaviour
+public class RoomSelecter : MonoBehaviour
 {
     [Header("各階層の部屋数")]
     [SerializeField]
@@ -22,7 +22,7 @@ public class RoomSelecter: MonoBehaviour
     [Header("部屋0の外")]
     [SerializeField]
     private Transform _room0OutPoints;
-    
+
     [SerializeField]
     private RoomDetails[] _roomDetails;
 
@@ -33,6 +33,9 @@ public class RoomSelecter: MonoBehaviour
     private Transform _errorPos;
     public readonly Vector3 ErrorVector;
     public const int ERROR_ROOM_NUM = -1;
+
+    [SerializeField]
+    private GameObject _debugWayObj;
     public enum PointKind
     {
         IN_POINT,
@@ -42,9 +45,9 @@ public class RoomSelecter: MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(ErrorVector);
         _calcWayPoint = new CalcWayPoint(_floorRoomCount, _roomWidth, _roomHeight);
         _calcWayPoint.SetWayPoints(_roomDetails.Length, _room0InPoints.position, _room0ExitPoints.position, _room0OutPoints.position);
+        DebugWayPoints();
     }
 
     // ターゲットの部屋を選定
@@ -53,16 +56,11 @@ public class RoomSelecter: MonoBehaviour
         // 端部屋を考慮した選択肢を作成
         int[] contenderRoom;
         int calcPos = NPCRoom % _floorRoomCount;
-        
+
         // 左端
         if (calcPos == 0)
         {
             contenderRoom = new int[] { NPCRoom, NPCRoom + 1 };
-        }
-        // 右端
-        else if (calcPos == _floorRoomCount - 1)
-        {
-            contenderRoom = new int[] { NPCRoom, NPCRoom - 1 };
         }
         else
         {
@@ -72,7 +70,7 @@ public class RoomSelecter: MonoBehaviour
         // 受け入れ可能な部屋の数をカウント
         int acceptableRoomCount = 0;
         foreach (int roomNum in contenderRoom)
-            if (_roomDetails[roomNum].IsRoomAcceptance && roomNum != NPCRoom) 
+            if (_roomDetails[roomNum].IsRoomAcceptance && roomNum != NPCRoom)
                 acceptableRoomCount++;
 
         // 受け入れ可能な部屋がない場合はnullを返す
@@ -101,5 +99,17 @@ public class RoomSelecter: MonoBehaviour
         outPos.y = npcPosY;
 
         return outPos;
+    }
+
+    // WayPointsの可視化機能
+    void DebugWayPoints()
+    {
+        for (int i = 0; i < _roomDetails.Length; i++)
+        {
+            Instantiate(_debugWayObj, _calcWayPoint.RoomOutPoints[i], Quaternion.identity);
+            Instantiate(_debugWayObj, _calcWayPoint.RoomInPoints[i], Quaternion.identity);
+            Instantiate(_debugWayObj, _calcWayPoint.RoomExitPoints[i], Quaternion.identity);
+            Debug.Log("a");
+        }
     }
 }
