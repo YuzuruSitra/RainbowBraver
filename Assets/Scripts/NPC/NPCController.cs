@@ -52,10 +52,10 @@ public class NPCController : MonoBehaviour
     // 目標ルーム選定クラス
     private RoomSelecter _roomSelecter;
     private Animator _animator;
-    // 滞在中の部屋を保持
-    private RoomDetails _currentRoom;
+    // 滞在中の部屋番号を保持
+    private int _currentRoomNum;
     // ターゲット座標を保持
-    private Vector3 _targetPos = Vector3.zero;
+    private Vector3 _targetPos;
     private bool _isCurrentWalk;
 
     void Start()
@@ -72,18 +72,18 @@ public class NPCController : MonoBehaviour
 
     void InitializeNPC()
     {
+        _currentRoomNum = _baseRoom;
         _roomSelecter = GameObject.FindWithTag("RoomSelecter").GetComponent<RoomSelecter>();
         _animator = gameObject.GetComponent<Animator>();
-        _currentRoom = _roomSelecter.OutRemainRoom(_baseRoom);
 
         // 各状態のインスタンスを作成して登録
-        _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _rayLength, _minStayTime, _maxStayTime));
+        _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _rayLength, _minStayTime, _maxStayTime, _roomSelecter.ErrorVector));
         _states.Add(RoomAIState.EXIT_ROOM, new ExitRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         _states.Add(RoomAIState.LEAVE_ROOM, new LeaveRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         // STAY_ROOMから開始
         _currentState = RoomAIState.STAY_ROOM;
-        _states[_currentState].EnterState(_targetPos);
+        _states[_currentState].EnterState(_roomSelecter.ErrorVector);
     }
 
     // アニメーションの遷移
@@ -101,40 +101,29 @@ public class NPCController : MonoBehaviour
         {
             case RoomAIState.STAY_ROOM:
                 newState = RoomAIState.EXIT_ROOM;
-                if (_currentRoom == null) break;
-                _targetPos.x = _currentRoom.RoomExitPoints.position.x;
-                _targetPos.y = transform.position.y;
-                _targetPos.z = _currentRoom.RoomExitPoints.position.z;
+                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.EXIT_POINT, transform.position.y);
                 break;
             case RoomAIState.EXIT_ROOM:
                 newState = RoomAIState.LEAVE_ROOM;
-                if (_currentRoom == null) break;
-                _targetPos.x = _currentRoom.RoomOutPoints.position.x;
-                _targetPos.y = transform.position.y;
-                _targetPos.z = _currentRoom.RoomOutPoints.position.z;
+                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.OUT_POINT, transform.position.y);
                 break;
             case RoomAIState.LEAVE_ROOM:
                 newState = RoomAIState.GO_TO_ROOM;
-                _currentRoom = _roomSelecter.SelectTargetRoom(_baseRoom, _currentRoom.RoomNum);
-                if (_currentRoom == null) break;
-                _targetPos.x = _currentRoom.RoomOutPoints.position.x;
-                _targetPos.y = transform.position.y;
-                _targetPos.z = _currentRoom.RoomOutPoints.position.z;
+                // 部屋の移動
+                _currentRoomNum = _roomSelecter.SelectNextRoomNum(_baseRoom, _currentRoomNum);
+                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.OUT_POINT, transform.position.y);
                 break;
             case RoomAIState.GO_TO_ROOM:
                 newState = RoomAIState.STAY_ROOM;
-                if (_currentRoom == null) break;
-                _targetPos.x = _currentRoom.RoomInPoints.position.x;
-                _targetPos.y = transform.position.y;
-                _targetPos.z = _currentRoom.RoomInPoints.position.z;
+                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.IN_POINT, transform.position.y);
                 break;
             default:
                 newState = _currentState;
                 break;
         }
-        if (_currentRoom == null && _currentState == RoomAIState.STAY_ROOM)
+        if (_currentRoomNum == RoomSelecter.ERROR_ROOM_NUM && _currentState == RoomAIState.STAY_ROOM)
         {
-            _targetPos = Vector3.zero;
+            _targetPos = _roomSelecter.ErrorVector;
             newState = RoomAIState.STAY_ROOM;
         }
         _states[newState].EnterState(_targetPos);

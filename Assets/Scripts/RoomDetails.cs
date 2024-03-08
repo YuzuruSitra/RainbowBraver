@@ -17,18 +17,4 @@ public class RoomDetails : MonoBehaviour
     private bool _isStair;
     public bool IsStair => _isStair;
 
-    [Header("•”‰®‚Ì’†")]
-    [SerializeField]
-    private Transform _roomInPoints;
-    public Transform RoomInPoints => _roomInPoints;
-
-    [Header("•”‰®‚ÌŒû")]
-    [SerializeField]
-    private Transform _roomExitPoints;
-    public Transform RoomExitPoints => _roomExitPoints;
-
-    [Header("•”‰®‚ÌŠO")]
-    [SerializeField]
-    private Transform _roomOutPoints;
-    public Transform RoomOutPoints => _roomOutPoints;
 }

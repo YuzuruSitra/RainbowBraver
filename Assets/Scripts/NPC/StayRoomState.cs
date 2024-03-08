@@ -3,6 +3,7 @@ using UnityEngine;
 public class StayRoomState : IRoomAIState
 {
     private Vector3 _targetPos;
+    private Vector3 _errorVector;
     private GameObject _npc;
     private bool _isEntry;
     private bool _wallHit;
@@ -24,7 +25,7 @@ public class StayRoomState : IRoomAIState
     public bool IsWalk => _isWalk;
     public bool IsStateFin => _isStateFin;
 
-    public StayRoomState(GameObject npc, float moveSpeed, float rotSpeed, float distance, float ray, float minTime, float maxTime)
+    public StayRoomState(GameObject npc, float moveSpeed, float rotSpeed, float distance, float ray, float minTime, float maxTime, Vector3 errorVector)
     {
         _npc = npc;
         _roomMoveSpeed = moveSpeed;
@@ -33,6 +34,7 @@ public class StayRoomState : IRoomAIState
         _rayDistance = ray;
         _stateMinTime = minTime;
         _stateMaxTime = maxTime;
+        _errorVector = errorVector;
     }
 
     // ステートに入った時の処理
@@ -40,7 +42,7 @@ public class StayRoomState : IRoomAIState
     {
         _targetPos = pos;
         _isEntry = false;
-        if (_targetPos == Vector3.zero) _isEntry = true;
+        if (_targetPos == _errorVector) _isEntry = true;
         _isStateFin = false;
         _remainStateTime = Random.Range(_stateMinTime, _stateMaxTime);
         SetParam();
