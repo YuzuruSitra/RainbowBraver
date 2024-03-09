@@ -453,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.11199981
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.z
@@ -854,6 +854,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: -3691345417598284247, guid: 431b44b28eb1dc74897457742890bf65, type: 3}
+    - target: {fileID: 4783896022733831641, guid: f1986ea944668df48a229a8168e48252, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4783896022733831645, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: _baseRoom
       value: 3
@@ -884,7 +888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.11199981
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1114,7 +1118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5666295548274921416, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5790029001311073462, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1305,7 +1309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2135358744}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.21, y: -1.921811, z: -2.76}
+  m_LocalPosition: {x: 30.21, y: -2.16, z: -2.65}
   m_LocalScale: {x: 77.57, y: 0.4, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1659,6 +1663,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5899551712945806006, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
       propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8922680402944059511, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
+      propertyPath: a
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
