@@ -48,9 +48,6 @@ public class NPCController : MonoBehaviour
     [Header("部屋移動中の障害物認知距離")]
     [SerializeField]
     private float _goToRoomRayLength;
-    [Header("部屋移動中の障害物回避角度")]
-    [SerializeField]
-    private float _goToRoomAvoidRot;
     [Header("部屋移動中の回避終了距離")]
     [SerializeField]
     private float _goToAvoidDistance;
@@ -89,7 +86,7 @@ public class NPCController : MonoBehaviour
         _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _stayRoomRayLength, _minStayTime, _maxStayTime, _roomSelecter.ErrorVector));
         _states.Add(RoomAIState.EXIT_ROOM, new ExitRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         _states.Add(RoomAIState.LEAVE_ROOM, new LeaveRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
-        _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance, _goToRoomRayLength, _goToRoomAvoidRot, _goToAvoidDistance));
+        _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance, _goToRoomRayLength, _goToAvoidDistance));
         // STAY_ROOMから開始
         _currentState = RoomAIState.STAY_ROOM;
         _states[_currentState].EnterState(_roomSelecter.ErrorVector);

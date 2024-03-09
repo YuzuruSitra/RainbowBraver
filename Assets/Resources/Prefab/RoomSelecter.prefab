@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _floorRoomCount: 4
-  _roomWidth: 3
-  _roomHeight: 1
   _roomDetails: []
   _errorPos: {fileID: 462569887891087727}
 --- !u!1 &2901189728465211900

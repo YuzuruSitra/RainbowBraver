@@ -18,21 +18,18 @@ public class GoToRoomState : IRoomAIState
     private float _rayDistance;
 
     private GameObject _currentHitObj;
-    private float _avoidRotFactor;
-    private Vector3 _avoidDirection;
     private float _avoidDistance;
 
     public bool IsWalk => _isWalk;
     public bool IsStateFin => _isStateFin;
 
-    public GoToRoomState(GameObject npc, float moveSpeed, float rotSpeed, float distance, float ray, float avoidRot, float avoidDistance)
+    public GoToRoomState(GameObject npc, float moveSpeed, float rotSpeed, float distance, float ray, float avoidDistance)
     {
         _npc = npc;
         _moveSpeed = moveSpeed;
         _rotSpeed = rotSpeed;
         _distance = distance;
         _rayDistance = ray;
-        _avoidRotFactor = avoidRot;
         _avoidDistance = avoidDistance;
     }
 
@@ -47,10 +44,16 @@ public class GoToRoomState : IRoomAIState
     // ステートの更新
     public void UpdateState()
     {
-        if (IsAvoid() && _currentAvoid == AvoidPatterns.Move) AvoidMoving();
-        else if (IsAvoid() && _currentAvoid == AvoidPatterns.Wait) AvoidWaiting();
-        else DefaultMoving();
-        // if (Vector3.Distance(_npc.transform.position, _targetPos) <= _distance) _isStateFin = true;
+        if (IsAvoid())
+        {
+            if (_currentAvoid == AvoidPatterns.Wait) AvoidWaiting();
+            else AvoidMoving();
+        }
+        else
+        {
+            DefaultMoving();
+            if (Vector3.Distance(_npc.transform.position, _targetPos) <= _distance) _isStateFin = true;
+        }
     }
 
     private void DefaultMoving()
@@ -58,7 +61,6 @@ public class GoToRoomState : IRoomAIState
         Vector3 direction = (_targetPos - _npc.transform.position).normalized;
         _npc.transform.position += direction * _moveSpeed * Time.deltaTime;
 
-        // ターゲットの方向を向く
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(-direction);
@@ -68,14 +70,18 @@ public class GoToRoomState : IRoomAIState
 
     private void AvoidMoving()
     {
-        _npc.transform.position += _avoidDirection * _moveSpeed * Time.deltaTime;
-        Quaternion targetRotation = Quaternion.LookRotation(-_avoidDirection);
-        _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _rotSpeed * Time.deltaTime);
+        Vector3 direction = (_targetPos - _npc.transform.position).normalized;
+        _npc.transform.position += -direction * _moveSpeed * Time.deltaTime;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _rotSpeed * Time.deltaTime);
+        }
     }
 
     private void AvoidWaiting()
     {
-        // ターゲットの方向を向く
         Vector3 direction = (_targetPos - _npc.transform.position).normalized;
         if (direction != Vector3.zero)
         {
@@ -84,59 +90,43 @@ public class GoToRoomState : IRoomAIState
         }
     }
 
+    // 障害物回避を実行するかどうかを判定するメソッド
     private bool IsAvoid()
     {
-        Vector3[] directions = {
-        Quaternion.AngleAxis(-_avoidRotFactor, Vector3.up) * -_npc.transform.forward,
-        -_npc.transform.forward,
-        Quaternion.AngleAxis(_avoidRotFactor, Vector3.up) * -_npc.transform.forward, };
-
-        foreach (Vector3 direction in directions)
+        //Debug.DrawRay(_npc.transform.position, -_npc.transform.forward * _rayDistance, Color.red);
+        if (Physics.Raycast(_npc.transform.position, -_npc.transform.forward, out RaycastHit hit, _rayDistance) &&
+            hit.collider.CompareTag("RoomNPC") && _currentHitObj == null)
         {
-            Debug.DrawRay(_npc.transform.position, direction * _rayDistance, Color.red);
-            if (Physics.Raycast(_npc.transform.position, direction, out RaycastHit hit, _rayDistance) &&
-                hit.collider.CompareTag("RoomNPC") && _currentHitObj == null)
-            {
-                _currentHitObj = hit.collider.gameObject;
-                _currentAvoid = AvoidChoose(_currentHitObj);
-                if (_currentAvoid == AvoidPatterns.Move) SetAvoidDirection();
-                else return true;
-            }
-        }
+            _currentHitObj = hit.collider.gameObject;
+            _currentAvoid = DecideAvoidancePattern(_currentHitObj);
+            return _currentAvoid != AvoidPatterns.Wait;
+        } 
 
+        return CheckObstacleTooFar();
+    }
 
+    // 障害物との距離をチェックするメソッド
+    private bool CheckObstacleTooFar()
+    {
         if (_currentHitObj == null) return false;
-
-        if (IsTooFarFromObstacle())
+        float distanceX = Mathf.Abs(_currentHitObj.transform.position.x - _npc.transform.position.x);
+        if (distanceX > _avoidDistance)
         {
             _currentHitObj = null;
             return false;
         }
-        
         return true;
     }
 
-    private void SetAvoidDirection()
-    {
-        _avoidDirection = Quaternion.AngleAxis(_avoidRotFactor, Vector3.up) * -_npc.transform.forward;
-        _avoidDirection.Normalize();
-    }
-
-    private bool IsTooFarFromObstacle()
-    {
-        float distanceX = Mathf.Abs(_currentHitObj.transform.position.x - _npc.transform.position.x);
-        return distanceX > _avoidDistance;
-    }
-
-    private AvoidPatterns AvoidChoose(GameObject otherObj)
+    // 障害物回避のパターンを決定するメソッド
+    private AvoidPatterns DecideAvoidancePattern(GameObject otherObj)
     {
         NPCController otherNPCController = _currentHitObj.GetComponent<NPCController>();
         float otherDistance = otherNPCController.GetDistanceToTarget();
         float thisDistance = Vector3.Distance(_npc.transform.position, _targetPos);
-        if (otherDistance < thisDistance)
-            return AvoidPatterns.Wait;
-        else
-            return AvoidPatterns.Move;
+        return otherDistance < thisDistance ? AvoidPatterns.Wait : AvoidPatterns.Move;
     }
 
 }
+
+// 躱す必要が無い場合は待機する

@@ -457,7 +457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.z
@@ -892,7 +892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1241,7 +1241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &2135358745
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1544,6 +1544,10 @@ PrefabInstance:
       propertyPath: _moveSpeed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4783896022733831645, guid: f1986ea944668df48a229a8168e48252, type: 3}
+      propertyPath: _goToAvoidDistance
+      value: 2.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1566,7 +1570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_LocalPosition.z

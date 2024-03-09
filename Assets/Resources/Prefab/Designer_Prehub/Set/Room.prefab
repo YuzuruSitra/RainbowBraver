@@ -45,6 +45,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.094366, y: 4.1863804, z: 0.18417466}
   m_Center: {x: -3.1464338, y: -0.20758247, z: 0.40791267}
+--- !u!1 &739102465010497494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8366194556291063932}
+  - component: {fileID: 1772404973134876395}
+  m_Layer: 0
+  m_Name: Floor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8366194556291063932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739102465010497494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4062166635707396352}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1772404973134876395
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739102465010497494}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.1994, y: 0.19562769, z: 5.6325755}
+  m_Center: {x: -3.1992345, y: 1.8610246, z: -2.3162878}
 --- !u!1 &1838450697987135034
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,8 +157,8 @@ Transform:
   - {fileID: 4787059322736346067}
   - {fileID: 4653419946705271156}
   - {fileID: 454667801382078406}
-  - {fileID: 4062166635707396352}
   - {fileID: 3721253282662903907}
+  - {fileID: 4062166635707396352}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -169,8 +214,9 @@ Transform:
   - {fileID: 7327360383278304756}
   - {fileID: 6387218321534929111}
   - {fileID: 9201470384699369117}
+  - {fileID: 8366194556291063932}
   m_Father: {fileID: 2125363145467948074}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3012171595008513886
 GameObject:
@@ -305,7 +351,7 @@ GameObject:
   - component: {fileID: 291423015503134662}
   - component: {fileID: 2589465304962632460}
   m_Layer: 0
-  m_Name: colidor (5)
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,11 +366,11 @@ Transform:
   m_GameObject: {fileID: 4102599531635452633}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0.13068008, y: -2.0209622, z: -5.7499733}
-  m_LocalScale: {x: 683.09955, y: 443.80353, z: 7.735009}
+  m_LocalScale: {x: 683.09955, y: 462, z: 7.735009}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2125363145467948074}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!33 &291423015503134662
 MeshFilter:

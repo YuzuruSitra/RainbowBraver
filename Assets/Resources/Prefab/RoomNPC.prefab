@@ -3644,11 +3644,10 @@ MonoBehaviour:
   _roomFriction: 0.6
   _stoppingDistance: 0.1
   _minStayTime: 4
-  _maxStayTime: 6
+  _maxStayTime: 5
   _stayRoomRayLength: 0.5
-  _goToRoomRayLength: 2
-  _goToRoomAvoidRot: 35
-  _goToAvoidDistance: 2
+  _goToRoomRayLength: 1.5
+  _goToAvoidDistance: 2.2
 --- !u!1 &5936013229669588935
 GameObject:
   m_ObjectHideFlags: 0

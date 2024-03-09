@@ -85,7 +85,6 @@ public class StayRoomState : IRoomAIState
                 // ëOï˚Ç…ï‡çs
                 MoveForward();
                 _isWalk = true;
-
                 break;
         }
 
