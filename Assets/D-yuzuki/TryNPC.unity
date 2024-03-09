@@ -428,6 +428,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4783896022733831645, guid: f1986ea944668df48a229a8168e48252, type: 3}
+      propertyPath: _moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4783896022733831645, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: _rayLength
       value: 0.75
       objectReference: {fileID: 0}
@@ -1535,6 +1539,10 @@ PrefabInstance:
     - target: {fileID: 4783896022733831645, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: _baseRoom
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4783896022733831645, guid: f1986ea944668df48a229a8168e48252, type: 3}
+      propertyPath: _moveSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5037673567445947762, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_RootOrder

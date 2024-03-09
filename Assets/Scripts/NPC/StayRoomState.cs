@@ -6,7 +6,6 @@ public class StayRoomState : IRoomAIState
     private Vector3 _errorVector;
     private GameObject _npc;
     private bool _isEntry;
-    private bool _wallHit;
     private float _changeTime;
     private int _remainState;
     private float _roomMoveSpeed;
@@ -14,6 +13,7 @@ public class StayRoomState : IRoomAIState
     private float _distance;
     private Vector3 _remainDirection;
     private float _rayDistance;
+    private bool _obstacleHit;
     private const float MAX_ANGLE = 180.0f;
     private const int MAX_ATTEMP = 100;
     private float _stateMinTime;
@@ -137,16 +137,14 @@ public class StayRoomState : IRoomAIState
         RaycastHit hit;
         if (Physics.Raycast(_npc.transform.position, -_npc.transform.forward, out hit, _rayDistance))
         {
-            if (hit.collider.CompareTag("Wall") && !_wallHit)
+            if ((hit.collider.CompareTag("Wall") || hit.collider.CompareTag("RoomNPC")) && !_obstacleHit)
             {
                 SetRandomDirection();
-                _wallHit = true;
-            }
-            else
-            {
-                _wallHit = false;
+                _obstacleHit = true;
+                return;
             }
         }
+        _obstacleHit = false;
     }
 
     private void MoveForward()

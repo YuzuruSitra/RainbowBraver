@@ -42,9 +42,18 @@ public class NPCController : MonoBehaviour
     [Header("滞在時間の最大値")]
     [SerializeField] 
     private float _maxStayTime;
-    [Header("壁の認知距離")]
+    [Header("部屋内の障害物認知距離")]
     [SerializeField]
-    private float _rayLength;
+    private float _stayRoomRayLength;
+    [Header("部屋移動中の障害物認知距離")]
+    [SerializeField]
+    private float _goToRoomRayLength;
+    [Header("部屋移動中の障害物回避角度")]
+    [SerializeField]
+    private float _goToRoomAvoidRot;
+    [Header("部屋移動中の回避終了距離")]
+    [SerializeField]
+    private float _goToAvoidDistance;
 
     private RoomAIState _currentState;
     private Dictionary<RoomAIState, IRoomAIState> _states = new Dictionary<RoomAIState, IRoomAIState>();
@@ -77,10 +86,10 @@ public class NPCController : MonoBehaviour
         _animator = gameObject.GetComponent<Animator>();
 
         // 各状態のインスタンスを作成して登録
-        _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _rayLength, _minStayTime, _maxStayTime, _roomSelecter.ErrorVector));
+        _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _stayRoomRayLength, _minStayTime, _maxStayTime, _roomSelecter.ErrorVector));
         _states.Add(RoomAIState.EXIT_ROOM, new ExitRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         _states.Add(RoomAIState.LEAVE_ROOM, new LeaveRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
-        _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
+        _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance, _goToRoomRayLength, _goToRoomAvoidRot, _goToAvoidDistance));
         // STAY_ROOMから開始
         _currentState = RoomAIState.STAY_ROOM;
         _states[_currentState].EnterState(_roomSelecter.ErrorVector);
