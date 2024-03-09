@@ -139,4 +139,9 @@ public class NPCController : MonoBehaviour
         _currentState = newState;
     }
 
+    public float GetDistanceToTarget()
+    {
+        return Vector3.Distance(transform.position, _targetPos);
+    }
+
 }
