@@ -24,6 +24,7 @@ public class NPCController : MonoBehaviour
     [Header("キャラクターの部屋")]
     [SerializeField]
     private int _baseRoom = 0;
+    public int BaseRoom => _baseRoom;
     [Header("移動速度")]
     [SerializeField] 
     private float _moveSpeed;
@@ -86,7 +87,7 @@ public class NPCController : MonoBehaviour
         _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _stayRoomRayLength, _minStayTime, _maxStayTime, _roomSelecter.ErrorVector));
         _states.Add(RoomAIState.EXIT_ROOM, new ExitRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         _states.Add(RoomAIState.LEAVE_ROOM, new LeaveRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
-        _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance, _goToRoomRayLength, _goToAvoidDistance));
+        _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance, _goToRoomRayLength, _goToAvoidDistance, _baseRoom));
         // STAY_ROOMから開始
         _currentState = RoomAIState.STAY_ROOM;
         _states[_currentState].EnterState(_roomSelecter.ErrorVector);
