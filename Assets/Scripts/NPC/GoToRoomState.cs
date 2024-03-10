@@ -90,6 +90,8 @@ public class GoToRoomState : IRoomAIState
     private void MoveTowardsTarget(Vector3 target, bool reverseDirection = false)
     {
         Vector3 direction = (target - _npc.transform.position).normalized;
+        direction.y = 0f;
+
         _npc.transform.position += (reverseDirection ? -direction : direction) * _moveSpeed * Time.deltaTime;
 
         if (direction != Vector3.zero)
@@ -104,6 +106,8 @@ public class GoToRoomState : IRoomAIState
     {
         _isWalk = false;
         Vector3 direction = (_targetPos - _npc.transform.position).normalized;
+        direction.y = 0f;
+
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(-direction);

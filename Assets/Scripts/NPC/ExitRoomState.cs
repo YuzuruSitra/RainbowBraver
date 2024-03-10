@@ -33,6 +33,7 @@ public class ExitRoomState : IRoomAIState
     public void UpdateState()
     {
         Vector3 direction = (_targetPos - _npc.transform.position).normalized;
+        direction.y = 0f;
         _npc.transform.position += direction * _moveSpeed * Time.deltaTime;
 
         // ターゲットの方向を向く

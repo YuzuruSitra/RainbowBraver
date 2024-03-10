@@ -57,6 +57,7 @@ public class StayRoomState : IRoomAIState
         {
             _isWalk = true;
             Vector3 direction = (_targetPos - _npc.transform.position).normalized;
+            direction.y = 0f;
             _npc.transform.position += direction * _roomMoveSpeed * Time.deltaTime;
             Quaternion targetRotation = Quaternion.LookRotation(-direction);
             _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _roomRotSpeed * Time.deltaTime);
@@ -120,6 +121,7 @@ public class StayRoomState : IRoomAIState
                 else
                 {
                     _remainDirection = randomDirection.normalized;
+                    _remainDirection.y = 0f;
                 }
                 return;
             }
