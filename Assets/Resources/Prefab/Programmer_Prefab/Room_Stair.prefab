@@ -452,8 +452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac15f62808fddc41980565d778ecbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomNum: 7
+  _roomNum: 15
   _isRoomAcceptance: 1
+  _isStair: 1
+  _isWarp: 0
   _roomInPoints: {fileID: 6580668185066360367}
   _roomExitPoints: {fileID: 1294997705828863147}
   _roomOutPoints: {fileID: 4483032834467117221}
@@ -469,10 +471,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845576a153e054f448f561f93b03c5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomFloor: 0
+  _roomFloor: 1
   _moveSpeed: 2
   _rotSpeed: 10
-  _stoppingDistance: 0.1
+  _stoppingDistance: 0.2
   _waitTime: 0
   _roomDetails: {fileID: 5777109376317069753}
 --- !u!65 &2383983100633379532
@@ -801,8 +803,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5301050045033448450}
   m_LocalRotation: {x: -0.50354964, y: 0.4964251, z: 0.4964254, w: 0.5035492}
-  m_LocalPosition: {x: 0.31, y: -1.96, z: -5.68}
-  m_LocalScale: {x: 675.66583, y: 479.41666, z: 4.79977}
+  m_LocalPosition: {x: 0.31, y: -2.02, z: -5.68}
+  m_LocalScale: {x: 675.66583, y: 479.41666, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3783535343743369800}

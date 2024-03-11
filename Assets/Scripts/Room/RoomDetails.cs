@@ -11,6 +11,19 @@ public class RoomDetails : MonoBehaviour
     [Header("“üŽº‹–‰Â")]
     [SerializeField]
     private bool _isRoomAcceptance;
+    public bool IsRoomAcceptance => _isRoomAcceptance;
+
+    [Header("ŠK’i‚©”Û‚©")]
+    [SerializeField]
+    private bool _isStair;
+    public bool IsStair => _isStair;
+
+    [Header("ƒ[ƒv‚©”Û‚©")]
+    [SerializeField]
+    private bool _isWarp;
+    public bool IsWarp => _isWarp;
+
+
     [Header("•”‰®‚Ì’†")]
     [SerializeField]
     private Transform _roomInPoints;
@@ -23,6 +36,5 @@ public class RoomDetails : MonoBehaviour
     [SerializeField]
     private Transform _roomOutPoints;
     public Transform RoomOutPoints => _roomOutPoints;
-    public bool IsRoomAcceptance => _isRoomAcceptance;
 
 }

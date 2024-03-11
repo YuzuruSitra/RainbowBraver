@@ -153,8 +153,9 @@ public class NPCController : MonoBehaviour
         return Vector3.Distance(transform.position, _targetPos);
     }
 
-    public void StateHandler(RoomAIState targetState)
+    public void FinWarpHandler(RoomAIState targetState, int currentRoom)
     {
+        _currentRoomNum = currentRoom;
         NextState(targetState);
     }
 

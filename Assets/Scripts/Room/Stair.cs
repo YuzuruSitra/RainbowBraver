@@ -90,7 +90,7 @@ public class Stair : MonoBehaviour
             yield return null;
         }
         npc.IsFreedom = true;
-        npc.StateHandler(RoomAIState.EXIT_ROOM);
+        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, _roomDetails.RoomNum);
     }
 
 }
