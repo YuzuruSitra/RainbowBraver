@@ -3642,7 +3642,7 @@ MonoBehaviour:
   _moveSpeed: 2
   _rotationSpeed: 10
   _roomFriction: 0.6
-  _stoppingDistance: 0.1
+  _stoppingDistance: 0.2
   _minStayTime: 4
   _maxStayTime: 4
   _stayRoomRayLength: 0.5

@@ -43,7 +43,17 @@ public class ExitRoomState : IRoomAIState
             _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _rotSpeed * Time.deltaTime);
         }
 
-        if (Vector3.Distance(_npc.transform.position, _targetPos) <= _distance) _isStateFin = true;
+        MonitorStateExit();
+    }
+
+    // ステートの終了を監視
+    public void MonitorStateExit()
+    {
+        Vector3 tmp1 = _npc.transform.position;
+        tmp1.y = 0;
+        Vector3 tmp2 = _targetPos;
+        tmp2.y = 0;
+        if (Vector3.Distance(tmp1, tmp2) <= _distance) _isStateFin = true;
     }
 
 }

@@ -5,15 +5,17 @@ public class RoomSelecter : MonoBehaviour
 {
     [Header("各階層の部屋数")]
     [SerializeField]
-    private int _floorRoomCount;    
+    private int _floorRoomCount;
+    public int FloorRoomCount => _floorRoomCount;
 
+    [Header("部屋を格納")]
     [SerializeField]
     private RoomDetails[] _roomDetails;
 
     [Header("npcの目標座標エラー値(エマの部屋)")]
     [SerializeField]
     private Transform _errorPos;
-    public readonly Vector3 ErrorVector;
+    public Vector3 ErrorVector => _errorPos.position;
     public const int ERROR_ROOM_NUM = -1;
 
     public enum PointKind
@@ -21,11 +23,6 @@ public class RoomSelecter : MonoBehaviour
         IN_POINT,
         EXIT_POINT,
         OUT_POINT
-    }
-
-    private void Start()
-    {
-
     }
 
     // ターゲットの部屋を選定
@@ -37,13 +34,13 @@ public class RoomSelecter : MonoBehaviour
 
         // 左端
         if (calcPos == 0)
-        {
             contenderRoom = new int[] { NPCRoom, NPCRoom + 1 };
-        }
+        // 右端
+        else if (calcPos == _floorRoomCount - 1)
+            contenderRoom = new int[] { NPCRoom, NPCRoom - 1 };
         else
-        {
             contenderRoom = new int[] { NPCRoom, NPCRoom - 1, NPCRoom + 1 };
-        }
+        　
 
         // 受け入れ可能な部屋の数をカウント
         int acceptableRoomCount = 0;

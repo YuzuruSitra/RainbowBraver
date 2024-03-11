@@ -90,8 +90,7 @@ public class StayRoomState : IRoomAIState
         }
 
         // ステートカウントダウン
-        _remainStateTime -= Time.deltaTime;
-        if (_remainStateTime <= 0) _isStateFin = true;
+        MonitorStateExit();
     }
 
     private void SetParam()
@@ -153,5 +152,12 @@ public class StayRoomState : IRoomAIState
         _npc.transform.position += _remainDirection * _roomMoveSpeed * Time.deltaTime;
         Quaternion targetRotation = Quaternion.LookRotation(-_remainDirection);
         _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _roomRotSpeed * Time.deltaTime);
+    }
+
+    // ステートの終了を監視
+    public void MonitorStateExit()
+    {
+        _remainStateTime -= Time.deltaTime;
+        if (_remainStateTime <= 0) _isStateFin = true;
     }
 }

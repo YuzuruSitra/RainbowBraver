@@ -68,7 +68,7 @@ public class GoToRoomState : IRoomAIState
         else
         {
             DefaultMoving();
-            if (Vector3.Distance(_npc.transform.position, _targetPos) <= _distance) _isStateFin = true;
+            MonitorStateExit();
         }
     }
 
@@ -172,5 +172,15 @@ public class GoToRoomState : IRoomAIState
         float otherDistance = otherNPCController.GetDistanceToTarget();
         float targetDistance = Vector3.Distance(_npc.transform.position, otherObj.transform.position);
         _currentAvoid = targetDistance - AVOID_THRESHOLD >= otherDistance ? AvoidPatterns.Wait : AvoidPatterns.Move;
+    }
+
+    // ステートの終了を監視
+    public void MonitorStateExit()
+    {
+        Vector3 tmp1 = _npc.transform.position;
+        tmp1.y = 0;
+        Vector3 tmp2 = _targetPos;
+        tmp2.y = 0;
+        if (Vector3.Distance(tmp1, tmp2) <= _distance) _isStateFin = true;
     }
 }
