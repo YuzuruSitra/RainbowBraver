@@ -33,7 +33,6 @@ public class Stair : MonoBehaviour
     
     private Vector3 _playerOutPos;
     public Vector3 PlayerOutPos => _playerOutPos;
-    private Coroutine _autoMoveCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +51,7 @@ public class Stair : MonoBehaviour
             Vector3 direction = (transform.position - other.transform.position).normalized;
             if (direction.z <= 0) return;
             _targetObj = other.gameObject;
-            _autoMoveCoroutine = StartCoroutine(AutoMoving_NPC());
+            StartCoroutine(AutoMoving_NPC());
         }
     }
 
@@ -74,7 +73,7 @@ public class Stair : MonoBehaviour
         }
 
         // ŠK‘w‚Ìƒ[ƒv
-        Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor);
+        Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor, npc.BaseRoom);
         _targetObj.transform.position = targetFloor.EntryPos;
 
         yield return _waitTime;

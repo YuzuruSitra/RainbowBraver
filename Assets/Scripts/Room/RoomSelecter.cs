@@ -31,7 +31,7 @@ public class RoomSelecter : MonoBehaviour
     public const int ERROR_ROOM_NUM = -1;
 
     // ç≈ëÂäKêî
-    private int _topFloor => _roomDetails.Length / _floorRoomCount;
+    private int _topFloor => _roomDetails.Length / _floorRoomCount - 1;
 
     public enum PointKind
     {
@@ -88,7 +88,14 @@ public class RoomSelecter : MonoBehaviour
         else
             contenderRoom = new List<int>() { NPCRoom, NPCRoom - 1, NPCRoom + 1 };
 
-        return contenderRoom;
+        List<int> outRooms = new List<int>(contenderRoom);
+        foreach (int room in contenderRoom)
+        {
+            if (room == NPCRoom) continue;
+            if (!_roomDetails[room].IsRoomAcceptance) outRooms.Remove(room);
+        }
+
+        return outRooms;
     }
 
     // äKíiÇçló∂ÇµÇΩíTçı
@@ -107,7 +114,7 @@ public class RoomSelecter : MonoBehaviour
             if (floor != _topFloor)
             {
                 int upperStairRoom = roomNum + _floorRoomCount;
-                if ((roomNum + 1) / _floorRoomCount == 1 && _roomDetails[upperStairRoom - 1].IsRoomAcceptance)
+                if (_roomDetails[upperStairRoom - 1].IsRoomAcceptance)
                 {
                     updatedRooms.Add(upperStairRoom);
                     updatedRooms.Add(upperStairRoom - 1);
@@ -118,7 +125,7 @@ public class RoomSelecter : MonoBehaviour
             {
                 // â∫äKÇÃïîâÆÇí«â¡
                 int lowerStairRoom = roomNum - _floorRoomCount;
-                if ((roomNum + 1) / _floorRoomCount == _topFloor && _roomDetails[lowerStairRoom].IsRoomAcceptance)
+                if (_roomDetails[lowerStairRoom].IsRoomAcceptance)
                 {
                     updatedRooms.Add(lowerStairRoom);
                     updatedRooms.Add(lowerStairRoom - 1);
@@ -158,5 +165,26 @@ public class RoomSelecter : MonoBehaviour
         return nextRoomNum;
     }
     /*------------------------*/
-
+    
+    // äKíiÇÃè„â∫íTçı
+    public List<int> SearchStairs(int floor, int npcRoom)
+    {
+        int npcFloor = npcRoom / _floorRoomCount + 1;
+        List<int> stairList = new List<int> { };
+        int roomNum = (floor * _floorRoomCount) + _floorRoomCount - 1;
+        int upperStairRoom = roomNum + _floorRoomCount;
+        int floorDifference = Mathf.Abs((upperStairRoom / _floorRoomCount) - npcFloor);
+        if (floor != _topFloor && floorDifference <= 1)
+        {
+            if (_roomDetails[upperStairRoom - 1].IsRoomAcceptance)
+                stairList.Add(upperStairRoom / _floorRoomCount);
+        }
+        if (floor != 0 && floorDifference <= 1)
+        {
+            int lowerStairRoom = roomNum - _floorRoomCount;
+            if (_roomDetails[lowerStairRoom].IsRoomAcceptance)
+                stairList.Add(lowerStairRoom / _floorRoomCount);
+        }
+        return stairList;
+    }
 }

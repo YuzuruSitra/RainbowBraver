@@ -819,7 +819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5666295548274921416, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5790029001311073462, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1710,7 +1710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5666295548274921416, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5790029001311073462, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1975,7 +1975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5666295548274921416, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5790029001311073462, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2327,6 +2327,10 @@ PrefabInstance:
       value: Room7_Stair
       objectReference: {fileID: 0}
     - target: {fileID: 8132073026330016949, guid: 3194fd713a644af48bdeaf7a4a10329c, type: 3}
+      propertyPath: _roomFloor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132073026330016949, guid: 3194fd713a644af48bdeaf7a4a10329c, type: 3}
       propertyPath: _stoppingDistance
       value: 0.2
       objectReference: {fileID: 0}
@@ -2475,7 +2479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5666295548274921416, guid: f1986ea944668df48a229a8168e48252, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1986ea944668df48a229a8168e48252, type: 3}

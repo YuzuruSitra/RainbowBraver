@@ -12,11 +12,12 @@ public class StairSelecter : MonoBehaviour
     private Transform _errorPos;
     public Vector3 ErrorVector => _errorPos.position;
     private int _maxFloor => _stairs.Length;
+    private RoomSelecter _roomSelecter;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _roomSelecter = GameObject.FindWithTag("PathSelecter").GetComponent<RoomSelecter>();
     }
 
     // Update is called once per frame
@@ -26,12 +27,10 @@ public class StairSelecter : MonoBehaviour
     }
 
     // èoÇƒÇ¢Ç≠ç¿ïWÇÃëIíË
-    public Stair FloorSelecter(int calledFloor)
+    public Stair FloorSelecter(int calledFloor, int baseRoom)
     {
-        if (calledFloor == 0) return _stairs[calledFloor + 1];
-        if (calledFloor + 1 == _maxFloor) return _stairs[calledFloor - 1];
-        int rnd = Random.Range(0, 2);
-        if (rnd == 0) return _stairs[calledFloor - 1];
-        else return _stairs[calledFloor + 1];
+        List<int> stairList = _roomSelecter.SearchStairs(calledFloor, baseRoom);
+        int rnd = Random.Range(0, stairList.Count);
+        return _stairs[stairList[rnd]];
     }
 }
