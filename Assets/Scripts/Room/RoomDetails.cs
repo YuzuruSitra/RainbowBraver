@@ -37,4 +37,12 @@ public class RoomDetails : MonoBehaviour
     private Transform _roomOutPoints;
     public Transform RoomOutPoints => _roomOutPoints;
 
+    [SerializeField]
+    private MeshRenderer _frontWall;
+    public MeshRenderer FrontWall => _frontWall;
+    [SerializeField]
+    private MeshRenderer _frontDoor;
+    public MeshRenderer FrontDoor => _frontDoor;
+    
+
 }

@@ -14,6 +14,7 @@ public class RoomSelecter : MonoBehaviour
     [Header("部屋を格納")]
     [SerializeField]
     private RoomDetails[] _roomDetails;
+    public RoomDetails[] RoomDetails => _roomDetails;
 
     [Header("npcの目標座標エラー値(エマの部屋)")]
     [SerializeField]

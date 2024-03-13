@@ -134,9 +134,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2125363145467948074}
   - component: {fileID: 2125363145467948077}
+  - component: {fileID: 2979346886632490039}
   m_Layer: 0
   m_Name: Room
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,9 +177,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomNum: 0
   _isRoomAcceptance: 0
+  _isStair: 0
+  _isWarp: 0
   _roomInPoints: {fileID: 2315262068498179264}
   _roomExitPoints: {fileID: 41739340639669827}
   _roomOutPoints: {fileID: 6934309669143484725}
+  _frontWall: {fileID: 5918892970302765244}
+  _frontDoor: {fileID: 3494855829386549166}
+--- !u!65 &2979346886632490039
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125363145467948075}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.774633, y: 4.0327935, z: 5.5339704}
+  m_Center: {x: 0.14066792, y: 0.009758234, z: 2.6672928}
 --- !u!1 &2814984475410862353
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,6 +879,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 78384b88d8574e1408cffc37ca9f1072, type: 3}
   m_PrefabInstance: {fileID: 2828732797264022314}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &3494855829386549166 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 78384b88d8574e1408cffc37ca9f1072, type: 3}
+  m_PrefabInstance: {fileID: 2828732797264022314}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5036630126395221048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -925,5 +948,10 @@ PrefabInstance:
 --- !u!4 &4787059322736346067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f91d4852a5e185f4cbd7a458c58fc2e9, type: 3}
+  m_PrefabInstance: {fileID: 5036630126395221048}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5918892970302765244 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: f91d4852a5e185f4cbd7a458c58fc2e9, type: 3}
   m_PrefabInstance: {fileID: 5036630126395221048}
   m_PrefabAsset: {fileID: 0}

@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Stair
   - PathSelecter
+  - Room
   layers:
   - Default
   - TransparentFX

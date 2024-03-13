@@ -3648,6 +3648,7 @@ MonoBehaviour:
   _stayRoomRayLength: 0.5
   _goToRoomRayLength: 2
   _goToAvoidDistance: 2.5
+  IsFreedom: 1
 --- !u!1 &5936013229669588935
 GameObject:
   m_ObjectHideFlags: 0
