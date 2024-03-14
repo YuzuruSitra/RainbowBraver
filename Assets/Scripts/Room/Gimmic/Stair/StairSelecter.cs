@@ -1,36 +1,47 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StairSelecter : MonoBehaviour
+// 階段の上下探索
+public class StairSelecter
 {
-    [Header("階段を格納")]
-    [SerializeField]
-    private Stair[] _stairs;
-    [Header("npcの目標座標エラー値(エマの部屋)")]
-    [SerializeField]
-    private Transform _errorPos;
-    public Vector3 ErrorVector => _errorPos.position;
-    private int _maxFloor => _stairs.Length;
-    private RoomSelecter _roomSelecter;
+    // シングルトン
+    private static StairSelecter instance;
+    public static StairSelecter Instance => instance ?? (instance = new StairSelecter());
 
-    // Start is called before the first frame update
-    void Start()
+    private RoomBunker _roomBunker;
+    private StairSelecter()
     {
-        _roomSelecter = GameObject.FindWithTag("PathSelecter").GetComponent<RoomSelecter>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
     }
 
     // 出ていく座標の選定
     public Stair FloorSelecter(int calledFloor, int baseRoom)
     {
-        List<int> stairList = _roomSelecter.SearchStairs(calledFloor, baseRoom);
+        List<int> stairList = SearchStairs(calledFloor, baseRoom);
         int rnd = Random.Range(0, stairList.Count);
-        return _stairs[stairList[rnd]];
+        return _roomBunker.Stairs[stairList[rnd]];
+    }
+
+    // 階段の上下探索
+    public List<int> SearchStairs(int floor, int npcRoom)
+    {
+        int floorRoomCount = _roomBunker.FloorRoomCount;
+        int npcFloor = npcRoom / floorRoomCount + 1;
+        List<int> stairList = new List<int> { };
+        int roomNum = (floor * floorRoomCount) + floorRoomCount - 1;
+        int upperStairRoom = roomNum + floorRoomCount;
+        int floorDifference = Mathf.Abs((upperStairRoom / floorRoomCount) - npcFloor);
+        if (floor != _roomBunker.TopFloor && floorDifference <= 1)
+        {
+            if (_roomBunker.RoomDetails[upperStairRoom - 1].IsRoomAcceptance)
+                stairList.Add(upperStairRoom / floorRoomCount);
+        }
+        if (floor != 0 && floorDifference <= 1)
+        {
+            int lowerStairRoom = roomNum - floorRoomCount;
+            if (_roomBunker.RoomDetails[lowerStairRoom].IsRoomAcceptance)
+                stairList.Add(lowerStairRoom / floorRoomCount);
+        }
+        return stairList;
     }
 }

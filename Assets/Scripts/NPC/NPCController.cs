@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,6 @@ public enum RoomAIState
     LEAVE_ROOM,
     GO_TO_ROOM
 }
-
 
 // ルームNPCの制御クラス
 public class NPCController : MonoBehaviour
@@ -86,7 +84,7 @@ public class NPCController : MonoBehaviour
     void InitializeNPC()
     {
         _currentRoomNum = _baseRoom;
-        _roomSelecter = GameObject.FindWithTag("PathSelecter").GetComponent<RoomSelecter>();
+        _roomSelecter = RoomSelecter.Instance;
         _animator = gameObject.GetComponent<Animator>();
 
         // 各状態のインスタンスを作成して登録
@@ -134,7 +132,7 @@ public class NPCController : MonoBehaviour
                 newState = state;
                 break;
         }
-        if (_currentRoomNum == RoomSelecter.ERROR_ROOM_NUM && state == RoomAIState.STAY_ROOM)
+        if (_currentRoomNum == RoomBunker.ERROR_ROOM_NUM && state == RoomAIState.STAY_ROOM)
         {
             _targetPos = _roomSelecter.ErrorVector;
             newState = RoomAIState.STAY_ROOM;

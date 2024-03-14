@@ -1918,10 +1918,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _changeViewButton: {fileID: 210118126}
   _playerMovement: {fileID: 175156438}
-  _roomSelecter: {fileID: 2097995028}
   _overallView: {fileID: 2000077980}
   _playerFollow: {fileID: 528639750}
   _playerInRoom: {fileID: 399609869}
+  _roomBunker: {fileID: 2097995030}
 --- !u!4 &1342853681
 Transform:
   m_ObjectHideFlags: 0
@@ -1938,7 +1938,7 @@ Transform:
   - {fileID: 528639751}
   - {fileID: 399609870}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1347849237
 GameObject:
@@ -2431,7 +2431,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1781262340 stripped
 MonoBehaviour:
@@ -2819,7 +2819,7 @@ RectTransform:
   m_Children:
   - {fileID: 210118125}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2906,16 +2906,31 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2097995029}
-  - component: {fileID: 2097995028}
-  - component: {fileID: 2097995027}
+  - component: {fileID: 2097995030}
   m_Layer: 0
-  m_Name: PathSelecter
-  m_TagString: PathSelecter
+  m_Name: RoomBunker
+  m_TagString: RoomBunker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2097995027
+--- !u!4 &2097995029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097995026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3596659242400377501}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2097995030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2924,23 +2939,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2097995026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfaefe80382d727448fd774bcf85b0a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stairs:
-  - {fileID: 2237615627484270480}
-  - {fileID: 313232192}
-  _errorPos: {fileID: 3596659242400377501}
---- !u!114 &2097995028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097995026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcfebd3a31d99f34c8be6bf5e8e12acd, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a44f98902edaa741a68fd21fafad10c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _floorRoomCount: 8
@@ -2961,26 +2960,10 @@ MonoBehaviour:
   - {fileID: 1188842064}
   - {fileID: 1031612831}
   - {fileID: 313232191}
+  _stairs:
+  - {fileID: 2237615627484270480}
+  - {fileID: 313232192}
   _errorPos: {fileID: 3596659242400377501}
-  _isDebug: 0
-  _debugObj: {fileID: 4496453156501632051, guid: a06b8c84d19773b4397324ff61d6434c, type: 3}
-  _canvasTransform: {fileID: 1882986241}
---- !u!4 &2097995029
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097995026}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3596659242400377501}
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2136556047 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2125363145467948077, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
@@ -3046,6 +3029,14 @@ PrefabInstance:
     - target: {fileID: 4596488524756539634, guid: 3194fd713a644af48bdeaf7a4a10329c, type: 3}
       propertyPath: m_Name
       value: Room7_Stair
+      objectReference: {fileID: 0}
+    - target: {fileID: 5777109376317069753, guid: 3194fd713a644af48bdeaf7a4a10329c, type: 3}
+      propertyPath: _roomNum
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949783552754591191, guid: 3194fd713a644af48bdeaf7a4a10329c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8132073026330016949, guid: 3194fd713a644af48bdeaf7a4a10329c, type: 3}
       propertyPath: _roomFloor
@@ -3217,7 +3208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7356319425208097227, guid: 1cfc6ffeb4b4e1a4dacad48c1a002571, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7356319425208097227, guid: 1cfc6ffeb4b4e1a4dacad48c1a002571, type: 3}
       propertyPath: m_LocalPosition.x

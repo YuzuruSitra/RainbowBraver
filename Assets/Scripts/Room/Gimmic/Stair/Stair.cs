@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+// ŠK’i
 public class Stair : MonoBehaviour
 {
     [Header("ŠK (1F=0)")]
@@ -40,7 +39,7 @@ public class Stair : MonoBehaviour
         _entryPos = _roomDetails.RoomInPoints.position;
         _npcOutPos = _roomDetails.RoomOutPoints.position;
         _playerOutPos = _roomDetails.RoomExitPoints.position;
-        _stairSelecter = GameObject.FindWithTag("PathSelecter").GetComponent<StairSelecter>();
+        _stairSelecter = StairSelecter.Instance;
     }
 
     void OnTriggerEnter(Collider other)

@@ -8,7 +8,7 @@ TagManager:
   - RoomNPC
   - Wall
   - Stair
-  - PathSelecter
+  - RoomBunker
   - Room
   layers:
   - Default

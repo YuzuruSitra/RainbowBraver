@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// ƒhƒA‚Ì§Œä
 public class DoorController : MonoBehaviour
 {
     [Header("‰ñ“]‚É‚©‚¯‚éŠÔ")]
