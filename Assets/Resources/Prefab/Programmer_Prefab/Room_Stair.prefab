@@ -710,7 +710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomNum: 0
-  _isRoomAcceptance: 1
   _roomType: 2
   _roomInPoints: {fileID: 3800905220880123573}
   _roomExitPoints: {fileID: 41660630552294870}
@@ -746,8 +745,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.3367271, y: 3.7731802, z: 7.26872}
-  m_Center: {x: 2.871139, y: -0.3287443, z: 3.9719136}
+  m_Size: {x: 8.765245, y: 4.250293, z: 7.5742226}
+  m_Center: {x: 0.15687943, y: -0.09018791, z: 4.1246653}
 --- !u!1 &5396884261505598662
 GameObject:
   m_ObjectHideFlags: 0
