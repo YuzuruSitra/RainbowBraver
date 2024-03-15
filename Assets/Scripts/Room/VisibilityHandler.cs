@@ -13,21 +13,19 @@ public class VisibilityHandler
         _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
     }
 
-
     public void ChangeAllRoom()
     {
         RoomDetails[] rooms = _roomBunker.RoomDetails;
         for (int i = 0; i < rooms.Length; i++)
-        {
-            rooms[i].FrontWall.enabled = !rooms[i].FrontWall.enabled;
-            rooms[i].FrontWall.enabled = !rooms[i].FrontDoor.enabled;
-        }
+            for (int u = 0; u < rooms[i].FrontMesh.Length; u++)
+                rooms[i].FrontMesh[i].enabled = !rooms[i].FrontMesh[i].enabled;
     }
 
     public void ChangeTargetRoom(bool state, int roomNum)
     {
-        _roomBunker.RoomDetails[roomNum].FrontWall.enabled = state;
-        _roomBunker.RoomDetails[roomNum].FrontDoor.enabled = state;
+        RoomDetails[] rooms = _roomBunker.RoomDetails;
+        for (int i = 0; i < rooms[roomNum].FrontMesh.Length; i++)
+                rooms[roomNum].FrontMesh[i].enabled = state;
     }
 }
 

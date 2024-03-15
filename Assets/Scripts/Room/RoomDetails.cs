@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public enum RoomType
+{
+    Private,
+    Facility,
+    Stair,
+    Lift
+}
+
 // 部屋情報の保持
 public class RoomDetails : MonoBehaviour
 {
@@ -8,21 +16,10 @@ public class RoomDetails : MonoBehaviour
     private int _roomNum;
     public int RoomNum => _roomNum;
 
-    [Header("入室許可")]
+    [Header("ルームタイプを選択")]
     [SerializeField]
-    private bool _isRoomAcceptance;
-    public bool IsRoomAcceptance => _isRoomAcceptance;
-
-    [Header("階段か否か")]
-    [SerializeField]
-    private bool _isStair;
-    public bool IsStair => _isStair;
-
-    [Header("ワープか否か")]
-    [SerializeField]
-    private bool _isWarp;
-    public bool IsWarp => _isWarp;
-
+    private RoomType _roomType;
+    public RoomType RoomType => _roomType;
 
     [Header("部屋の中")]
     [SerializeField]
@@ -37,12 +34,28 @@ public class RoomDetails : MonoBehaviour
     private Transform _roomOutPoints;
     public Transform RoomOutPoints => _roomOutPoints;
 
+    [Header("透過したいメッシュ")]
     [SerializeField]
-    private MeshRenderer _frontWall;
-    public MeshRenderer FrontWall => _frontWall;
-    [SerializeField]
-    private MeshRenderer _frontDoor;
-    public MeshRenderer FrontDoor => _frontDoor;
-    
+    private MeshRenderer[] _frontMesh;
+    public MeshRenderer[] FrontMesh => _frontMesh;    
+
+    // 侵入可能かの検閲
+    public bool IsRoomAcceptance(int npcRoom)
+    {
+        bool outBool = false;
+        switch (_roomType)
+        {
+            case RoomType.Private:
+                outBool = npcRoom == _roomNum;
+                break;
+            case RoomType.Facility:
+            case RoomType.Stair:
+            case RoomType.Lift:
+                outBool = true;
+                break;
+        }
+        return outBool;
+    }
+
 
 }

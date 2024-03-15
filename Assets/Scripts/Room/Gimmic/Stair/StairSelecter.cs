@@ -33,13 +33,13 @@ public class StairSelecter
         int floorDifference = Mathf.Abs((upperStairRoom / floorRoomCount) - npcFloor);
         if (floor != _roomBunker.TopFloor && floorDifference <= 1)
         {
-            if (_roomBunker.RoomDetails[upperStairRoom - 1].IsRoomAcceptance)
+            if (_roomBunker.RoomDetails[upperStairRoom - 1].IsRoomAcceptance(npcRoom))
                 stairList.Add(upperStairRoom / floorRoomCount);
         }
         if (floor != 0 && floorDifference <= 1)
         {
             int lowerStairRoom = roomNum - floorRoomCount;
-            if (_roomBunker.RoomDetails[lowerStairRoom].IsRoomAcceptance)
+            if (_roomBunker.RoomDetails[lowerStairRoom].IsRoomAcceptance(npcRoom))
                 stairList.Add(lowerStairRoom / floorRoomCount);
         }
         return stairList;
