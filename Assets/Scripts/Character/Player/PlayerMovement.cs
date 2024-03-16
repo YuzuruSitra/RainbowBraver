@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     public event Action<bool> ActionInRoom;
     private int _currentRoomNum;
     public int CurentRoomNum => _currentRoomNum;
-    private bool _inStair = false;
 
     void Start()
     {
@@ -69,21 +68,10 @@ public class PlayerMovement : MonoBehaviour
             _currentRoomNum = other.gameObject.GetComponent<RoomDetails>().RoomNum;
             ChangeInRoom(true);
         }
-        if (other.CompareTag("OutLineCol") && !_inStair)
-        {
-            _inStair = true;
-            gameObject.layer = LayerMask.NameToLayer("Outline");
-        }
     }
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Room"))
             ChangeInRoom(false);
-
-        if (other.CompareTag("OutLineCol") && _inStair)
-        {
-            _inStair = false;
-            gameObject.layer = LayerMask.NameToLayer("Default");
-        }
     }
 }

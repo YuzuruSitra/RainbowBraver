@@ -7,6 +7,8 @@ public class VisibilityHandler
     private static VisibilityHandler instance;
     public static VisibilityHandler Instance => instance ?? (instance = new VisibilityHandler());
     private RoomBunker _roomBunker;
+    private bool _isVisibleOneRoom = false;
+    public bool IsVisibleOneRoom => _isVisibleOneRoom;
 
     private VisibilityHandler()
     {
@@ -26,6 +28,7 @@ public class VisibilityHandler
         RoomDetails[] rooms = _roomBunker.RoomDetails;
         for (int i = 0; i < rooms[roomNum].FrontMesh.Length; i++)
                 rooms[roomNum].FrontMesh[i].enabled = state;
+        _isVisibleOneRoom = state;
     }
 }
 
