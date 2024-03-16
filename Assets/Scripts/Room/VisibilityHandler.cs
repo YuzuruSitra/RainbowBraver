@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -11,9 +10,11 @@ public class VisibilityHandler
     private static VisibilityHandler instance;
     public static VisibilityHandler Instance => instance ?? (instance = new VisibilityHandler());
     private RoomBunker _roomBunker;
-    private bool _isVisibleOneRoom = false;
-    public bool IsVisibleOneRoom => _isVisibleOneRoom;
-    const float DURATION = 1f;
+    private bool _isVisibleAllRoom = true;
+    public bool IsVisibleAllRoom => _isVisibleAllRoom;
+    private int _isClearRoomNum = -1;
+    public int IsClearRoomNum => _isClearRoomNum;
+    const float DURATION = 0.2f;
 
     private VisibilityHandler()
     {
@@ -22,23 +23,32 @@ public class VisibilityHandler
 
     public void ChangeAllRoom()
     {
+        _isVisibleAllRoom = !_isVisibleAllRoom;
         RoomDetails[] rooms = _roomBunker.RoomDetails;
+        List<Material> mats = new List<Material>();
         for (int i = 0; i < rooms.Length; i++)
+        {
+            if (_isClearRoomNum == i) continue;
             for (int u = 0; u < rooms[i].FrontMesh.Length; u++)
-                rooms[i].FrontMesh[i].enabled = !rooms[i].FrontMesh[i].enabled;
+                mats.Add(rooms[i].FrontMesh[u].material);
+        }
+        FadingMaterial(_isVisibleAllRoom, mats);
     }
 
     public void ChangeTargetRoom(bool state, int roomNum)
     {
+        if (!_isVisibleAllRoom) return;
         RoomDetails[] rooms = _roomBunker.RoomDetails;
         List<Material> mats = new List<Material>();
         for (int i = 0; i < rooms[roomNum].FrontMesh.Length; i++)
             mats.Add(rooms[roomNum].FrontMesh[i].material);
         FadingMaterial(state, mats);
-        _isVisibleOneRoom = state;
+        if (!state)
+            _isClearRoomNum = roomNum;
+        else
+            _isClearRoomNum = -1;
     }
 
-    // マテリアルのフェード処理
     static async void FadingMaterial(bool state, List<Material> targetMats)
     {
         float[] startAlphas = targetMats.Select(mat => mat.color.a).ToArray();
@@ -46,25 +56,21 @@ public class VisibilityHandler
 
         System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
         sw.Start();
-        await Task.WhenAll(targetMats.Select(async _ =>
+        while (sw.ElapsedMilliseconds < DURATION * 1000)
         {
-            float currentTime = 0f;
-            while (currentTime < DURATION)
+            float currentTime = sw.ElapsedMilliseconds / 1000f;
+            await Task.Delay((int)(DURATION * 10));
+            for (int i = 0; i < targetMats.Count; i++)
             {
-                currentTime += DURATION * 0.01f;
-                await Task.Delay((int)DURATION * 10);
-                Color color = _.color;
-                for (int i = 0; i < targetMats.Count; i++)
-                {
-                    color.a = Mathf.Lerp(startAlphas[i], targetAlphas[i], currentTime / DURATION);
-                    targetMats[i].color = color;
-                }
+                Color color = targetMats[i].color;
+                color.a = Mathf.Lerp(startAlphas[i], targetAlphas[i], currentTime / DURATION);
+                targetMats[i].color = color;
             }
-        }));
-
+        }
         sw.Stop();
-        Debug.Log(sw.ElapsedMilliseconds + "ms");
+        // Debug.Log(sw.ElapsedMilliseconds + "ms");
 
+        // 目標のアルファ値に設定
         for (int i = 0; i < targetMats.Count; i++)
         {
             Color color = targetMats[i].color;
@@ -73,4 +79,6 @@ public class VisibilityHandler
         }
     }
 }
+
+// 各状態のステートを作る
 

@@ -391,8 +391,6 @@ MonoBehaviour:
   _frontMesh:
   - {fileID: 5918892970302765244}
   - {fileID: 3494855829386549166}
-  rend: {fileID: 5918892970302765244}
-  newMaterial: {fileID: 2100000, guid: a37b34070a37ad44dbc67d36bc669188, type: 2}
 --- !u!65 &2979346886632490039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -805,7 +803,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4174201370315951466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.077, z: -0.072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -824,8 +822,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7642784, y: 2.8963137, z: 2.2209356}
-  m_Center: {x: 0.14606059, y: -0.6526978, z: -0.080691695}
+  m_Size: {x: 1.7642784, y: 2.8963137, z: 2.954813}
+  m_Center: {x: 0.14606059, y: -0.6526978, z: -0.28523272}
 --- !u!114 &8922680402944059511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,7 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b021338a5bcbdeb44ad5c11c122749c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationTime: 0.5
+  _rotationTime: 0.25
   _inOpenRot: {x: -90, y: 0, z: 0}
   _closeRot: {x: -90, y: 90, z: 0}
   _outOpenRot: {x: -90, y: 180, z: 0}

@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class CamController : MonoBehaviour
 {
     [SerializeField]
-    private Button _changeViewButton;
-    [SerializeField]
     private PlayerMovement _playerMovement;
     [SerializeField]
     private CinemachineVirtualCameraBase _overallView;
@@ -33,10 +31,9 @@ public class CamController : MonoBehaviour
         _visibilityHandler = VisibilityHandler.Instance;
 
         _playerMovement.ActionInRoom += ChangeFollowCam;
-        _changeViewButton.onClick.AddListener(ChangeCamView);
     }
 
-    private void ChangeCamView()
+    public void ChangeCamView()
     {
         _isPlayerFollow = !_isPlayerFollow;
         _overallView.Priority = _isPlayerFollow ? 0 : 1;

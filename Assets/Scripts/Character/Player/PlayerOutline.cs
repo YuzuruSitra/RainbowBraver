@@ -45,7 +45,7 @@ public class PlayerOutline : MonoBehaviour
             Debug.DrawRay(gameObject.transform.position + origin, direction * _rayLength, Color.red);
             if (Physics.Raycast(gameObject.transform.position + origin, direction, out RaycastHit hit, _rayLength))
             {
-                if (hit.collider.CompareTag("Wall") && _visibilityHandler.IsVisibleOneRoom)
+                if (hit.collider.CompareTag("Wall") && _visibilityHandler.IsClearRoomNum == -1)
                     gameObject.layer = LayerMask.NameToLayer(LAYER_OUTLINE);
             }
             else
