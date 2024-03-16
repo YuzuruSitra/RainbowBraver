@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OutlineHandler : MonoBehaviour
+public class PlayerOutline : MonoBehaviour
 {
     [Header("中心からのオフセット")]
     [SerializeField]

@@ -391,6 +391,8 @@ MonoBehaviour:
   _frontMesh:
   - {fileID: 5918892970302765244}
   - {fileID: 3494855829386549166}
+  rend: {fileID: 5918892970302765244}
+  newMaterial: {fileID: 2100000, guid: a37b34070a37ad44dbc67d36bc669188, type: 2}
 --- !u!65 &2979346886632490039
 BoxCollider:
   m_ObjectHideFlags: 0
