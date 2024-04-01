@@ -17,10 +17,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveDirection;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    private bool _inRoom = false;
-    public event Action<bool> ActionInRoom;
-    private int _currentRoomNum;
-    public int CurentRoomNum => _currentRoomNum;
 
     void Start()
     {
@@ -52,26 +48,5 @@ public class PlayerMovement : MonoBehaviour
     private void AnimHandler(Vector3 moveDirection)
     {
         // _animator.SetBool("IsIdole", true);
-    }
-
-    public void ChangeInRoom(bool state)
-    {
-        if (_inRoom == state) return;
-        _inRoom = state;
-        ActionInRoom?.Invoke(_inRoom);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Room"))
-        {
-            _currentRoomNum = other.gameObject.GetComponent<RoomDetails>().RoomNum;
-            ChangeInRoom(true);
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Room"))
-            ChangeInRoom(false);
     }
 }

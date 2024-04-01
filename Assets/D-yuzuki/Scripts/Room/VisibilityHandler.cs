@@ -14,7 +14,7 @@ public class VisibilityHandler
     public bool IsVisibleAllRoom => _isVisibleAllRoom;
     private int _isClearRoomNum = -1;
     public int IsClearRoomNum => _isClearRoomNum;
-    const float DURATION = 0.2f;
+    const float DURATION = 0.15f;
 
     private VisibilityHandler()
     {

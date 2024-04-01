@@ -12,7 +12,7 @@ public class BtAddListener : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _changeViewButton.onClick.AddListener(_camController.ChangeCamView);
+        _changeViewButton.onClick.AddListener(_camController.DefaultCamChanger);
         _changeVisibilButton.onClick.AddListener(VisibilityHandler.Instance.ChangeAllRoom);
     }
 
