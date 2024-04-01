@@ -1,17 +1,30 @@
 using System;
 using UnityEngine;
 
-public class PlayerRoomCol : MonoBehaviour
+public class PlayerInRoomHandler : MonoBehaviour
 {
     private bool _inRoom = false;
     public event Action<bool> ActionInRoom;
     private int _currentRoomNum;
     public int CurentRoomNum => _currentRoomNum;
+    private Vector3 _defaultSize;
+    private Vector3 _inRoomSize;
 
-    // Start is called before the first frame update
-    void Start()
+    [Header("ïîâÆÇ≈ÇÃÉTÉCÉYåWêî")]
+    [SerializeField]
+    private float _scaleFactor;
+    [SerializeField]
+    private GameObject _player;
+
+    private void Start()
     {
-        
+        _defaultSize = _player.transform.lossyScale;
+        _inRoomSize = _defaultSize * _scaleFactor;
+    }
+
+    void Update()
+    {
+        transform.position = _player.transform.position;
     }
 
     public void ChangeInRoom(bool state)
@@ -27,7 +40,7 @@ public class PlayerRoomCol : MonoBehaviour
         {
             _currentRoomNum = other.gameObject.GetComponent<RoomDetails>().RoomNum;
             ChangeInRoom(true);
-            transform.localScale = new Vector3(0.07f, 0.07f, 0.07f);
+            _player.transform.localScale = _inRoomSize;
         }
     }
     void OnTriggerExit(Collider other)
@@ -35,7 +48,7 @@ public class PlayerRoomCol : MonoBehaviour
         if (other.CompareTag("Room"))
         {
             ChangeInRoom(false);
-            transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            _player.transform.localScale = _defaultSize;
         }
     }
 }

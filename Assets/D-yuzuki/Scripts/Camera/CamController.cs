@@ -27,7 +27,7 @@ public class CamController : MonoBehaviour
     private const int HIGH_PRIORITY = 1;
 
     [SerializeField]
-    private PlayerRoomCol _playerRoomCol;
+    private PlayerInRoomHandler _playerInRoomHandler;
     [SerializeField]
     private RoomBunker _roomBunker;
     private VisibilityHandler _visibilityHandler;
@@ -38,7 +38,7 @@ public class CamController : MonoBehaviour
         ChangeCamView(CamState.OVERAL_VIEW);
         _visibilityHandler = VisibilityHandler.Instance;
 
-        _playerRoomCol.ActionInRoom += ChangeRoomCam;
+        _playerInRoomHandler.ActionInRoom += ChangeRoomCam;
     }
 
     private void ChangeCamView(CamState newState)
@@ -47,7 +47,7 @@ public class CamController : MonoBehaviour
         {
             pair.camera.Priority = pair.state == newState ? HIGH_PRIORITY : LOW_PRIORITY;
             if (pair.state == CamState.PLAYER_IN_ROOM && newState == CamState.PLAYER_IN_ROOM)
-                pair.camera.Follow = _roomBunker.RoomDetails[_playerRoomCol.CurentRoomNum].transform;
+                pair.camera.Follow = _roomBunker.RoomDetails[_playerInRoomHandler.CurentRoomNum].transform;
         }
     }
 
@@ -55,7 +55,7 @@ public class CamController : MonoBehaviour
     {
         _playerInRoom = inRoom;
         ChangeCamView(inRoom ? CamState.PLAYER_IN_ROOM : _currentDefaultCam);
-        _visibilityHandler.ChangeTargetRoom(!inRoom, _playerRoomCol.CurentRoomNum);
+        _visibilityHandler.ChangeTargetRoom(!inRoom, _playerInRoomHandler.CurentRoomNum);
     }
 
     public void DefaultCamChanger()

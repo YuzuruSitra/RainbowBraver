@@ -42,7 +42,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift)) speed = _runSpeed;
 
         _moveDirection.y -= _gravity * Time.deltaTime;
-        _controller.Move(_moveDirection * speed * Time.deltaTime);   
+        _controller.Move(_moveDirection * speed * Time.deltaTime);
+
     }
 
     private void AnimHandler(Vector3 moveDirection)

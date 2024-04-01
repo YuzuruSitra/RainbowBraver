@@ -462,7 +462,7 @@ MonoBehaviour:
     camera: {fileID: 4650790219909590742}
   - state: 2
     camera: {fileID: 4650790218426142028}
-  _playerMovement: {fileID: 0}
+  _playerInRoomHandler: {fileID: 0}
   _roomBunker: {fileID: 0}
 --- !u!1 &4650790219360410312
 GameObject:
