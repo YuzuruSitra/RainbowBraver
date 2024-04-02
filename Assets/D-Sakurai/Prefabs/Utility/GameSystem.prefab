@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7388265588132668391}
   - component: {fileID: 7388265588132668388}
+  - component: {fileID: 5528021276292625076}
   - component: {fileID: -1384935280858632823}
   m_Layer: 0
   m_Name: GameSystem
-  m_TagString: Untagged
+  m_TagString: GameSystem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +47,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   n_slots: 3
+--- !u!114 &5528021276292625076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388265588132668389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd90c8db109b6e49bef62f3ac2c2a42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <TextSpeed>k__BackingField: 5
+  <Resolution>k__BackingField:
+    x: 1280
+    y: 720
+  <WindowMode>k__BackingField: 0
+  <VolMaster>k__BackingField: 1
+  <VolSe>k__BackingField: 1
+  <VolBgm>k__BackingField: 1
+  <VolEnv>k__BackingField: 1
 --- !u!114 &-1384935280858632823
 MonoBehaviour:
   m_ObjectHideFlags: 0

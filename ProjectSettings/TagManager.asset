@@ -11,6 +11,7 @@ TagManager:
   - RoomBunker
   - Room
   - OutLineCol
+  - GameSystem
   layers:
   - Default
   - TransparentFX

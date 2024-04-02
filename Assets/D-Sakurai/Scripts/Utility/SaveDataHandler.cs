@@ -89,7 +89,6 @@ public class SaveDataHandler : MonoBehaviour
         return result;
     }
 
-
     /// <summary>
     /// 実際にセーブ処理を行う関数。
     /// </summary>
