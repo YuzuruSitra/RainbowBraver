@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CI.QuickSave;
 using System;
+using UnityEditor.Build.Content;
 
 public class SaveDataHandler : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class SaveDataHandler : MonoBehaviour
     /// </summary>
     /// <param name="slot">セーブするスロット</param>
     public void HardSaveVoid(int slot){
-        SaveLoadResult result = Save(slot, true);
+        SaveLoadResult result = _Save(slot, true);
         Debug.Log("Save successful?: " + result.Successful + "\n" + result.StatusText);
     }
 
@@ -36,7 +37,7 @@ public class SaveDataHandler : MonoBehaviour
     /// </summary>
     /// <param name="slot">セーブするスロット</param>
     public void SoftSaveVoid(int slot){
-        SaveLoadResult result = Save(slot, false);
+        SaveLoadResult result = _Save(slot, false);
         Debug.Log("Save successful?: " + result.Successful + "\n" + result.StatusText);
     }
 
@@ -58,7 +59,7 @@ public class SaveDataHandler : MonoBehaviour
     /// <param name="slot">セーブするスロット</param>
     /// <returns>セーブ処理の実行結果</returns>
     public SaveLoadResult HardSave(int slot){
-        SaveLoadResult result = Save(slot, true);
+        SaveLoadResult result = _Save(slot, true);
         Debug.Log("Save successful?: " + result.Successful + "\n" + result.StatusText);
 
         return result;
@@ -71,7 +72,7 @@ public class SaveDataHandler : MonoBehaviour
     /// <param name="slot"セーブするスロット></param>
     /// <returns>セーブ処理の実行結果</returns>
     public SaveLoadResult SoftSave(int slot){
-        SaveLoadResult result = Save(slot, false);
+        SaveLoadResult result = _Save(slot, false);
         Debug.Log("Save successful?: " + result.Successful + "\n" + result.StatusText);
 
         return result;
@@ -95,7 +96,7 @@ public class SaveDataHandler : MonoBehaviour
     /// <param name="slot">セーブするスロット</param>
     /// <param name="allowOverwrite">上書きを行うか</param>
     /// <returns>実行結果</returns>
-    private SaveLoadResult Save(int slot, bool allowOverwrite){
+    private SaveLoadResult _Save(int slot, bool allowOverwrite){
         
         // Handle out of slot range error
         if (slot + 1 > n_slots)

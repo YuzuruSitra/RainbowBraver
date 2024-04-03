@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7388265588132668389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7388265588132668391}
+  - component: {fileID: 7388265588132668388}
+  - component: {fileID: 5528021276292625076}
+  - component: {fileID: -1384935280858632823}
+  m_Layer: 0
+  m_Name: GameSystemLegacy
+  m_TagString: GameSystem
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7388265588132668391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388265588132668389}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7388265588132668388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388265588132668389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5085831931ab34ba4a7e8bdec96dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  n_slots: 3
+--- !u!114 &5528021276292625076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388265588132668389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd90c8db109b6e49bef62f3ac2c2a42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <TextSpeed>k__BackingField: 5
+  <Resolution>k__BackingField:
+    x: 1280
+    y: 720
+  <WindowMode>k__BackingField: 0
+  <VolMaster>k__BackingField: 1
+  <VolSe>k__BackingField: 1
+  <VolBgm>k__BackingField: 1
+  <VolEnv>k__BackingField: 1
+--- !u!114 &-1384935280858632823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388265588132668389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52233a0279f647a4f9f5035e5c6d92d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

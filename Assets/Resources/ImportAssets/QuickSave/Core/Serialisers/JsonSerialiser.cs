@@ -26,7 +26,8 @@ namespace CI.QuickSave.Core.Serialisers
                 new SpriteConverter(),
                 new Vector2Converter(),
                 new Vector3Converter(),
-                new Vector4Converter()
+                new Vector4Converter(),
+                new Int2Converter()
             }
         };
 
