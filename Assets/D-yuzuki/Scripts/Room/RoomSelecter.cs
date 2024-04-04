@@ -43,12 +43,10 @@ public class RoomSelecter
     {
         List<int> contenderRoom = CreateContenderRoomList(npcRoom);
         contenderRoom = SearchStairs(contenderRoom, npcRoom);
-
+        contenderRoom = SearchLift(contenderRoom, npcRoom);
         if (contenderRoom.Count == 0) return RoomBunker.ERROR_ROOM_NUM;
-
         List<int> alternativeRooms = SelectAlternativeRooms(contenderRoom, currentRoomNum);
         int nextRoomNum = SelectNextRoom(alternativeRooms);
-
         return nextRoomNum;
     }
 
@@ -74,11 +72,10 @@ public class RoomSelecter
     private List<int> SearchStairs(List<int> rooms, int npcRoom)
     {
         List<int> updatedRooms = new List<int>(rooms);
-
         foreach (int roomNum in rooms)
         {
-            // 階段でない場合は次の部屋へ
-            if (_roomBunker.RoomDetails[roomNum].RoomType != RoomType.Stair) continue;
+            RoomType roomType = _roomBunker.RoomDetails[roomNum].RoomType;
+            if (roomType != RoomType.Stair) continue;
             bool isDel = true;
             int floor = roomNum / _roomBunker.FloorRoomCount;
 
@@ -107,6 +104,42 @@ public class RoomSelecter
             
             // 上下階の部屋が共に不可ならば現在の部屋を削除
             if (isDel) updatedRooms.Remove(roomNum);
+        }
+
+        return updatedRooms;
+    }
+
+    // リフトを考慮した探索
+    private List<int> SearchLift(List<int> rooms, int npcRoom)
+    {
+        List<int> updatedRooms = new List<int>(rooms);
+        foreach (int roomNum in rooms)
+        {
+            RoomType roomType = _roomBunker.RoomDetails[roomNum].RoomType;
+            bool isAdd = false;
+            if (roomType != RoomType.Lift) continue;
+            GameObject room = _roomBunker.RoomDetails[roomNum].gameObject;
+            Lift lift = room.GetComponent<Lift>();
+            // 階層を検索
+            int targetLiftNum;
+            if (lift.Info == Lift.LiftInfo.UPPER)
+                targetLiftNum = roomNum - _roomBunker.FloorRoomCount;
+            else
+                targetLiftNum = roomNum + _roomBunker.FloorRoomCount;
+            // 端かどうかの判定
+            int outerNum = targetLiftNum % _roomBunker.FloorRoomCount; 
+            // リフトの左右を候補に追加
+            if (outerNum != 0 && _roomBunker.RoomDetails[targetLiftNum - 1].IsRoomAcceptance(npcRoom))
+            {
+                isAdd = true;
+                updatedRooms.Add(targetLiftNum - 1);
+            }
+            if (outerNum != _roomBunker.FloorRoomCount - 1 && _roomBunker.RoomDetails[targetLiftNum + 1].IsRoomAcceptance(npcRoom))
+            {
+                isAdd = true;
+                updatedRooms.Add(targetLiftNum + 1);
+            }
+            if (isAdd) updatedRooms.Add(targetLiftNum);
         }
 
         return updatedRooms;

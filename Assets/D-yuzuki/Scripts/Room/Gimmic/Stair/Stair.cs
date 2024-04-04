@@ -10,8 +10,8 @@ public class Stair : MonoBehaviour
     [Header("移動時の待機時間")]
     [SerializeField] 
     private float _waitTime;
-    [SerializeField]
     private RoomDetails _roomDetails;
+    public RoomDetails RoomDetails => _roomDetails;
     private GameObject _targetObj;
     private StairSelecter _stairSelecter;
     
@@ -20,16 +20,13 @@ public class Stair : MonoBehaviour
 
     private Vector3 _npcOutPos;
     public Vector3 NPCOutPos => _npcOutPos;
-    
-    private Vector3 _playerOutPos;
-    public Vector3 PlayerOutPos => _playerOutPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        _roomDetails = GetComponent<RoomDetails>();
         _entryPos = _roomDetails.RoomInPoints.position;
         _npcOutPos = _roomDetails.RoomOutPoints.position;
-        _playerOutPos = _roomDetails.RoomExitPoints.position;
         _stairSelecter = StairSelecter.Instance;
     }
 
@@ -65,7 +62,7 @@ public class Stair : MonoBehaviour
         // 階層のワープ
         Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor, npc.BaseRoom);
         _targetObj.transform.position = targetFloor.EntryPos;
-
+        
         yield return _waitTime;
 
         // 退出    
@@ -79,7 +76,8 @@ public class Stair : MonoBehaviour
             yield return null;
         }
         npc.IsFreedom = true;
-        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, _roomDetails.RoomNum);
+        int targetStairNum = targetFloor.RoomDetails.RoomNum;
+        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, targetStairNum);
     }
 
 }

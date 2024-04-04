@@ -4,36 +4,37 @@ using UnityEngine;
 
 public class Lift : MonoBehaviour
 {
+    public enum LiftInfo
+    {
+        UPPER,
+        LOWER
+    }
+    [SerializeField]
+    private LiftInfo _info;
+    public LiftInfo Info => _info;
+
     [SerializeField]
     private Lift _pairLift;
 
-    [Header("ŠK (1F=0)")]
-    [SerializeField]
-    private int _roomFloor;
     [Header("ˆÚ“®Žž‚Ì‘Ò‹@ŽžŠÔ")]
     [SerializeField] 
     private float _waitTime;
-    [SerializeField]
     private RoomDetails _roomDetails;
+    public RoomDetails RoomDetails => _roomDetails;
     private GameObject _targetObj;
-    private StairSelecter _stairSelecter;
     
     private Vector3 _entryPos;
     public Vector3 EntryPos => _entryPos;
 
     private Vector3 _npcOutPos;
     public Vector3 NPCOutPos => _npcOutPos;
-    
-    private Vector3 _playerOutPos;
-    public Vector3 PlayerOutPos => _playerOutPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        _roomDetails = GetComponent<RoomDetails>();
         _entryPos = _roomDetails.RoomInPoints.position;
         _npcOutPos = _roomDetails.RoomOutPoints.position;
-        _playerOutPos = _roomDetails.RoomExitPoints.position;
-        _stairSelecter = StairSelecter.Instance;
     }
 
     void OnTriggerEnter(Collider other)
@@ -66,15 +67,13 @@ public class Lift : MonoBehaviour
         }
 
         // ŠK‘w‚Ìƒ[ƒv
-        Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor, npc.BaseRoom);
-        _targetObj.transform.position = targetFloor.EntryPos;
-
+        _targetObj.transform.position = _pairLift.EntryPos;
         yield return _waitTime;
 
         // ‘Þo    
-        while (Vector3.Distance(_targetObj.transform.position, targetFloor.NPCOutPos) >= npc.StoppingDistance)
+        while (Vector3.Distance(_targetObj.transform.position, _pairLift.NPCOutPos) >= npc.StoppingDistance)
         {
-            Vector3 direction2 = (targetFloor.NPCOutPos - _targetObj.transform.position).normalized;
+            Vector3 direction2 = (_pairLift.NPCOutPos - _targetObj.transform.position).normalized;
             direction2.y = 0f;
             _targetObj.transform.position += direction2 * npc.MoveSpeed * Time.deltaTime;
             Quaternion targetRotation2 = Quaternion.LookRotation(-direction2);
@@ -82,7 +81,7 @@ public class Lift : MonoBehaviour
             yield return null;
         }
         npc.IsFreedom = true;
-        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, _roomDetails.RoomNum);
+        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, _pairLift.RoomDetails.RoomNum);
     }
 
 }
