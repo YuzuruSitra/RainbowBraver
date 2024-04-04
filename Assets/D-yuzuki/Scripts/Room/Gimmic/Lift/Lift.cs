@@ -1,9 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-// ŠK’i
-public class Stair : MonoBehaviour
+public class Lift : MonoBehaviour
 {
+    [SerializeField]
+    private Lift _pairLift;
+
     [Header("ŠK (1F=0)")]
     [SerializeField]
     private int _roomFloor;
