@@ -12,6 +12,7 @@ TagManager:
   - Room
   - OutLineCol
   - GameSystem
+  - ConfigPage
   layers:
   - Default
   - TransparentFX
