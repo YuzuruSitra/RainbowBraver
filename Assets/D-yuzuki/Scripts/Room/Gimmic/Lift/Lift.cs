@@ -1,19 +1,27 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-// ŠK’i
-public class Stair : MonoBehaviour
+public class Lift : MonoBehaviour
 {
-    [Header("ŠK (1F=0)")]
+    public enum LiftInfo
+    {
+        UPPER,
+        LOWER
+    }
     [SerializeField]
-    private int _roomFloor;
+    private LiftInfo _info;
+    public LiftInfo Info => _info;
+
+    [SerializeField]
+    private Lift _pairLift;
+
     [Header("ˆÚ“®Žž‚Ì‘Ò‹@ŽžŠÔ")]
     [SerializeField] 
     private float _waitTime;
     private RoomDetails _roomDetails;
     public RoomDetails RoomDetails => _roomDetails;
     private GameObject _targetObj;
-    private StairSelecter _stairSelecter;
     
     private Vector3 _entryPos;
     public Vector3 EntryPos => _entryPos;
@@ -27,7 +35,6 @@ public class Stair : MonoBehaviour
         _roomDetails = GetComponent<RoomDetails>();
         _entryPos = _roomDetails.RoomInPoints.position;
         _npcOutPos = _roomDetails.RoomOutPoints.position;
-        _stairSelecter = StairSelecter.Instance;
     }
 
     void OnTriggerEnter(Collider other)
@@ -60,15 +67,13 @@ public class Stair : MonoBehaviour
         }
 
         // ŠK‘w‚Ìƒ[ƒv
-        Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor, npc.BaseRoom);
-        _targetObj.transform.position = targetFloor.EntryPos;
-        
+        _targetObj.transform.position = _pairLift.EntryPos;
         yield return _waitTime;
 
         // ‘Þo    
-        while (Vector3.Distance(_targetObj.transform.position, targetFloor.NPCOutPos) >= npc.StoppingDistance)
+        while (Vector3.Distance(_targetObj.transform.position, _pairLift.NPCOutPos) >= npc.StoppingDistance)
         {
-            Vector3 direction2 = (targetFloor.NPCOutPos - _targetObj.transform.position).normalized;
+            Vector3 direction2 = (_pairLift.NPCOutPos - _targetObj.transform.position).normalized;
             direction2.y = 0f;
             _targetObj.transform.position += direction2 * npc.MoveSpeed * Time.deltaTime;
             Quaternion targetRotation2 = Quaternion.LookRotation(-direction2);
@@ -76,8 +81,7 @@ public class Stair : MonoBehaviour
             yield return null;
         }
         npc.IsFreedom = true;
-        int targetStairNum = targetFloor.RoomDetails.RoomNum;
-        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, targetStairNum);
+        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, _pairLift.RoomDetails.RoomNum);
     }
 
 }

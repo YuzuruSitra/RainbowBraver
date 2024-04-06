@@ -28,15 +28,18 @@ public class NPCController : MonoBehaviour
     [Header("移動速度")]
     [SerializeField] 
     private float _moveSpeed;
+    public float MoveSpeed => _moveSpeed;
     [Header("回転速度")]
     [SerializeField] 
     private float _rotationSpeed;
+    public float RotationSpeed => _rotationSpeed;
     [Header("部屋内の速度低下係数")]
     [SerializeField]
     private float _roomFriction;
     [Header("目標座標に対する許容誤差")]
     [SerializeField] 
     private float _stoppingDistance = 0.1f;
+    public float StoppingDistance => _stoppingDistance;
     [Header("滞在時間の最小値")]
     [SerializeField] 
     private float _minStayTime;
@@ -141,10 +144,7 @@ public class NPCController : MonoBehaviour
         _currentState = newState;
     }
 
-    /// <summary>
-    /// 外部からの参照
-    /// </summary>
-    /// <returns></returns>
+    // 外部からの参照
     
     public float GetDistanceToTarget()
     {
