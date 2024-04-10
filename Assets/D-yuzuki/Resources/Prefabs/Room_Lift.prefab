@@ -843,7 +843,7 @@ GameObject:
   - component: {fileID: 7519576544677385121}
   - component: {fileID: 6664462916805032888}
   - component: {fileID: 6664462916805032891}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Room_Lift
   m_TagString: Room
   m_Icon: {fileID: 0}
@@ -894,6 +894,8 @@ MonoBehaviour:
   _frontMesh:
   - {fileID: 2810255273631663920}
   - {fileID: 5018154988631877666}
+  _outlineObj:
+  - {fileID: 8656117338847290096}
 --- !u!114 &6664462916805032888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1106,6 +1108,10 @@ PrefabInstance:
       value: front_wall
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f91d4852a5e185f4cbd7a458c58fc2e9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f91d4852a5e185f4cbd7a458c58fc2e9, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1131,6 +1137,14 @@ PrefabInstance:
     - target: {fileID: 2324310157249435598, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
       propertyPath: m_Name
       value: Windoe_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324310157249435598, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530702112217116733, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3101374209555631476, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
       propertyPath: m_RootOrder
@@ -1254,6 +1268,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: doorObj
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 78384b88d8574e1408cffc37ca9f1072, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78384b88d8574e1408cffc37ca9f1072, type: 3}
 --- !u!23 &5018154988631877666 stripped
@@ -1330,10 +1348,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: patarn.000
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e874524718deb2148a7ae897093d8b74, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e874524718deb2148a7ae897093d8b74, type: 3}
 --- !u!4 &8316851599513745482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e874524718deb2148a7ae897093d8b74, type: 3}
+  m_PrefabInstance: {fileID: 8422255814925524897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8656117338847290096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e874524718deb2148a7ae897093d8b74, type: 3}
   m_PrefabInstance: {fileID: 8422255814925524897}
   m_PrefabAsset: {fileID: 0}

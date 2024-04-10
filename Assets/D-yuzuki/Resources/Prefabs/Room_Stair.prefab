@@ -729,11 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomFloor: 1
-  _moveSpeed: 2
-  _rotSpeed: 10
-  _stoppingDistance: 0.2
   _waitTime: 0.2
-  _roomDetails: {fileID: 5777109376317069753}
 --- !u!65 &2383983100633379532
 BoxCollider:
   m_ObjectHideFlags: 0

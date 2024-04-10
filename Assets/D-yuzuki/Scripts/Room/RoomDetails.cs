@@ -38,6 +38,10 @@ public class RoomDetails : MonoBehaviour
     [SerializeField]
     private MeshRenderer[] _frontMesh;
     public MeshRenderer[] FrontMesh => _frontMesh;    
+    [Header("アウトラインをつけたいメッシュ")]
+    [SerializeField]
+    private GameObject[] _outlineObj;
+    public GameObject[] OutlineObj => _outlineObj;  
 
     // 侵入可能かの検閲
     public bool IsRoomAcceptance(int npcRoom)

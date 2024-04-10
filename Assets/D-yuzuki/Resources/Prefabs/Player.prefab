@@ -194,6 +194,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _offset: {x: 0.3, y: 0.8, z: 0}
   _rayLength: 10
+  _layerOutline:
+    serializedVersion: 2
+    m_Bits: 64
+  _layerDefault:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!143 &4097597889235549694
 CharacterController:
   m_ObjectHideFlags: 0

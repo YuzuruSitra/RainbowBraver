@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 2125363145467948074}
   - component: {fileID: 2125363145467948077}
   - component: {fileID: 2979346886632490039}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Room
   m_TagString: Room
   m_Icon: {fileID: 0}
@@ -391,6 +391,8 @@ MonoBehaviour:
   _frontMesh:
   - {fileID: 5918892970302765244}
   - {fileID: 3494855829386549166}
+  _outlineObj:
+  - {fileID: 938047624800345468}
 --- !u!65 &2979346886632490039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2204,11 +2206,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: patarn.000
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e874524718deb2148a7ae897093d8b74, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e874524718deb2148a7ae897093d8b74, type: 3}
 --- !u!4 &454667801382078406 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e874524718deb2148a7ae897093d8b74, type: 3}
+  m_PrefabInstance: {fileID: 127777036492251181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &938047624800345468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e874524718deb2148a7ae897093d8b74, type: 3}
   m_PrefabInstance: {fileID: 127777036492251181}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2828732797264022314
@@ -2270,6 +2281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: doorObj
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 78384b88d8574e1408cffc37ca9f1072, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78384b88d8574e1408cffc37ca9f1072, type: 3}
 --- !u!4 &2363004422265908417 stripped
@@ -2297,6 +2312,14 @@ PrefabInstance:
     - target: {fileID: 2324310157249435598, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
       propertyPath: m_Name
       value: Windoe_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324310157249435598, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530702112217116733, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3101374209555631476, guid: 31dec59d5e7ded4489538f633b802a4e, type: 3}
       propertyPath: m_RootOrder
@@ -2419,6 +2442,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f91d4852a5e185f4cbd7a458c58fc2e9, type: 3}
       propertyPath: m_Name
       value: front_wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f91d4852a5e185f4cbd7a458c58fc2e9, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f91d4852a5e185f4cbd7a458c58fc2e9, type: 3}
