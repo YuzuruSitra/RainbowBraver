@@ -51,18 +51,18 @@ public class Lift : MonoBehaviour
 
     private IEnumerator AutoMoving_NPC()
     {
-        NPCController npc = _targetObj.GetComponent<NPCController>();
-        npc.IsFreedom = false;
+        BraverController braver = _targetObj.GetComponent<BraverController>();
+        braver.IsFreedom = false;
 
         // エントリー
-        while (Vector3.Distance(_targetObj.transform.position, _entryPos) >= npc.StoppingDistance)
+        while (Vector3.Distance(_targetObj.transform.position, _entryPos) >= braver.StoppingDistance)
         {
             Vector3 direction1 = (_entryPos - _targetObj.transform.position).normalized;
             direction1.y = 0f;
-            _targetObj.transform.position += direction1 * npc.MoveSpeed * Time.deltaTime;
+            _targetObj.transform.position += direction1 * braver.MoveSpeed * Time.deltaTime;
 
             Quaternion targetRotation1 = Quaternion.LookRotation(-direction1);
-            _targetObj.transform.rotation = Quaternion.Slerp(_targetObj.transform.rotation, targetRotation1, npc.RotationSpeed * Time.deltaTime);
+            _targetObj.transform.rotation = Quaternion.Slerp(_targetObj.transform.rotation, targetRotation1, braver.RotationSpeed * Time.deltaTime);
             yield return null;
         }
 
@@ -71,17 +71,17 @@ public class Lift : MonoBehaviour
         yield return _waitTime;
 
         // 退出    
-        while (Vector3.Distance(_targetObj.transform.position, _pairLift.NPCOutPos) >= npc.StoppingDistance)
+        while (Vector3.Distance(_targetObj.transform.position, _pairLift.NPCOutPos) >= braver.StoppingDistance)
         {
             Vector3 direction2 = (_pairLift.NPCOutPos - _targetObj.transform.position).normalized;
             direction2.y = 0f;
-            _targetObj.transform.position += direction2 * npc.MoveSpeed * Time.deltaTime;
+            _targetObj.transform.position += direction2 * braver.MoveSpeed * Time.deltaTime;
             Quaternion targetRotation2 = Quaternion.LookRotation(-direction2);
-            _targetObj.transform.rotation = Quaternion.Slerp(_targetObj.transform.rotation, targetRotation2, npc.RotationSpeed * Time.deltaTime);
+            _targetObj.transform.rotation = Quaternion.Slerp(_targetObj.transform.rotation, targetRotation2, braver.RotationSpeed * Time.deltaTime);
             yield return null;
         }
-        npc.IsFreedom = true;
-        npc.FinWarpHandler(RoomAIState.EXIT_ROOM, _pairLift.RoomDetails.RoomNum);
+        braver.IsFreedom = true;
+        braver.FinWarpHandler(RoomAIState.EXIT_ROOM, _pairLift.RoomDetails.RoomNum);
     }
 
 }

@@ -19,7 +19,7 @@ public enum RoomAIState
 }
 
 // ルームNPCの制御クラス
-public class NPCController : MonoBehaviour
+public class BraverController : MonoBehaviour
 {
     [Header("キャラクターの部屋")]
     [SerializeField]
@@ -60,7 +60,8 @@ public class NPCController : MonoBehaviour
     private Dictionary<RoomAIState, IRoomAIState> _states = new Dictionary<RoomAIState, IRoomAIState>();
 
     // 目標ルーム選定クラス
-    private RoomSelecter _roomSelecter;
+    private BraverRoomSelecter _braverRoomSelecter;
+    private RoomPosAllocation _roomPosAllocation;
     private Animator _animator;
     // 滞在中の部屋番号を保持
     private int _currentRoomNum;
@@ -87,17 +88,18 @@ public class NPCController : MonoBehaviour
     void InitializeNPC()
     {
         _currentRoomNum = _baseRoom;
-        _roomSelecter = RoomSelecter.Instance;
+        _braverRoomSelecter = BraverRoomSelecter.Instance;
+        _roomPosAllocation = RoomPosAllocation.Instance;
         _animator = gameObject.GetComponent<Animator>();
 
         // 各状態のインスタンスを作成して登録
-        _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _stayRoomRayLength, _minStayTime, _maxStayTime, _roomSelecter.ErrorVector));
+        _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(gameObject, _moveSpeed * _roomFriction, _rotationSpeed * _roomFriction, _stoppingDistance, _stayRoomRayLength, _minStayTime, _maxStayTime, _roomPosAllocation.ErrorVector));
         _states.Add(RoomAIState.EXIT_ROOM, new ExitRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         _states.Add(RoomAIState.LEAVE_ROOM, new LeaveRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance));
         _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(gameObject, _moveSpeed, _rotationSpeed, _stoppingDistance, _goToRoomRayLength, _goToAvoidDistance, _baseRoom));
         // STAY_ROOMから開始
         _currentState = RoomAIState.STAY_ROOM;
-        _states[_currentState].EnterState(_roomSelecter.ErrorVector);
+        _states[_currentState].EnterState(_roomPosAllocation.ErrorVector);
     }
 
     // アニメーションの遷移
@@ -115,21 +117,21 @@ public class NPCController : MonoBehaviour
         {
             case RoomAIState.STAY_ROOM:
                 newState = RoomAIState.EXIT_ROOM;
-                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.EXIT_POINT, transform.position.y);
+                _targetPos = _roomPosAllocation.TargetPosSelection(_currentRoomNum, RoomPosAllocation.PointKind.EXIT_POINT, transform.position.y);
                 break;
             case RoomAIState.EXIT_ROOM:
                 newState = RoomAIState.LEAVE_ROOM;
-                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.OUT_POINT, transform.position.y);
+                _targetPos = _roomPosAllocation.TargetPosSelection(_currentRoomNum, RoomPosAllocation.PointKind.OUT_POINT, transform.position.y);
                 break;
             case RoomAIState.LEAVE_ROOM:
                 newState = RoomAIState.GO_TO_ROOM;
                 // 部屋の移動
-                _currentRoomNum = _roomSelecter.SelectNextRoomNum(_baseRoom, _currentRoomNum);
-                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.OUT_POINT, transform.position.y);
+                _currentRoomNum = _braverRoomSelecter.SelectNextRoomNum(_baseRoom, _currentRoomNum);
+                _targetPos = _roomPosAllocation.TargetPosSelection(_currentRoomNum, RoomPosAllocation.PointKind.OUT_POINT, transform.position.y);
                 break;
             case RoomAIState.GO_TO_ROOM:
                 newState = RoomAIState.STAY_ROOM;
-                _targetPos = _roomSelecter.TargetPosSelection(_currentRoomNum, RoomSelecter.PointKind.IN_POINT, transform.position.y);
+                _targetPos = _roomPosAllocation.TargetPosSelection(_currentRoomNum, RoomPosAllocation.PointKind.IN_POINT, transform.position.y);
                 break;
             default:
                 newState = state;
@@ -137,7 +139,7 @@ public class NPCController : MonoBehaviour
         }
         if (_currentRoomNum == RoomBunker.ERROR_ROOM_NUM && state == RoomAIState.STAY_ROOM)
         {
-            _targetPos = _roomSelecter.ErrorVector;
+            _targetPos = _roomPosAllocation.ErrorVector;
             newState = RoomAIState.STAY_ROOM;
         }
         _states[newState].EnterState(_targetPos);

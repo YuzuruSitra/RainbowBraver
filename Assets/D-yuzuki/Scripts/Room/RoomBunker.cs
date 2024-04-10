@@ -15,8 +15,7 @@ public class RoomBunker : MonoBehaviour
     [SerializeField]
     private Stair[] _stairs;
     public Stair[] Stairs => _stairs;
-    private int _topFloor => _stairs.Length - 1;
-    public int TopFloor => _topFloor;
+    public int TopFloor => _stairs.Length - 1;
 
     [Header("npcの目標座標エラー値(エマの部屋)")]
     [SerializeField]

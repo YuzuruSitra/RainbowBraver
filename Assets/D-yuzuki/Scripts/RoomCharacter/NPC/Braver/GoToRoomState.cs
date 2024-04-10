@@ -149,7 +149,7 @@ public class GoToRoomState : IRoomAIState
     private bool ShouldCancelAvoidance(GameObject otherObj)
     {
         bool isCancel = false;
-        NPCController otherNPCController = _currentHitObj.GetComponent<NPCController>();
+        BraverController otherNPCController = _currentHitObj.GetComponent<BraverController>();
         float otherDistance = otherNPCController.GetDistanceToTarget();
         float thisDistance = Vector3.Distance(_npc.transform.position, _targetPos);
         if (thisDistance < otherDistance)
@@ -168,7 +168,7 @@ public class GoToRoomState : IRoomAIState
     // ‰ñ”ðƒpƒ^[ƒ“‚ðŒˆ’è
     private void DecideAvoidancePattern(GameObject otherObj)
     {
-        NPCController otherNPCController = _currentHitObj.GetComponent<NPCController>();
+        BraverController otherNPCController = _currentHitObj.GetComponent<BraverController>();
         float otherDistance = otherNPCController.GetDistanceToTarget();
         float targetDistance = Vector3.Distance(_npc.transform.position, otherObj.transform.position);
         _currentAvoid = targetDistance - AVOID_THRESHOLD >= otherDistance ? AvoidPatterns.Wait : AvoidPatterns.Move;

@@ -2,43 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 目的部屋の選定
-public class RoomSelecter
+public class BraverRoomSelecter
 {
     // シングルトン
-    private static RoomSelecter instance;
-    public static RoomSelecter Instance => instance ?? (instance = new RoomSelecter());
+    private static BraverRoomSelecter instance;
+    public static BraverRoomSelecter Instance => instance ?? (instance = new BraverRoomSelecter());
 
     private RoomBunker _roomBunker;
-    public Vector3 ErrorVector => _roomBunker.ErrorVector;
 
-    private RoomSelecter()
+    private BraverRoomSelecter()
     {
         _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
     }
 
-    public enum PointKind
-    {
-        IN_POINT,
-        EXIT_POINT,
-        OUT_POINT
-    }
-
-    // 指定座標の払い出し
-    public Vector3 TargetPosSelection(int roomNum, PointKind pointKind, float npcPosY)
-    {
-        Vector3 outPos = Vector3.zero;
-        // 不正なルーム番号
-        if (roomNum >= _roomBunker.RoomDetails.Length || roomNum < 0) return ErrorVector;
-
-        if (pointKind == PointKind.IN_POINT) outPos = _roomBunker.RoomDetails[roomNum].RoomInPoints.position;
-        else if (pointKind == PointKind.EXIT_POINT) outPos = _roomBunker.RoomDetails[roomNum].RoomExitPoints.position;
-        else if (pointKind == PointKind.OUT_POINT) outPos = _roomBunker.RoomDetails[roomNum].RoomOutPoints.position;
-        outPos.y = npcPosY;
-
-        return outPos;
-    }
-
-    /*-----ターゲットの部屋を選定-----*/
     public int SelectNextRoomNum(int npcRoom, int currentRoomNum)
     {
         List<int> contenderRoom = CreateContenderRoomList(npcRoom);
@@ -170,5 +146,4 @@ public class RoomSelecter
         return nextRoomNum;
     }
 
-    /*------------------------*/
 }
