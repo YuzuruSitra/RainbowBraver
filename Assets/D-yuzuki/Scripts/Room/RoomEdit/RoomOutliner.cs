@@ -1,22 +1,13 @@
 using UnityEngine;
 
 // 部屋のアウトライン切り替えクラス
-public class RoomOutliner : MonoBehaviour
+public class RoomOutliner
 {
-    private RoomBunker _roomBunker;
-    [SerializeField]
-    private RoomClicker _roomClicker;
     private RoomDetails _currentRoom;
     private const string LAYER_OUTLINE = "Outline";
     private const string LAYER_DEFAULT = "Default";
 
-    void Start()
-    {
-        _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
-        _roomClicker.ChancgeRetentionRoom += ChangeOutLine;
-    }
-
-    void ChangeOutLine(GameObject newRoom)
+    public void ChangeOutLine(GameObject newRoom)
     {
         RoomDetails newRoomInfo = null;
         if (newRoom != null)

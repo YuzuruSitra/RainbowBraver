@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RoomPosAllocation : MonoBehaviour
+public class RoomPosAllocation
 {
     // ƒVƒ“ƒOƒ‹ƒgƒ“
     private static RoomPosAllocation instance;
