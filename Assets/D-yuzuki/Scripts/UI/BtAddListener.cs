@@ -10,13 +10,18 @@ public class BtAddListener : MonoBehaviour
     [SerializeField]
     private Button _changeEditModeButton;
     [SerializeField]
+    private Button _changeDefaultModeButton;
+    // ƒNƒ‰ƒX
+    [SerializeField]
     private CamController _camController;
-    // Start is called before the first frame update
+    private ChangeInnStateHandler _changeInnStateHandler;
     void Start()
     {
+        _changeInnStateHandler = new ChangeInnStateHandler();
         _changeViewButton.onClick.AddListener(_camController.DefaultCamChanger);
         _changeVisibilButton.onClick.AddListener(VisibilityHandler.Instance.ChangeAllRoom);
-        _changeEditModeButton.onClick.AddListener(new ChangeInnState().ChangeState);
+        _changeEditModeButton.onClick.AddListener(_changeInnStateHandler.ChangeEditState);
+        _changeDefaultModeButton.onClick.AddListener(_changeInnStateHandler.ChangeDefaultState);
     }
 
 }

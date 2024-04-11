@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class RoomEditor
 {
-    private RoomDetails _retentionRoom;
     private RoomClicker _roomClicker;
     private RoomOutliner _roomOutliner;
+    public RoomOutliner RoomOutliner => _roomOutliner;
 
     public RoomEditor()
     {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static InnGameController;
 
 // 部屋のアウトライン切り替えクラス
 public class RoomOutliner
@@ -17,8 +18,21 @@ public class RoomOutliner
         if (_currentRoom != null)
         {
             foreach (GameObject obj in _currentRoom.OutlineObj)
-                obj.layer = LayerMask.NameToLayer(LAYER_DEFAULT);
+                if (newRoom != _currentRoom)
+                    obj.layer = LayerMask.NameToLayer(LAYER_DEFAULT);
         }
         _currentRoom = newRoom;
     }
+
+    public void FinOutLine(InnState newState)
+    {
+        if (newState == InnState.EDIT) return;
+        if (_currentRoom != null)
+        {
+            foreach (GameObject obj in _currentRoom.OutlineObj)
+                obj.layer = LayerMask.NameToLayer(LAYER_DEFAULT);
+        }
+        _currentRoom = null;
+    }
+
 }

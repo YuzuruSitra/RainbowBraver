@@ -10,19 +10,22 @@ public class InnGameController : MonoBehaviour
         SETTING
     }
     private InnState _currentState = InnState.DEFAULT;
-    public InnState CurrentState => _currentState;
-    // public event Action<InnState> ChancgeInnState;
+    private event Action<InnState> ChancgeInnState;
     private RoomEditor _roomEditor;
+    [SerializeField]
+    private PanelChanger _panelChanger;
 
     void Start()
     {
-        _roomEditor = new RoomEditor();    
+        _roomEditor = new RoomEditor();
+        ChancgeInnState += _roomEditor.RoomOutliner.FinOutLine;
+        if (_panelChanger != null) ChancgeInnState += _panelChanger.ChangePanel;
     }
 
     public void ChangeInnState(InnState newState)
     {
         if (_currentState == newState) return;
-        // ChancgeInnState?.Invoke(newState);
+        ChancgeInnState?.Invoke(newState);
         _currentState = newState;
     }
 
