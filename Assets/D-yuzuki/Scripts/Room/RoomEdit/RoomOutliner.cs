@@ -7,13 +7,11 @@ public class RoomOutliner
     private const string LAYER_OUTLINE = "Outline";
     private const string LAYER_DEFAULT = "Default";
 
-    public void ChangeOutLine(GameObject newRoom)
+    public void ChangeOutLine(RoomDetails newRoom)
     {
-        RoomDetails newRoomInfo = null;
         if (newRoom != null)
         {
-            newRoomInfo = newRoom.GetComponent<RoomDetails>();
-            foreach (GameObject obj in newRoomInfo.OutlineObj)
+            foreach (GameObject obj in newRoom.OutlineObj)
                 obj.layer = LayerMask.NameToLayer(LAYER_OUTLINE);
         }
         if (_currentRoom != null)
@@ -21,6 +19,6 @@ public class RoomOutliner
             foreach (GameObject obj in _currentRoom.OutlineObj)
                 obj.layer = LayerMask.NameToLayer(LAYER_DEFAULT);
         }
-        _currentRoom = newRoomInfo;
+        _currentRoom = newRoom;
     }
 }

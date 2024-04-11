@@ -4,7 +4,9 @@ using UnityEngine;
 // •”‰®‘I‘ðƒNƒ‰ƒX
 public class RoomClicker
 {
-    public event Action<GameObject> ChancgeRetentionRoom;
+    private RoomDetails _retentionRoom;
+    public RoomDetails RetentionRoom => _retentionRoom;
+    public event Action<RoomDetails> ChancgeRetentionRoom;
     int _targetLayer = 1 << LayerMask.NameToLayer("Room");
 
     public void SelectRoomObj()
@@ -14,7 +16,14 @@ public class RoomClicker
         if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _targetLayer)) return;
         GameObject hitObj = hit.collider.gameObject;
         if (hitObj.tag != "Room") return;
-        ChancgeRetentionRoom?.Invoke(hitObj);
+        RoomDetails hitRoom = hitObj.GetComponent<RoomDetails>();
+        InputNewRoom(hitRoom);
+    }
+
+    private void InputNewRoom(RoomDetails room)
+    {
+        ChancgeRetentionRoom?.Invoke(room);
+        _retentionRoom = room;
     }
 
 }

@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class RoomEditor
 {
-    [Header("•”‰®‚ÌƒŒƒCƒ„[")]
-    [SerializeField]
-    private LayerMask _targetLayer;
+    private RoomDetails _retentionRoom;
     private RoomClicker _roomClicker;
     private RoomOutliner _roomOutliner;
 
