@@ -1,33 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using D_Sakurai.Scripts.CombatSystem.SKills.SkillBase;
 
-// TODO: Skillの実際の中身をActionとして分割する。SkillDataを名前とActionの配列を格納したクラスに変更する
-public class SkillData{
-    public bool IsBasic;
-    public enum SkillType{Attack, Heal, Effect};
-    public SkillType Type;
-    public float Amount;
-
-    public SkillData(bool isBasic, SkillType type, float amount){
-        IsBasic = isBasic;
-        Type = type;
-        Amount = amount;
-    }
-}
-
-public class JobSkillBase{
-    public string SkillName;
-    public string SkillDescription;
-}
-
-public static class JobSkills{
-    public static class Swordsman{
-        public static string name;
-        public static SkillData[] data = {
-            new SkillData(true, SkillData.SkillType.Attack, 10),
-            new SkillData(true, SkillData.SkillType.Attack, 20),
-            new SkillData(true, SkillData.SkillType.Heal, 30)
-        };
+namespace D_Sakurai.Scripts.CombatSystem.Skills
+{
+    namespace JobSkills
+    {
+        public static class Swordsman
+        {
+            public static SKillData[] Skills = 
+            {
+                new SKillData(
+                    "hoge",
+                    new SkillProperty[]
+                    {
+                        new (true, SkillAttribute.Physical, SkillType.Attack, 20),
+                        new (true, SkillAttribute.Magical, SkillType.Attack, 10),
+                    }
+                ),
+                new SKillData(
+                    "fuga",
+                    new SkillProperty[]
+                    {
+                        new (true, SkillAttribute.Magical, SkillType.Heal, 30),
+                    }
+                )
+            };
+        }
     }
 }
