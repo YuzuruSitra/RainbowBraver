@@ -1,120 +1,128 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
-/// Unitの所属をあらわすEnum
-/// </summary>
-public enum Affiliation{ Player, Enemy }
-/// <summary>
-/// UnitAllyの職業をあらわすEnum
-/// </summary>
-public enum Job{Swordsman, Gladiator, Spearer, Hunter, Oracle, Sorcerer}
-
-/// <summary>
-/// ユニットの基底クラスを初期化する際に使用する構造体
-/// </summary>
-public struct UnitData{
-    public Affiliation Affiliation;
-
-    public int MaxHp;
-    public int MaxMp;
-
-    public float PAtk;
-    public string PAtkLabel;
-    public float PDef;
-
-    public float MAtk;
-    public string MAtkLabel;
-    public float MDef;
-
-    public int Speed;
-}
-
-/// <summary>
-/// ユニットの基底クラス
-/// </summary>
-public class Unit
+namespace D_Sakurai.Scripts.CombatSystem
 {
-    public Affiliation Affiliation{ get; private set; }
-
-    public int MaxHp{ get; private set; }
-    public int MaxMp{ get; private set; }
-    public int Hp{ get; private set; }
-    public int Mp{ get; private set; }
-
-    public float PAtk{ get; private set; }
-    public string PAtkLabel{ get; private set; }
-    public float PDef{ get; private set; }
-
-    public float MAtk{ get; private set; }
-    public string MAtkLabel{ get; private set; }
-    public float MDef{ get; private set; }
-
-    public int Speed{ get; private set; }
-
-    public Unit(UnitData data){
-        Affiliation = data.Affiliation;
-        MaxHp = data.MaxHp;
-        MaxMp = data.MaxMp;
-
-        Hp = MaxHp;
-        Mp = MaxMp;
-
-        PAtk = data.PAtk;
-        PAtkLabel = data.PAtkLabel;
-        PDef = data.PDef;
-
-        MAtk = data.MAtk;
-        MAtkLabel = data.MAtkLabel;
-        MDef = data.MDef;
-
-        Speed = data.Speed;
-    }
-}
-
-
-/// <summary>
-/// UnitAllyを初期化する際に使用する構造体
-/// </summary>
-public struct UnitAllyData
-{
-    public UnitData unitData;
-
-    public Affiliation Affiliation;
-
-    public Job job;
-    public int JobSkillIndex;
-    public int PersonalitySkillIndex;
-}
-
-/// <summary>
-/// 味方のUnit
-/// </summary>
-public class UnitAlly : Unit
-{
-    public int JobSkillIndex{ get; private set; }
-    public int PersonalitySkillIndex{ get; private set; }
-
-    public UnitAlly(UnitAllyData data) : base(data.unitData)
+    namespace Units
     {
-        JobSkillIndex = data.JobSkillIndex;
-        PersonalitySkillIndex = data.PersonalitySkillIndex;
+        /// <summary>
+        /// Unitの所属を表すEnum
+        /// </summary>
+        public enum Affiliation{ Player, Enemy }
         
-    }
-}
+        /// <summary>
+        /// UnitAllyの職業を表すEnum
+        /// </summary>
+        public enum Job{ Swordsman, Gladiator, Lancer, Hunter, Oracle, Sorcerer }
 
+        /// <summary>
+        /// ユニットのインターフェイス
+        /// </summary>
+        interface IUnitData
+        {
+            Affiliation Affiliation { get; }
 
-/// <summary>
-/// UnitEnemyを初期化する際に使用する構造体
-/// </summary>
-public struct UnitEnemyData{
-    public UnitData unitData;
-}
-/// <summary>
-/// 敵のUnit
-/// </summary>
-public class UnitEnemy : Unit{
-    public UnitEnemy(UnitEnemyData data) : base(data.unitData){
+            int MaxHp { get; }
+            int MaxMp { get; }
+
+            float PAtk { get; }
+            string PAtkLabel { get; }
+            float PDef { get; }
+
+            float MAtk { get; }
+            string MAtkLabel { get; }
+            float MDef { get; }
+
+            int Speed { get; }
+        }
+
+        /// <summary>
+        /// ユニットの基底クラス
+        /// </summary>
+        public class Unit : IUnitData
+        {
+            // 所属
+            public Affiliation Affiliation{ get; }
+
+            // 最大HP
+            public int MaxHp{ get; }
+            // 最大MP
+            public int MaxMp{ get; }
+            
+            // HP
+            // 戦闘中実際に変動するのはこちらの値
+            public int Hp{ get; private set; }
+            // MP
+            // 戦闘中実際に変動するのはこちらの値
+            public int Mp{ get; private set; }
+
+            // 物理攻撃力
+            public float PAtk{ get; }
+            // 通常物理攻撃用の技名
+            public string PAtkLabel{ get; }
+            // 物理防御力
+            public float PDef{ get; }
+
+            // 魔法攻撃力
+            public float MAtk{ get; }
+            // 通常魔法攻撃用の技名
+            public string MAtkLabel{ get; }
+            // 魔法防御力
+            public float MDef{ get; }
+
+            // 素早さ
+            public int Speed{ get; }
+
+            protected Unit(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed){
+                Affiliation = affiliation;
+                MaxHp = maxHp;
+                MaxMp = maxMp;
+
+                // HP, MPは生成時にmax値を代入して初期化
+                Hp = maxHp;
+                Mp = maxMp;
+
+                PAtk = pAtk;
+                PAtkLabel = pAtkLabel;
+                PDef = pDef;
+
+                MAtk = mAtk;
+                MAtkLabel = mAtkLabel;
+                MDef = mDef;
+
+                Speed = speed;
+            }
+        }
+
+        /// <summary>
+        /// 味方のUnit
+        /// </summary>
+        public class UnitAlly : Unit
+        {
+            // ユニットの職業
+            public Job Job { get; private set; }
+            
+            // ユニットが持つ職業固有スキルのインデックス(複数の技を用意する場合に備えて)
+            public int JobSkillIndex{ get; private set; }
+            // ユニットが持つ性格固有スキルのインデックス
+            public int PersonalitySkillIndex{ get; private set; }
+
+            public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, int jobSkillIndex, int personalitySkillIndex) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            {
+                Job = job;
+                JobSkillIndex = jobSkillIndex;
+                PersonalitySkillIndex = personalitySkillIndex;
+            }
+        }
+
+        /// <summary>
+        /// 敵のUnit
+        /// </summary>
+        public class UnitEnemy : Unit{
+            // 敵ユニットの種類
+            public int Kind { get; private set; }
+            
+            public UnitEnemy(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, int kind) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            {
+                Kind = kind;
+            }
+        }        
     }
 }
