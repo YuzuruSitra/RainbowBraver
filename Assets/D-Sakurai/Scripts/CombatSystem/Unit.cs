@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace D_Sakurai.Scripts.CombatSystem
 {
     namespace Units
@@ -35,6 +37,7 @@ namespace D_Sakurai.Scripts.CombatSystem
 
         /// <summary>
         /// ユニットの基底クラス
+        /// ユニットは、敵味方の別なく戦闘に参加する1主体を指す単位
         /// </summary>
         public class Unit : IUnitData
         {
@@ -90,7 +93,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 Speed = speed;
             }
         }
-
+        
         /// <summary>
         /// 味方のUnit
         /// </summary>
@@ -104,11 +107,14 @@ namespace D_Sakurai.Scripts.CombatSystem
             // ユニットが持つ性格固有スキルのインデックス
             public int PersonalitySkillIndex{ get; private set; }
 
-            public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, int jobSkillIndex, int personalitySkillIndex) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            public float FriendshipLevel;
+
+            public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, int jobSkillIndex, int personalitySkillIndex, float friendShipLevel) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
                 Job = job;
                 JobSkillIndex = jobSkillIndex;
                 PersonalitySkillIndex = personalitySkillIndex;
+                FriendshipLevel = friendShipLevel;
             }
         }
 
