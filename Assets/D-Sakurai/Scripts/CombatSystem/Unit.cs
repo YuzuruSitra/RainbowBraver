@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace D_Sakurai.Scripts.CombatSystem
 {
     namespace Units
@@ -13,6 +11,12 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// UnitAllyの職業を表すEnum
         /// </summary>
         public enum Job{ Swordsman, Gladiator, Lancer, Hunter, Oracle, Sorcerer }
+        
+        /// <summary>
+        /// [値は仮置き]
+        /// UnitAllyの性格を表すEnum
+        /// </summary>
+        public enum Personality{Active, Sociable, Humble, Intelligent}
 
         /// <summary>
         /// ユニットのインターフェイス
@@ -101,6 +105,8 @@ namespace D_Sakurai.Scripts.CombatSystem
         {
             // ユニットの職業
             public Job Job { get; private set; }
+            // ユニットの性格
+            public Personality Personality { get; private set; }
             
             // ユニットが持つ職業固有スキルのインデックス(複数の技を用意する場合に備えて)
             public int JobSkillIndex{ get; private set; }
@@ -109,9 +115,10 @@ namespace D_Sakurai.Scripts.CombatSystem
 
             public float FriendshipLevel;
 
-            public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, int jobSkillIndex, int personalitySkillIndex, float friendShipLevel) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, Personality personality, int jobSkillIndex, int personalitySkillIndex, float friendShipLevel) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
                 Job = job;
+                Personality = personality;
                 JobSkillIndex = jobSkillIndex;
                 PersonalitySkillIndex = personalitySkillIndex;
                 FriendshipLevel = friendShipLevel;

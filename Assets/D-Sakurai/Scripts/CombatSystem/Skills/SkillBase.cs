@@ -1,4 +1,6 @@
-namespace D_Sakurai.Scripts.CombatSystem.SKills
+using UnityEngine;
+
+namespace D_Sakurai.Scripts.CombatSystem.Skills
 {
     // スキルの情報を構成する基本的な要素
     namespace SkillBase
@@ -18,59 +20,39 @@ namespace D_Sakurai.Scripts.CombatSystem.SKills
             Effect// 状態異常・バフ・デバフ
         };
 
-        /// <summary>
-        /// スキル1種類を定義するクラス
-        /// </summary>
-        public class SkillData
+        //  スキル1種類を定義する構造体
+        // ----------------------------------
+        [System.Serializable]
+        public struct SkillData
         {
             // スキル名
-            public string Name { get; }
+            public string name;
             // スキルの説明文
-            public string Description { get; }
+            public string description;
             // スキルに含まれる行動の配列
-            public SkillProperty[] SkillProperties { get; }
-
-            public SkillData(string name, string description, SkillProperty[] skillProperties)
-            {
-                Name = name;
-                Description = description;
-                SkillProperties = skillProperties;
-            }
+            public SkillProperty[] skillProperties;
         }
         
-        /// <summary>
-        /// SkillDataに1つ以上含まれる、実際の行動1つを定義するクラス
-        /// </summary>
-        public class SkillProperty
+        //  SkillDataに1つ以上含まれる、実際の行動1つを定義する構造体
+        // -------------------------------------------------------------
+        [System.Serializable]
+        public struct SkillProperty
         {
             // 汎用的な行動か(いらなくなりそう)
-            public bool IsBasic { get; }
+            public bool isBasic;
             
             // 行動の属性
-            public SkillAttribute SkillAttribute { get; }
+            public SkillAttribute skillAttribute;
             // 行動の種類
-            public SkillType Type { get; }
+            public SkillType type;
 
             // 行動の素の効果量
-            public float Amount { get; }
+            public float amount;
 
             // 消費するMP
-            public int CostMp { get; }
+            public int costMp;
             // 消費するHP(一応)
-            public int CostHp { get; }
-
-            public SkillProperty(bool isBasic, SkillAttribute attribute, SkillType type, float amount, int costHp = 0, int costMp = 0)
-            {
-                IsBasic = isBasic;
-
-                SkillAttribute = attribute;
-                Type = type;
-
-                Amount = amount;
-
-                CostHp = costHp;
-                CostMp = costMp;
-            }
+            public int costHp;
         }
     }
 }
