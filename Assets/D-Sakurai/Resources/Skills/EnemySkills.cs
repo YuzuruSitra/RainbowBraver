@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace D_Sakurai.Scripts.CombatSystem.Skills
+namespace D_Sakurai.Resources.Skills
 {
     [CreateAssetMenu(fileName = "EnemySkills", menuName = "CombatSystem/EnemySkills", order = 4)]
     public class EnemySkills : ScriptableObject
