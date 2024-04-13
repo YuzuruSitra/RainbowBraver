@@ -23,36 +23,59 @@ namespace D_Sakurai.Scripts.CombatSystem.Skills
         //  スキル1種類を定義する構造体
         // ----------------------------------
         [System.Serializable]
-        public struct SkillData
+        public struct BraverSkillData
         {
             // スキル名
-            public string name;
+            public string Name;
             // スキルの説明文
-            public string description;
+            public string Description;
             // スキルに含まれる行動の配列
-            public SkillProperty[] skillProperties;
+            public BraverSkillProperty[] SkillProperties;
         }
         
         //  SkillDataに1つ以上含まれる、実際の行動1つを定義する構造体
         // -------------------------------------------------------------
         [System.Serializable]
-        public struct SkillProperty
+        public struct BraverSkillProperty
         {
             // 汎用的な行動か(いらなくなりそう)
-            public bool isBasic;
+            public bool IsBasic;
             
             // 行動の属性
-            public SkillAttribute skillAttribute;
+            public SkillAttribute SkillAttribute;
             // 行動の種類
-            public SkillType type;
+            public SkillType Type;
 
             // 行動の素の効果量
-            public float amount;
+            public float Amount;
 
             // 消費するMP
-            public int costMp;
+            public int CostMp;
             // 消費するHP(一応)
-            public int costHp;
+            public int CostHp;
+        }
+
+        [System.Serializable]
+        public struct EnemySkillData
+        {
+            // スキル名
+            public string Name;
+            // スキルの説明文
+            public string Description;
+            // スキルに含まれる行動の配列
+            public EnemySkillProperty[] SkillProperties;
+        }
+
+        [System.Serializable]
+        public struct EnemySkillProperty
+        {
+            // 行動の属性
+            public SkillAttribute SkillAttribute;
+            // 行動の種類
+            public SkillType Type;
+
+            // 行動の素の効果量
+            public float Amount;
         }
     }
 }
