@@ -12,3 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6aeb71b18814491ba0fd585f39c5fef, type: 3}
   m_Name: BraversList
   m_EditorClassIdentifier: 
+  braversData:
+  - jobId: 0
+    maxHp: 0
+    maxMp: 0
+    hp: 0
+    mp: 0
+    pAtk: 0
+    pDef: 0
+    mAtk: 0
+    mDef: 0
+    speed: 0
+    friendShipLevel: []

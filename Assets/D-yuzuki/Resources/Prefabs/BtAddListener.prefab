@@ -46,4 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _changeViewButton: {fileID: 0}
   _changeVisibilButton: {fileID: 0}
+  _changeEditModeButton: {fileID: 0}
+  _changeDefaultModeButton: {fileID: 0}
+  _addFloorButton: {fileID: 0}
   _camController: {fileID: 0}
+  _roomBuilder: {fileID: 0}

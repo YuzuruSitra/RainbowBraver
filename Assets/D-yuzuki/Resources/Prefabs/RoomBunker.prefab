@@ -49,6 +49,9 @@ MonoBehaviour:
   _roomDetails: []
   _stairs: []
   _errorPos: {fileID: 2016963726999487400}
+  _factorX: 9.2
+  _factorY: 4.2
+  _basePosZ: 0
 --- !u!1 &3879228350128141115
 GameObject:
   m_ObjectHideFlags: 0

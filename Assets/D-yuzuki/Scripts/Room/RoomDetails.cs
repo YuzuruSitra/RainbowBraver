@@ -61,5 +61,9 @@ public class RoomDetails : MonoBehaviour
         return outBool;
     }
 
+    public void SetRoomNum(int num)
+    {
+        _roomNum = num;
+    }
 
 }
