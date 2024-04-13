@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace D_Sakurai.Scripts.CombatSystem.Skills
 {
-    [CreateAssetMenu(fileName = "JobSkills", menuName = "JobSkills", order = 1)]
+    [CreateAssetMenu(fileName = "JobSkills", menuName = "CombatSystem/JobSkills", order = 1)]
     public class JobSkills : ScriptableObject
     {
-        public List<SkillBase.SkillData> swordsman;
-        public List<SkillBase.SkillData> gladiator;
-        public List<SkillBase.SkillData> lancer;
-        public List<SkillBase.SkillData> hunter;
-        public List<SkillBase.SkillData> oracle;
-        public List<SkillBase.SkillData> sorcerer;
+        public SkillBase.BraverSkillData[] Swordsman;
+        public SkillBase.BraverSkillData[] Gladiator;
+        public SkillBase.BraverSkillData[] Lancer;
+        public SkillBase.BraverSkillData[] Hunter;
+        public SkillBase.BraverSkillData[] Oracle;
+        public SkillBase.BraverSkillData[] Sorcerer;
     }
 }
