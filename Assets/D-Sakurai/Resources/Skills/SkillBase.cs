@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace D_Sakurai.Scripts.CombatSystem.Skills
+namespace D_Sakurai.Resources.Skills
 {
     // スキルの情報を構成する基本的な要素
     namespace SkillBase

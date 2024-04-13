@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace D_Sakurai.Scripts.CombatSystem.Skills
+namespace D_Sakurai.Resources.Skills
 {
     [CreateAssetMenu(fileName = "JobSkills", menuName = "CombatSystem/JobSkills", order = 1)]
     public class JobSkills : ScriptableObject

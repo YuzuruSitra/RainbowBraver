@@ -130,11 +130,12 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// </summary>
         public class UnitEnemy : Unit{
             // 敵ユニットの種類
-            public int Kind { get; private set; }
+            // ScriptableObjectの情報を元に生成する方針に変更したため不要
+            // public int Kind { get; private set; }
             
-            public UnitEnemy(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, int kind) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            public UnitEnemy(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
-                Kind = kind;
+                // Kind = kind;
             }
         }        
     }
