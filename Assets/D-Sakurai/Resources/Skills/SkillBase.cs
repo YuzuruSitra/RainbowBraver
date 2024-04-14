@@ -27,6 +27,8 @@ namespace D_Sakurai.Resources.Skills
             public string Name;
             // スキルの説明文
             public string Description;
+            // スキル実行時に増える友情ゲージ量
+            public float SpecialGaugeIncreaseRate;
             // スキルに含まれる行動の配列
             public BraverSkillProperty[] SkillProperties;
         }

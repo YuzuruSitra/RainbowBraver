@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using D_Sakurai.Resources.Enemy;
-using Resources.Duty;
 using UnityEngine;
+using System.Linq;
 
+using Resources.Duty;
+using D_Sakurai.Resources.Enemy;
 using D_Sakurai.Scripts.CombatSystem.Units;
 
 namespace D_Sakurai.Scripts.CombatSystem
@@ -27,6 +27,9 @@ namespace D_Sakurai.Scripts.CombatSystem
             {
                 throw new Exception("Another duty ongoing!");
             }
+            
+            // TODO: Instantiate GameObjects and assign them to each Unit
+            // TODO: Unitに使用する技を持たせる?
         }
         
         public void Commence()
@@ -50,57 +53,110 @@ namespace D_Sakurai.Scripts.CombatSystem
             // -------------------
             
             // Load all enemy data from scriptable
-            // phaseData.enemyIdsを使って.Select?か何かで必要な要素だけを直接配列に格納したら軽い気がしたけど、
-            // 結局読みだす段階で一度メモリに置かれてる気がするのでやめた。
+            // NOTE: phaseData.enemyIdsを使って.Selectか何かで必要な要素だけを直接配列に格納したら軽い気がしたけど、
+            // 読みだす段階で一度メモリに置かれてそうで結局変わらない気がするのでやめた。
             EnemyData[] enemiesData = UnityEngine.Resources.Load<Enemies>("Enemy/EnemyData").EnemiesData;
 
             // Store needed EnemyData in enemies
-            List<EnemyData> neededEnemyData = new List<EnemyData>();
-            foreach (var id in phaseData.EnemyIds)
+            EnemyData[] neededEnemyData = new EnemyData[phaseData.EnemyIds.Length];
+            foreach (var (value, idx) in phaseData.EnemyIds.Select((value, idx) => (value, idx)))
             {
-                neededEnemyData.Add(enemiesData[id]);
+                neededEnemyData[idx] = enemiesData[value];
             }
 
             // List of instantiated UnitEnemy
-            UnitEnemy[] enemies = new UnitEnemy[neededEnemyData.Count];
-            // TODO: Select()がいまいちわかっていない
-            foreach ((EnemyData val, int idx) enemy in neededEnemyData.Select((value, idx) => (value, idx)))
+            UnitEnemy[] enemies = new UnitEnemy[neededEnemyData.Length];
+            foreach ((var unt, int idx) in neededEnemyData.Select((unt, idx) => (unt, idx)))
             {
-                var unt = enemy.val;
-                enemies[enemy.idx] = new UnitEnemy(Affiliation.Enemy, unt.MaxHp, 999, unt.PAtk, unt.GenericAttackLabel, unt.PDef, unt.MAtk, unt.GenericAttackLabel, unt.MDef, unt.Speed);
+                enemies[idx] = new UnitEnemy(Affiliation.Enemy, unt.MaxHp, 999, unt.PAtk, unt.GenericAttackLabel, unt.PDef, unt.MAtk, unt.GenericAttackLabel, unt.MDef, unt.Speed);
             }
+            
+            // Make array of all units for convenience
+            Unit[] allUnits = new Unit[_allies.Length + enemies.Length];
+            Array.Copy(_allies, allUnits, _allies.Length);
+            Array.Copy(enemies, 0, allUnits, _allies.Length, enemies.Length);
 
             //  Turn
             // ---------------
+            var currentTurn = 0;
+            (bool, Affiliation) annihilationData;
             do
             {
-                Turn(_allies, enemies);
-            } while (CheckAnnihilation(_allies, enemies));
+                Turn(allUnits, enemies, currentTurn);
+                currentTurn++;
+
+                annihilationData = CheckAnnihilation(_allies, enemies);
+            } while (annihilationData.Item1);
             
             //  PostPhase
             // --------------------
+            if (annihilationData.Item2 == Affiliation.Player)
+            {
+                Debug.Log("Player team win");
+            }
+            else
+            {
+                Debug.Log("Enemy team win");
+            }
         }
 
-        private void Turn(UnitAlly[] allies, UnitEnemy[] enemies)
+        private void Turn(Unit[] allUnits, UnitEnemy[] enemies, int current)
         {
+            //  PreTurn
+            // ------------------
+            Unit next = GetNextUnit(allUnits);
             
+            
+            //  Eval / Action
+            // -----------------------
+            if (next is UnitAlly unt)
+            {
+                switch (unt.Job)
+                {
+                    
+                }
+                // Eval code for Player
+            }
         }
-
-        private bool CheckAnnihilation(UnitAlly[] allies, UnitEnemy[] enemies)
+        
+        private static (bool, Affiliation) CheckAnnihilation(UnitAlly[] allies, UnitEnemy[] enemies)
         {
             // Extract living UnitAlly
             UnitAlly[] livingAllies = Array.FindAll(allies, elem => elem.Hp > 0);
             // Return true(annihilated) if livingAllies.Length is 0 or shorter
-            if (livingAllies.Length <= 0) return true;
+            if (livingAllies.Length <= 0) return (true, Affiliation.Player);
 
             // Extract living UnitEnemy
             UnitEnemy[] livingEnemies = Array.FindAll(enemies, elem => elem.Hp > 0);
             // Return true(annihilated) if livingEnemies.Length is 0 or shorter
-            if (livingEnemies.Length <= 0) return true;
+            if (livingEnemies.Length <= 0) return (true, Affiliation.Enemy);
 
             // Return false(dont annihilated)
-            return false;
+            return (false, Affiliation.Player);
         }
+
+        private static Unit GetNextUnit(Unit[] allUnits)
+        {
+            Unit result = allUnits[0];
+            float currentFastest = allUnits[0].Speed;
+
+            foreach (var unit in allUnits)
+            {
+                // If unit is not yet actioned and faster than current fastest unit
+                if (unit.Actioned && unit.Speed > currentFastest)
+                {
+                    result = unit;
+                }
+            }
+
+            return result;
+        }
+
+        // TODO: Unitに使用する技のインスタンスを含める
+        // private static EvalAlly(Unit[] allUnits, UnitAlly[] allies, UnitEnemy[] enemies)
+        // {
+        //     
+        // }
         
         void PhysicalAttack(Units.Unit subject, Units.Unit target){
             Debug.Log("sub: " + subject + "\nobj: " + target);
