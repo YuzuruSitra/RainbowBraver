@@ -7,7 +7,12 @@ public class RoomClicker
     private RoomDetails _retentionRoom;
     public RoomDetails RetentionRoom => _retentionRoom;
     public event Action<RoomDetails> ChangeRetentionRoom;
-    int _targetLayer = 1 << LayerMask.NameToLayer("Room");
+    private int _targetLayer;
+
+    public RoomClicker(int layer)
+    {
+        _targetLayer = layer;
+    }
 
     public void SelectRoomObj()
     {

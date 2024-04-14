@@ -1,5 +1,4 @@
 using UnityEngine;
-using static InnGameController;
 
 // 部屋のアウトライン切り替えクラス
 public class RoomOutliner
@@ -24,9 +23,8 @@ public class RoomOutliner
         _currentRoom = newRoom;
     }
 
-    public void FinOutLine(InnState newState)
+    public void FinOutLine()
     {
-        if (newState == InnState.EDIT) return;
         if (_currentRoom != null)
         {
             foreach (GameObject obj in _currentRoom.OutlineObj)

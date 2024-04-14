@@ -1,42 +1,41 @@
 using UnityEngine;
 
-public class RoomChanger : MonoBehaviour
+// 部屋の入れ替え処理
+public class RoomChanger
 {
-    [SerializeField]
     private Vector3 _offSet;
-    [SerializeField]
     private GameObject _selectionObj;
-    private RoomEditor _roomEditor;
-    private RoomDetails _firstSelectRoom;
+    private RoomDetails _touchObj;
+    private RoomDetails _cloneTouchObj;
     private bool _isEditing = false;
 
-    void Start()
+    public RoomChanger(Vector3 offSet, GameObject selectionObj)
     {
-        _roomEditor = RoomEditor.Instance;
-        _roomEditor.RoomClicker.ChangeRetentionRoom += ChangeRoom;
+        _offSet = offSet;
+        _selectionObj = selectionObj;
     }
 
     public void ChangerSwitch()
     {
-        if (!IsEditingEnabled()) return;
         if (_isEditing)
             FinishChanging();
         else
             LaunchChanging();
     }
 
-    private void ChangeRoom(RoomDetails target)
+    public void ChangeRoom(RoomDetails target)
     {
-        if (_firstSelectRoom == null) return;
-        if (target.RoomType == RoomType.Lift) return;
-
+        _touchObj = target;
+        if (!_isEditing) return;
+        if (!IsEditingEnabled(target)) return;
+        
         // 場所を交換
-        Vector3 tmpPos = _firstSelectRoom.transform.position;
-        _firstSelectRoom.transform.position = target.transform.position;
+        Vector3 tmpPos = _cloneTouchObj.transform.position;
+        _cloneTouchObj.transform.position = target.transform.position;
         target.transform.position = tmpPos;
         // 部屋の番号を交換
-        int tmpNum = _firstSelectRoom.RoomNum;
-        _firstSelectRoom.SetRoomNum(target.RoomNum);
+        int tmpNum = _cloneTouchObj.RoomNum;
+        _cloneTouchObj.SetRoomNum(target.RoomNum);
         target.SetRoomNum(tmpNum);
 
         // 予測エリアの更新
@@ -44,32 +43,33 @@ public class RoomChanger : MonoBehaviour
         FinishChanging();
     }
 
-    // 部屋の編集が有効か否か
-    private bool IsEditingEnabled()
-    {
-        if (_roomEditor.SelectObj == null) return false;
-        switch (_roomEditor.SelectObj.RoomType)
-        {
-            case RoomType.Lift:
-                return false;
-        }
-        return true;
-    }
-
     // 部屋交換の開始
     private void LaunchChanging()
     {
-        _firstSelectRoom = _roomEditor.SelectObj;
+        if (_touchObj == null) return;
+        _cloneTouchObj = _touchObj;
         _selectionObj.SetActive(true);
-        _selectionObj.transform.position = _firstSelectRoom.transform.position - _offSet;            
+        _selectionObj.transform.position = _touchObj.transform.position - _offSet;            
         _isEditing = true;    
     }
 
     // 部屋交換の終了
     private void FinishChanging()
     {
-        _firstSelectRoom = null;
         _selectionObj.SetActive(false);
         _isEditing = false;
+    }
+
+    // 特定の部屋の時は選択不可
+    private bool IsEditingEnabled(RoomDetails target)
+    {
+        if (target.RoomType == RoomType.Lift) return false;
+        return true;
+    }
+
+    // 終了処理
+    public void FinRoomChange()
+    {
+        _touchObj = null;
     }
 }

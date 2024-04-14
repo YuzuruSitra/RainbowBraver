@@ -1,32 +1,16 @@
 using UnityEngine;
 
-public class RoomBuilder : MonoBehaviour
+// 部屋の建築処理
+public class RoomBuilder
 {
-    [Header("部屋生成時の親オブジェクト")]
-    [SerializeField]
-    private Transform _parent;
-    [SerializeField]
-    private GameObject _roomsFPrefab;
     private RoomBunker _roomBunker;
 
-    void Start()
+    public RoomBuilder(RoomBunker roomBunker)
     {
-        _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
+        _roomBunker = roomBunker;
     }
     
-    public void BuildFloor()
-    {
-        if (_roomBunker == null)  return;
-
-        if (!IsBuildValid()) return;
-
-        Vector3 insPos = CalculateInstantiatePosition();
-        GameObject newFloor = Instantiate(_roomsFPrefab, insPos, Quaternion.identity, _parent);
-        UpdateRoomBunker(newFloor);
-        newFloor.name = "Rooms" + _roomBunker.TopFloor + "F";
-    }
-
-    private Vector3 CalculateInstantiatePosition()
+    public Vector3 CalculateInstantiatePosition()
     {
         float basePosY = _roomBunker.RoomDetails[0].transform.position.y;
         float newFloorPosY = basePosY + (_roomBunker.TopFloor + 1) * _roomBunker.FactorY;
@@ -37,7 +21,7 @@ public class RoomBuilder : MonoBehaviour
         return returnPos;
     }
 
-    private void UpdateRoomBunker(GameObject newFloor)
+    public void UpdateRoomBunker(GameObject newFloor)
     {
         int childCount = newFloor.transform.childCount;
         RoomDetails[] newRooms = new RoomDetails[childCount];
@@ -60,7 +44,7 @@ public class RoomBuilder : MonoBehaviour
     }
 
     // 建設可能かどうかをチェック
-    private bool IsBuildValid()
+    public bool IsBuildValid()
     {
         ///
         /// 条件を追加
