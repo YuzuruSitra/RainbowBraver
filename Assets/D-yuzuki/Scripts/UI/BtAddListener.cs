@@ -13,12 +13,16 @@ public class BtAddListener : MonoBehaviour
     private Button _changeDefaultModeButton;
     [SerializeField]
     private Button _addFloorButton;
+    [SerializeField]
+    private Button _changeRoomButton;
     // ƒNƒ‰ƒX
     [SerializeField]
     private CamController _camController;
     private ChangeInnStateHandler _changeInnStateHandler;
     [SerializeField]
     private RoomBuilder _roomBuilder;
+    [SerializeField]
+    private RoomChanger _roomChanger;
     void Start()
     {
         _changeInnStateHandler = new ChangeInnStateHandler();
@@ -27,6 +31,7 @@ public class BtAddListener : MonoBehaviour
         _changeEditModeButton.onClick.AddListener(_changeInnStateHandler.ChangeEditState);
         _changeDefaultModeButton.onClick.AddListener(_changeInnStateHandler.ChangeDefaultState);
         _addFloorButton.onClick.AddListener(_roomBuilder.BuildFloor);
+        _changeRoomButton.onClick.AddListener(_roomChanger.ChangerSwitch);
     }
 
 }

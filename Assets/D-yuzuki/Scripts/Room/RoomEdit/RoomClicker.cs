@@ -6,7 +6,7 @@ public class RoomClicker
 {
     private RoomDetails _retentionRoom;
     public RoomDetails RetentionRoom => _retentionRoom;
-    public event Action<RoomDetails> ChancgeRetentionRoom;
+    public event Action<RoomDetails> ChangeRetentionRoom;
     int _targetLayer = 1 << LayerMask.NameToLayer("Room");
 
     public void SelectRoomObj()
@@ -22,7 +22,7 @@ public class RoomClicker
 
     private void InputNewRoom(RoomDetails room)
     {
-        ChancgeRetentionRoom?.Invoke(room);
+        ChangeRetentionRoom?.Invoke(room);
         _retentionRoom = room;
     }
 

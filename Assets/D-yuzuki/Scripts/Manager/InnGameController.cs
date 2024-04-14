@@ -17,7 +17,7 @@ public class InnGameController : MonoBehaviour
 
     void Start()
     {
-        _roomEditor = new RoomEditor();
+        _roomEditor = RoomEditor.Instance;
         ChancgeInnState += _roomEditor.RoomOutliner.FinOutLine;
         if (_panelChanger != null) ChancgeInnState += _panelChanger.ChangePanel;
     }
