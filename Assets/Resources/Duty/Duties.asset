@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a64074b4491471aa3bc5097f6089f39, type: 3}
   m_Name: Duties
   m_EditorClassIdentifier: Assembly-CSharp:D_Sakurai.Scripts.CombatSystem.DutyData:DutiesData
-  Duties:
-  - Title: Dummy
-    Description: Dummy data
+  DutiesData:
+  - Title: Dummy duty
+    Description: Dummy duty data
     Phases:
-    - HostileAmount: 2
-      EnemyIds: 0000000001000000
+    - EnemyIds: 0000000001000000

@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559e4c885a934cc3a8c39f42a7f0420f, type: 3}
   m_Name: EnemySkills
   m_EditorClassIdentifier: 
-  EnemySkillData: []
+  EnemySkillsData:
+  - Name: Dummy physical attack
+    Description: Perform physical attack
+    SkillProperties:
+    - SkillAttribute: 0
+      Type: 0
+      Amount: 2
+  - Name: Dummy magical attack
+    Description: Perform magical attack
+    SkillProperties:
+    - SkillAttribute: 1
+      Type: 0
+      Amount: 2

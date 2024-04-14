@@ -12,9 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858afcc344c54c5da122719ac4383113, type: 3}
   m_Name: JobSkills
   m_EditorClassIdentifier: 
-  swordsman: []
-  gladiator: []
-  lancer: []
-  hunter: []
-  oracle: []
-  sorcerer: []
+  Swordsman:
+  - Name: Swordsman dummy job skill
+    Description: Dummy data of swordsman's job skill
+    SkillProperties:
+    - IsBasic: 1
+      SkillAttribute: 0
+      Type: 0
+      Amount: 5
+      CostMp: 0
+      CostHp: 0
+  Gladiator: []
+  Lancer: []
+  Hunter: []
+  Oracle: []
+  Sorcerer: []

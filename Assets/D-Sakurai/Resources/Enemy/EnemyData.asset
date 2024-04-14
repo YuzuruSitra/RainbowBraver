@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b889bdbbe41c288d7cc04cebad7bc, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
-  EnemiesData: []
+  EnemiesData:
+  - MaxHp: 10
+    PAtk: 5
+    MAtk: 0
+    GenericAttackLabel: Enemy 0 generic attack
+    PDef: 0
+    MDef: 0
+    Speed: 0
+    EnemySkillIds: 00000000
+  - MaxHp: 10
+    PAtk: 0
+    MAtk: 5
+    GenericAttackLabel: Enemy 1 generic attack
+    PDef: 0
+    MDef: 0
+    Speed: 0
+    EnemySkillIds: 01000000

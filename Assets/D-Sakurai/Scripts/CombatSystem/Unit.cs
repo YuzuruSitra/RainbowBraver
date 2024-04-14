@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace D_Sakurai.Scripts.CombatSystem
 {
     namespace Units
@@ -37,6 +39,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             float MDef { get; }
 
             int Speed { get; }
+            
+            bool Actioned { get; }
         }
 
         /// <summary>
@@ -76,6 +80,30 @@ namespace D_Sakurai.Scripts.CombatSystem
 
             // 素早さ
             public int Speed{ get; }
+            
+            // そのターン行動したか
+            public bool Actioned { get; }
+
+            private GameObject GameObject { get; set; }
+            private Animator Animator { get; set; }
+
+            // このUnitとして扱うGameObjectを取得する
+            public void AssignGameObject(GameObject obj)
+            {
+                GameObject = obj;
+                AssignAnimator(obj);
+            }
+            // このUnitとして扱うGameObjectのAnimatorを取得する
+            private void AssignAnimator(GameObject obj)
+            {
+                Animator = obj.GetComponent<Animator>();
+            }
+            
+            // Animatorの特定のステートを呼び出す(Async/Awaitを利用してステートを抜けた際に戻すように書く予定)
+            public void CallAnimState(string trigger)
+            {
+                Animator.SetTrigger(trigger);
+            }
 
             protected Unit(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed){
                 Affiliation = affiliation;
@@ -95,6 +123,8 @@ namespace D_Sakurai.Scripts.CombatSystem
                 MDef = mDef;
 
                 Speed = speed;
+
+                Actioned = false;
             }
         }
         
