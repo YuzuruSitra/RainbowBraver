@@ -77,7 +77,7 @@ public class Stair : MonoBehaviour
         }
         braver.IsFreedom = true;
         int targetStairNum = targetFloor.RoomDetails.RoomNum;
-        braver.FinWarpHandler(RoomAIState.EXIT_ROOM, targetStairNum);
+        braver.FinWarpHandler(targetStairNum);
     }
 
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static InnGameController;
 
@@ -7,28 +8,44 @@ public class RoomEditor : MonoBehaviour
     private RoomOutliner _roomOutliner;
     // RoomClicker
     private RoomClicker _roomClicker;
+    [Header("部屋選択に必要なパラメーター")]
     [SerializeField]
     private LayerMask _targetLayer;
     // RoomChanger
     private RoomChanger _roomChanger;
     public RoomChanger RoomChanger => _roomChanger;
+    [Header("部屋交換に必要なパラメーター")]
     [SerializeField]
     private Vector3 _offSet;
     [SerializeField]
     private GameObject _selectionObj;
     // RoomBuilder
     private RoomBuilder _roomBuilder;
-    [Header("部屋生成時の親オブジェクト")]
+    [Header("部屋建築に必要なパラメーター")]
     [SerializeField]
     private Transform _parent;
     [SerializeField]
     private GameObject _roomsFPrefab;
-
-    void Start()
+    // 部屋情報
+    [System.Serializable]
+    private struct RoomsPair
     {
+        public RoomType type;
+        public GameObject prefab;
+    }
+    [Header("部屋の情報")]
+    [SerializeField]
+    private RoomsPair[] _roomsPair; 
+
+
+    void Awake()
+    {
+#if UNITY_EDITOR
+        CheckRoomsPair();
+#endif
         _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
-        _roomClicker = new RoomClicker(_targetLayer);
         _roomOutliner = new RoomOutliner();
+        _roomClicker = new RoomClicker(_targetLayer);
         _roomChanger = new RoomChanger(_offSet, _selectionObj);
         _roomBuilder = new RoomBuilder(_roomBunker);
         _roomClicker.ChangeRetentionRoom += _roomOutliner.ChangeOutLine;
@@ -59,6 +76,15 @@ public class RoomEditor : MonoBehaviour
         if (newState == InnState.EDIT) return;
         _roomOutliner.FinOutLine();
         _roomChanger.FinRoomChange();
+    }
+
+    // 設定ミスをチェック
+    private void CheckRoomsPair()
+    {
+        HashSet<RoomType> uniqueStates = new HashSet<RoomType>();
+        foreach (RoomsPair pair in _roomsPair)
+            if (!uniqueStates.Add(pair.type))
+                Debug.LogError("Duplicate RoomType detected: " + pair.type.ToString());
     }
 
 }

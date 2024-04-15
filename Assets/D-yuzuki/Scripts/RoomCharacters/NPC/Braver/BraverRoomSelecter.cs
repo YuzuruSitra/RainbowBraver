@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 // –Ú“I•”‰®‚Ì‘I’è
@@ -22,6 +23,7 @@ public class BraverRoomSelecter
         contenderRoom = SearchLift(contenderRoom, npcRoom);
         if (contenderRoom.Count == 0) return RoomBunker.ERROR_ROOM_NUM;
         List<int> alternativeRooms = SelectAlternativeRooms(contenderRoom, currentRoomNum);
+        if (alternativeRooms.Count == 0) return RoomBunker.ERROR_ROOM_NUM;
         int nextRoomNum = SelectNextRoom(alternativeRooms);
         return nextRoomNum;
     }
@@ -81,7 +83,6 @@ public class BraverRoomSelecter
             // ã‰ºŠK‚Ì•”‰®‚ª‹¤‚É•s‰Â‚È‚ç‚ÎŒ»İ‚Ì•”‰®‚ğíœ
             if (isDel) updatedRooms.Remove(roomNum);
         }
-
         return updatedRooms;
     }
 
@@ -116,8 +117,8 @@ public class BraverRoomSelecter
                 updatedRooms.Add(targetLiftNum + 1);
             }
             if (isAdd) updatedRooms.Add(targetLiftNum);
+            else updatedRooms.Remove(roomNum);
         }
-
         return updatedRooms;
     }
 

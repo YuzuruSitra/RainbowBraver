@@ -65,6 +65,8 @@ public class BraverController : MonoBehaviour
     private Animator _animator;
     // 滞在中の部屋番号を保持
     private int _currentRoomNum;
+    // 次の部屋番号を保持
+    private int _nextRoomNum;
     // ターゲット座標を保持
     private Vector3 _targetPos;
     private bool _isCurrentWalk;
@@ -116,6 +118,7 @@ public class BraverController : MonoBehaviour
         switch (state)
         {
             case RoomAIState.STAY_ROOM:
+                _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(_baseRoom, _currentRoomNum);
                 newState = RoomAIState.EXIT_ROOM;
                 _targetPos = _roomPosAllocation.TargetPosSelection(_currentRoomNum, RoomPosAllocation.PointKind.EXIT_POINT, transform.position.y);
                 break;
@@ -126,7 +129,7 @@ public class BraverController : MonoBehaviour
             case RoomAIState.LEAVE_ROOM:
                 newState = RoomAIState.GO_TO_ROOM;
                 // 部屋の移動
-                _currentRoomNum = _braverRoomSelecter.SelectNextRoomNum(_baseRoom, _currentRoomNum);
+                _currentRoomNum = _nextRoomNum;
                 _targetPos = _roomPosAllocation.TargetPosSelection(_currentRoomNum, RoomPosAllocation.PointKind.OUT_POINT, transform.position.y);
                 break;
             case RoomAIState.GO_TO_ROOM:
@@ -137,11 +140,12 @@ public class BraverController : MonoBehaviour
                 newState = state;
                 break;
         }
-        if (_currentRoomNum == RoomBunker.ERROR_ROOM_NUM && state == RoomAIState.STAY_ROOM)
+        if (_nextRoomNum == RoomBunker.ERROR_ROOM_NUM && state == RoomAIState.STAY_ROOM)
         {
             _targetPos = _roomPosAllocation.ErrorVector;
             newState = RoomAIState.STAY_ROOM;
         }
+        
         _states[newState].EnterState(_targetPos);
         _currentState = newState;
     }
@@ -153,10 +157,10 @@ public class BraverController : MonoBehaviour
         return Vector3.Distance(transform.position, _targetPos);
     }
 
-    public void FinWarpHandler(RoomAIState targetState, int currentRoom)
+    public void FinWarpHandler(int currentRoom)
     {
-        _currentRoomNum = currentRoom;
-        NextState(targetState);
+        _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(_baseRoom, currentRoom);
+        NextState(RoomAIState.EXIT_ROOM);
     }
 
 }

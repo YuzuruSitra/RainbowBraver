@@ -710,12 +710,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomNum: 0
-  _roomType: 2
+  _roomType: 3
   _roomInPoints: {fileID: 3800905220880123573}
   _roomExitPoints: {fileID: 41660630552294870}
   _roomOutPoints: {fileID: 492600055201794730}
   _frontMesh:
   - {fileID: 3320846848793012470}
+  _outlineObj: []
 --- !u!114 &8132073026330016949
 MonoBehaviour:
   m_ObjectHideFlags: 0

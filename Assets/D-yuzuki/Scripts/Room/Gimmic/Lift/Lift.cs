@@ -81,7 +81,7 @@ public class Lift : MonoBehaviour
             yield return null;
         }
         braver.IsFreedom = true;
-        braver.FinWarpHandler(RoomAIState.EXIT_ROOM, _pairLift.RoomDetails.RoomNum);
+        braver.FinWarpHandler(_pairLift.RoomDetails.RoomNum);
     }
 
 }

@@ -886,8 +886,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac15f62808fddc41980565d778ecbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomNum: 4
-  _roomType: 3
+  _roomNum: 0
+  _roomType: 4
   _roomInPoints: {fileID: 6126407418018339660}
   _roomExitPoints: {fileID: 8480383884548420047}
   _roomOutPoints: {fileID: 1522133541760181945}
