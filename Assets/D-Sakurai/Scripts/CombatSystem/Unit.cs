@@ -1,3 +1,5 @@
+using D_Sakurai.Resources.Skills;
+using D_Sakurai.Resources.Skills.SkillBase;
 using UnityEngine;
 
 namespace D_Sakurai.Scripts.CombatSystem
@@ -93,6 +95,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 GameObject = obj;
                 AssignAnimator(obj);
             }
+            
             // このUnitとして扱うGameObjectのAnimatorを取得する
             private void AssignAnimator(GameObject obj)
             {
@@ -140,10 +143,51 @@ namespace D_Sakurai.Scripts.CombatSystem
             
             // ユニットが持つ職業固有スキルのインデックス(複数の技を用意する場合に備えて)
             public int JobSkillIndex{ get; private set; }
+            // public BraverSkillData JobSkill { get; private set; }
+
             // ユニットが持つ性格固有スキルのインデックス
             public int PersonalitySkillIndex{ get; private set; }
+            // public BraverSkillData PersonalitySkill { get; private set; }
 
             public float FriendshipLevel;
+
+            // 回復技、エフェクト技(状態異常・バフ・デバフ)、エフェクト解除技をそれぞれ持っているか
+            public bool HasHeal{ get; private set; }
+            public bool HasEffect{ get; private set; }
+            public bool HasDeEffect{ get; private set; }
+
+            private void RecognizeSelfSkills()
+            {
+                HasHeal = HasEffect = HasDeEffect = false;
+                
+                JobSkills jobSkills = UnityEngine.Resources.Load<JobSkills>("Skills/JobSkills");
+                foreach (var property in jobSkills.JobSkillArray[JobSkillIndex].SkillProperties)
+                {
+                    switch (property.Type)
+                    {
+                        case SkillType.Heal: HasHeal = true;
+                            break;
+                        case SkillType.Effect: HasEffect = true;
+                            break;
+                        case SkillType.DeEffect: HasDeEffect = true;
+                            break;
+                    }
+                }
+
+                PersonalitySkills personalitySkills = UnityEngine.Resources.Load<PersonalitySkills>("Skills/PersonalitySkills");
+                foreach (var property in personalitySkills.PersonalitySkillArray[PersonalitySkillIndex].SkillProperties)
+                {
+                    switch (property.Type)
+                    {
+                        case SkillType.Heal: HasHeal = true;
+                            break;
+                        case SkillType.Effect: HasEffect = true;
+                            break;
+                        case SkillType.DeEffect: HasDeEffect = true;
+                            break;
+                    }
+                }
+            }
 
             public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, Personality personality, int jobSkillIndex, int personalitySkillIndex, float friendShipLevel) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
@@ -152,6 +196,9 @@ namespace D_Sakurai.Scripts.CombatSystem
                 JobSkillIndex = jobSkillIndex;
                 PersonalitySkillIndex = personalitySkillIndex;
                 FriendshipLevel = friendShipLevel;
+
+                // ヒール・バフデバフ・状態異常技を持っているか先に判定しておく
+                RecognizeSelfSkills();
             }
         }
 
