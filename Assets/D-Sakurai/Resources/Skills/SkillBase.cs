@@ -15,7 +15,8 @@ namespace D_Sakurai.Resources.Skills
         {
             Attack,
             Heal,
-            Effect// 状態異常・バフ・デバフ
+            Effect,// 状態異常・バフ・デバフ
+            DeEffect// 状態異常・デバフの解除
         };
 
         //  スキル1種類を定義する構造体
