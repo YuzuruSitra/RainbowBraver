@@ -4472,6 +4472,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2125363145467948075, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
     - target: {fileID: 3572518066538651554, guid: c51ac15255afb904399d144fa67bc429, type: 3}
+      propertyPath: _roomsPair.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 2125363145467948075, guid: 80a52cf9c04c7544f92750d78a40899c, type: 3}
+    - target: {fileID: 3572518066538651554, guid: c51ac15255afb904399d144fa67bc429, type: 3}
       propertyPath: _roomsPair.Array.data[3].prefab
       value: 
       objectReference: {fileID: 4596488524756539634, guid: 3194fd713a644af48bdeaf7a4a10329c, type: 3}

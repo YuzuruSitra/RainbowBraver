@@ -46,7 +46,8 @@ public class RoomEditor : MonoBehaviour
         _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
         _roomOutliner = new RoomOutliner();
         _roomClicker = new RoomClicker(_targetLayer);
-        _roomChanger = new RoomChanger(_offSet, _selectionObj);
+        // _roomChanger = new RoomChanger(_offSet, _selectionObj);
+        _roomChanger = new RoomChanger(_targetLayer);
         _roomBuilder = new RoomBuilder(_roomBunker);
         _roomClicker.ChangeRetentionRoom += _roomOutliner.ChangeOutLine;
         _roomClicker.ChangeRetentionRoom += _roomChanger.ChangeRoom;
@@ -56,6 +57,7 @@ public class RoomEditor : MonoBehaviour
     public void InputRoomSelect()
     {
         if (Input.GetMouseButtonDown(0)) _roomClicker.SelectRoomObj();
+        _roomChanger.MoveToTarget();
     }
 
     // äKÇÃëùíz
