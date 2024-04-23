@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GoToRoomState : IRoomAIState
@@ -9,25 +8,15 @@ public class GoToRoomState : IRoomAIState
         Wait,
         Move
     }
+    private InnNPCMover _innNpcMover;
+    private GameObject _npc;
 
     // 現在の回避パターン
     private AvoidPatterns _currentAvoid = AvoidPatterns.Move;
-    // 自身のルームナンバー
-    private int _roomNum;
-    // NPCオブジェクト
-    private GameObject _npc;
-    // 移動速度
-    private float _moveSpeed;
-    // 回転速度
-    private float _rotSpeed;
-    // 目標までの距離
-    private float _distance;
     // ターゲットの位置
     private Vector3 _targetPos;
     // 歩行フラグ
     private bool _isWalk;
-    // ステート終了フラグ
-    private bool _isStateFin;
     // レイの距離
     private float _rayDistance;
     // 現在の衝突オブジェクト
@@ -39,37 +28,30 @@ public class GoToRoomState : IRoomAIState
     // 歩行フラグのgetter
     public bool IsWalk => _isWalk;
     // ステート終了フラグのgetter
-    public bool IsStateFin => _isStateFin;
+    public bool IsStateFin => _innNpcMover.IsAchieved;
+    private bool _currentDirection = true;
 
-    public GoToRoomState(GameObject npc, float moveSpeed, float rotSpeed, float distance, float ray, float avoidDistance, int room)
+    public GoToRoomState(InnNPCMover mover)
     {
-        _npc = npc;
-        _moveSpeed = moveSpeed;
-        _rotSpeed = rotSpeed;
-        _distance = distance;
-        _rayDistance = ray;
-        _avoidDistance = avoidDistance;
-        _roomNum = room;
+        _innNpcMover = mover;
+        _npc = _innNpcMover.Character;
     }
 
-    public void EnterState(Vector3 pos)
+    public void EnterState(Vector3 pos, int targetRoom)
     {
         _targetPos = pos;
-        _isStateFin = false;
+        
     }
 
     public void UpdateState()
     {
         if (IsAvoidingObstacle())
-        {
-            if (_currentAvoid == AvoidPatterns.Wait) AvoidWaiting();
-            else AvoidMoving();
-        }
+            if (_currentAvoid == AvoidPatterns.Wait) 
+                _isWalk = false;
+            else 
+                AvoidMoving();
         else
-        {
             DefaultMoving();
-            MonitorStateExit();
-        }
     }
 
     // デフォルトの移動
@@ -77,6 +59,7 @@ public class GoToRoomState : IRoomAIState
     {
         _isWalk = true;
         MoveTowardsTarget(_targetPos);
+        _innNpcMover.Moving();
     }
 
     // 回避時の移動
@@ -84,35 +67,15 @@ public class GoToRoomState : IRoomAIState
     {
         _isWalk = true;
         MoveTowardsTarget(_targetPos, reverseDirection: true);
+        _innNpcMover.Moving();
     }
 
     // ターゲットに向かって移動
     private void MoveTowardsTarget(Vector3 target, bool reverseDirection = false)
     {
-        Vector3 direction = (target - _npc.transform.position).normalized;
-        direction.y = 0f;
-
-        _npc.transform.position += (reverseDirection ? -direction : direction) * _moveSpeed * Time.deltaTime;
-
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(reverseDirection ? direction : -direction);
-            _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _rotSpeed * Time.deltaTime);
-        }
-    }
-
-    // 待機時の移動
-    private void AvoidWaiting()
-    {
-        _isWalk = false;
-        Vector3 direction = (_targetPos - _npc.transform.position).normalized;
-        direction.y = 0f;
-
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(-direction);
-            _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _rotSpeed * Time.deltaTime);
-        }
+        if (_currentDirection == reverseDirection) return;
+        _currentDirection = reverseDirection;
+        _innNpcMover.SetTarGetPos((reverseDirection ? -target : target));
     }
 
     // 障害物を回避するかどうかを判定
@@ -172,15 +135,5 @@ public class GoToRoomState : IRoomAIState
         float otherDistance = otherNPCController.GetDistanceToTarget();
         float targetDistance = Vector3.Distance(_npc.transform.position, otherObj.transform.position);
         _currentAvoid = targetDistance - AVOID_THRESHOLD >= otherDistance ? AvoidPatterns.Wait : AvoidPatterns.Move;
-    }
-
-    // ステートの終了を監視
-    public void MonitorStateExit()
-    {
-        Vector3 tmp1 = _npc.transform.position;
-        tmp1.y = 0;
-        Vector3 tmp2 = _targetPos;
-        tmp2.y = 0;
-        if (Vector3.Distance(tmp1, tmp2) <= _distance) _isStateFin = true;
     }
 }

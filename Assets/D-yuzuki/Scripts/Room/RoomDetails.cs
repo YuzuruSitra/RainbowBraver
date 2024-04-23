@@ -22,6 +22,12 @@ public class RoomDetails : MonoBehaviour
     private RoomType _roomType;
     public RoomType RoomType => _roomType;
 
+    // 後々Scriptableオブジェクトから引く予定
+    [Header("部屋に居座る時間")]
+    [SerializeField]
+    private float _remainTime;
+    public float RemainTime => _remainTime;
+
     [Header("部屋の中")]
     [SerializeField]
     private Transform _roomInPoints;
