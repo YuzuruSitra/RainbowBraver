@@ -7,7 +7,8 @@ public class ExitRoomState : IRoomAIState
     private bool _isWalk;
 
     public bool IsWalk => _isWalk;
-    public bool IsStateFin => _innNpcMover.IsAchieved;
+    private bool _launchState;
+    public bool IsStateFin => _innNpcMover.IsAchieved && _launchState;
     private int _targetRoomNum;
 
 
@@ -23,11 +24,17 @@ public class ExitRoomState : IRoomAIState
         _innNpcMover.SetTarGetPos(_targetPos);
         _targetRoomNum = targetRoom;
         _isWalk = true;
+        _launchState = true;
     }
 
     // ステートの更新
     public void UpdateState()
     {
         _innNpcMover.Moving();
+    }
+
+    public void ExitState()
+    {
+        _launchState = false;
     }
 }

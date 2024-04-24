@@ -21,7 +21,9 @@ public class StayRoomState : IRoomAIState
     private bool _isWalk;
 
     public bool IsWalk => _isWalk;
-    public bool IsStateFin => MonitorStateExit();
+
+    private bool _launchState;
+    public bool IsStateFin => (_remainStateTime <= 0) && _launchState;
 
     public StayRoomState(InnNPCMover mover, Vector3 errorVector)
     {
@@ -41,6 +43,7 @@ public class StayRoomState : IRoomAIState
         _isEntry = false;
 
         if (_entryTargetPos == _errorVector) _isEntry = true;
+        _launchState = true;
     }
 
     // ステートの更新
@@ -84,7 +87,12 @@ public class StayRoomState : IRoomAIState
         }
 
         // ステートカウントダウン
-        MonitorStateExit();
+        _remainStateTime -= Time.deltaTime;
+    }
+
+    public void ExitState()
+    {
+        _launchState = false;
     }
 
     private void SetInStateParam()
@@ -133,12 +141,5 @@ public class StayRoomState : IRoomAIState
             }
         }
         _obstacleHit = false;
-    }
-
-    // ステートの終了を監視
-    public bool MonitorStateExit()
-    {
-        _remainStateTime -= Time.deltaTime;
-        return (_remainStateTime <= 0);
     }
 }

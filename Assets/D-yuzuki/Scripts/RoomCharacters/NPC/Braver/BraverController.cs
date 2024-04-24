@@ -7,6 +7,7 @@ public interface IRoomAIState
     bool IsWalk { get; }
     void EnterState(Vector3 targetPos, int targetRoom);
     void UpdateState();
+    void ExitState();
 }
 
 public enum RoomAIState
@@ -78,7 +79,6 @@ public class BraverController : MonoBehaviour
         if (!IsFreedom) return;
         _states[_currentState].UpdateState();
         // ChangeAnimWalk(_states[_currentState].IsWalk);
-
         if (_states[_currentState].IsStateFin) NextState(_currentState);
     }
 
@@ -143,7 +143,7 @@ public class BraverController : MonoBehaviour
             _targetPos = _roomPosAllocation.ErrorVector;
             newState = RoomAIState.STAY_ROOM;
         }
-        
+        _states[_currentState].ExitState();
         _states[newState].EnterState(_targetPos, _targetRoomNum);
         _currentState = newState;
     }

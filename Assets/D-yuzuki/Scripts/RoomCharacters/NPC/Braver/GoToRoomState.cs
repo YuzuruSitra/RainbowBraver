@@ -27,8 +27,9 @@ public class GoToRoomState : IRoomAIState
     private const float AVOID_THRESHOLD = 1.5f;
     // 歩行フラグのgetter
     public bool IsWalk => _isWalk;
+    private bool _launchState;
     // ステート終了フラグのgetter
-    public bool IsStateFin => _innNpcMover.IsAchieved;
+    public bool IsStateFin => _innNpcMover.IsAchieved && _launchState;
     private bool _currentDirection = true;
 
     public GoToRoomState(InnNPCMover mover)
@@ -40,7 +41,8 @@ public class GoToRoomState : IRoomAIState
     public void EnterState(Vector3 pos, int targetRoom)
     {
         _targetPos = pos;
-        
+        _innNpcMover.SetTarGetPos(_targetPos);
+        _launchState = true;
     }
 
     public void UpdateState()
@@ -52,6 +54,11 @@ public class GoToRoomState : IRoomAIState
                 AvoidMoving();
         else
             DefaultMoving();
+    }
+
+    public void ExitState()
+    {
+        _launchState = false;
     }
 
     // デフォルトの移動
