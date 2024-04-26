@@ -199,6 +199,7 @@ namespace D_Sakurai.Scripts.CombatSystem
 
         private static void EvalAlly(UnitAlly subject, Unit[] allUnits, UnitAlly[] allies, UnitEnemy[] enemies, DecisionThreshData threshData, Vector3 decisionThresh)
         {
+            // TODO: 戦略を変更できるようにする予定はないので、DecisionThreshDataを引数に渡すのはスマートじゃない。Duty.Commenceの最初でdecisionThreshに代入しそれだけを使うべき。
             // TODO: うお～　"状態異常になっているか"の確認もする必要がある
             if (subject.HasHeal && Random.value < decisionThresh.x)
             {
