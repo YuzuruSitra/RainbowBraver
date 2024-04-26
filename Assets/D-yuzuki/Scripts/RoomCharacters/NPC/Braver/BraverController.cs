@@ -32,22 +32,6 @@ public class BraverController : MonoBehaviour
     [Header("目標座標に対する許容誤差")]
     [SerializeField] 
     private float _stoppingDistance = 0.1f;
-    public float StoppingDistance => _stoppingDistance;
-    [Header("滞在時間の最小値")]
-    [SerializeField] 
-    private float _minStayTime;
-    [Header("滞在時間の最大値")]
-    [SerializeField] 
-    private float _maxStayTime;
-    [Header("部屋内の障害物認知距離")]
-    [SerializeField]
-    private float _stayRoomRayLength;
-    [Header("部屋移動中の障害物認知距離")]
-    [SerializeField]
-    private float _goToRoomRayLength;
-    [Header("部屋移動中の回避終了距離")]
-    [SerializeField]
-    private float _goToAvoidDistance;
 
     private RoomAIState _currentState;
     private Dictionary<RoomAIState, IRoomAIState> _states = new Dictionary<RoomAIState, IRoomAIState>();
@@ -62,7 +46,6 @@ public class BraverController : MonoBehaviour
     private int _nextRoomNum;
     // ターゲット座標を保持
     private Vector3 _targetPos;
-    private bool _isCurrentWalk;
     // 行動制限
     public bool IsFreedom = true;
     // 移動用クラス

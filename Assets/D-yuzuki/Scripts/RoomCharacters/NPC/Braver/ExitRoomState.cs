@@ -11,7 +11,6 @@ public class ExitRoomState : IRoomAIState
     public bool IsStateFin => _innNpcMover.IsAchieved && _launchState;
     private int _targetRoomNum;
 
-
     public ExitRoomState(InnNPCMover mover)
     {
         _innNpcMover = mover;
