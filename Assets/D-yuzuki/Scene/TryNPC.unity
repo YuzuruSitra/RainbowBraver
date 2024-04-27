@@ -726,11 +726,6 @@ MonoBehaviour:
   _baseRoom: 0
   _moveSpeed: 2
   _stoppingDistance: 0.3
-  _minStayTime: 4
-  _maxStayTime: 4
-  _stayRoomRayLength: 0.5
-  _goToRoomRayLength: 2
-  _goToAvoidDistance: 2.5
   IsFreedom: 1
 --- !u!1 &162554567
 GameObject:
@@ -3255,7 +3250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2125363145467948077, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
       propertyPath: _roomType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2125363145467948077, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
       propertyPath: _isRoomAcceptance
