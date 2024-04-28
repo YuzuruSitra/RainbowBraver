@@ -78,7 +78,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             }
 
             // TODO: Instantiate GameObjects and assign them to each Unit
-            // TODO: 技データに発動させるエフェクト情報を仕込んで
+            // TODO: 技データに発動させるエフェクト情報を仕込む予定
         }
         
         /// <summary>
@@ -124,7 +124,19 @@ namespace D_Sakurai.Scripts.CombatSystem
             UnitEnemy[] enemies = new UnitEnemy[neededEnemyData.Length];
             foreach ((var unt, int idx) in neededEnemyData.Select((unt, idx) => (unt, idx)))
             {
-                enemies[idx] = new UnitEnemy(Affiliation.Enemy, unt.MaxHp, 999, unt.PAtk, unt.GenericAttackLabel, unt.PDef, unt.MAtk, unt.GenericAttackLabel, unt.MDef, unt.Speed, unt.EnemySkillIds);
+                enemies[idx] = new UnitEnemy(
+                    Affiliation.Enemy,
+                    unt.MaxHp,
+                    9999,// 敵にはMP概念が無いので
+                    unt.PAtk,
+                    unt.GenericAttackLabel,
+                    unt.PDef,
+                    unt.MAtk,
+                    unt.GenericAttackLabel,
+                    unt.MDef,
+                    unt.Speed,
+                    unt.EnemySkillIds
+                    );
             }
             
             // Make array of all units for convenience
