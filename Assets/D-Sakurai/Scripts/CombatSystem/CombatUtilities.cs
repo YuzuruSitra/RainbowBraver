@@ -6,6 +6,9 @@ using D_Sakurai.Scripts.CombatSystem.Units;
 
 namespace D_Sakurai.Scripts.CombatSystem
 {
+    /// <summary>
+    /// CombatManagerが使用するユーティリティ群
+    /// </summary>
     public static class CombatUtilities
     {
         /// <summary>
@@ -174,6 +177,13 @@ namespace D_Sakurai.Scripts.CombatSystem
             }
         }
 
+        /// <summary>
+        /// 敵の行動を決定する
+        /// </summary>
+        /// <param name="subject">行動主体</param>
+        /// <param name="allUnits">戦闘に参加しているUnit全てを格納した配列</param>
+        /// <param name="allies">味方のUnitを格納した配列</param>
+        /// <param name="enemies">敵のUnitを格納した配列</param>
         public static void EvalEnemy(UnitEnemy subject, Unit[] allUnits, UnitEnemy[] allies, UnitAlly[] enemies)
         {
             // TODO: 状態効果技を連発しないようにする

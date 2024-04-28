@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Numerics;
-using Random = UnityEngine.Random;
 using Vector4 = UnityEngine.Vector4;
 
 using Resources.Duty;
@@ -44,6 +41,12 @@ namespace D_Sakurai.Scripts.CombatSystem
         private enum Strategies {Offensive, Defensive, Technical, Default};
         [SerializeField] private Strategies Strategy;
         
+        /// <summary>
+        /// 開始する依頼のセットアップ
+        /// </summary>
+        /// <param name="id">開始する依頼のID</param>
+        /// <param name="allies">味方のUnitAllyを格納した配列</param>
+        /// <exception cref="Exception">既に別の依頼が進行中である場合</exception>
         public void Setup(int id, UnitAlly[] allies)
         {
             if (!_ongoing)
@@ -75,10 +78,12 @@ namespace D_Sakurai.Scripts.CombatSystem
             }
 
             // TODO: Instantiate GameObjects and assign them to each Unit
-            // TODO: Unitに使用する技を持たせる?
             // TODO: 技データに発動させるエフェクト情報を仕込んで
         }
         
+        /// <summary>
+        /// 依頼の開始
+        /// </summary>
         public void Commence()
         {
             _ongoing = true;
@@ -94,6 +99,10 @@ namespace D_Sakurai.Scripts.CombatSystem
             _ongoing = false;
         }
 
+        /// <summary>
+        /// 敵1グループが出現してから、プレイヤー側か敵側のどちらかが全滅するまでの期間
+        /// </summary>
+        /// <param name="phaseData">Phaseの内容の定義</param>
         private void Phase(Phase phaseData)
         {
             //  PrePhase
@@ -137,16 +146,15 @@ namespace D_Sakurai.Scripts.CombatSystem
             
             //  PostPhase
             // --------------------
-            if (annihilationData.Item2 == Affiliation.Player)
-            {
-                Debug.Log("Player team win");
-            }
-            else
-            {
-                Debug.Log("Enemy team win");
-            }
+            Debug.Log(annihilationData.Item2 == Affiliation.Player ? "Player team win" : "Enemy team win");
         }
 
+        /// <summary>
+        /// 戦闘に参加しているUnitが行動を行う期間
+        /// </summary>
+        /// <param name="allUnits">全てのUnitを格納した配列</param>
+        /// <param name="enemies">敵のUnitを格納した配列</param>
+        /// <param name="current">現在の経過ターン数</param>
         private void Turn(Unit[] allUnits, UnitEnemy[] enemies, int current)
         {
             //  PreTurn
@@ -171,6 +179,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             }
         }
         
+        // Unit.GiveDamage -> Unit.ReceiveDamage等にリプレイス予定
+        // TODO: 前述の仕組みが無事に動いたら消す
         void PhysicalAttack(Unit subject, Unit target){
             Debug.Log("sub: " + subject + "\nobj: " + target);
             return;
