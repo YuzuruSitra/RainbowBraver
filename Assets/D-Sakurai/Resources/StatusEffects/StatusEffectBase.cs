@@ -2,6 +2,9 @@ namespace D_Sakurai.Resources.StatusEffects
 {
     namespace StatusEffectBase
     {
+        /// <summary>
+        /// 状態効果の種類を表すEnum
+        /// </summary>
         public enum StatusEffectType
         {
             Mp,
@@ -16,6 +19,9 @@ namespace D_Sakurai.Resources.StatusEffects
             BrainWashed
         }
 
+        /// <summary>
+        /// 状態効果1種類を定義するクラス
+        /// </summary>
         [System.Serializable]
         public class StatusEffectData
         {
@@ -33,6 +39,9 @@ namespace D_Sakurai.Resources.StatusEffects
             public StatusEffectProperty[] Properties;
         }
 
+        /// <summary>
+        /// 状態効果1種類に含まれる具体的な効果1種類を定義する構造体
+        /// </summary>
         [System.Serializable]
         public struct StatusEffectProperty
         {

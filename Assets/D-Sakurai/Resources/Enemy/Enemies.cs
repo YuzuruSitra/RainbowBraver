@@ -8,6 +8,9 @@ namespace D_Sakurai.Resources.Enemy
         public EnemyData[] EnemiesData;
     }
 
+    /// <summary>
+    /// 敵1種類を定義する構造体
+    /// </summary>
     [System.Serializable]
     public struct EnemyData
     {

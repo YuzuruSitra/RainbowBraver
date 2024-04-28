@@ -5,14 +5,18 @@ namespace D_Sakurai.Resources.Skills
     // スキルの情報を構成する基本的な要素
     namespace SkillBase
     {
-        // スキルの属性
+        /// <summary>
+        /// スキルの属性
+        /// </summary>
         public enum SkillAttribute
         {
             Physical,
             Magical
         }
 
-        // スキルの種類
+        /// <summary>
+        /// スキルの種類
+        /// </summary>
         public enum SkillType
         {
             Attack,
@@ -21,8 +25,9 @@ namespace D_Sakurai.Resources.Skills
             DeEffect // 状態異常・デバフの解除
         };
 
-        //  スキル1種類を定義する構造体
-        // ----------------------------------
+        /// <summary>
+        /// スキル1種類を定義するクラス
+        /// </summary>
         [System.Serializable]
         public class BraverSkillData
         {
@@ -81,8 +86,9 @@ namespace D_Sakurai.Resources.Skills
             }
         }
 
-        //  SkillDataに1つ以上含まれる、実際の行動1つを定義する構造体
-        // -------------------------------------------------------------
+        /// <summary>
+        /// SkillDataに1つ以上含まれる、実際の行動1つを定義する構造体
+        /// </summary>
         [System.Serializable]
         public struct BraverSkillProperty
         {
@@ -104,6 +110,9 @@ namespace D_Sakurai.Resources.Skills
             public StatusEffectData StatusEffect;
         }
 
+        /// <summary>
+        /// 敵が使用するスキル1種類を定義するクラス
+        /// </summary>
         [System.Serializable]
         public class EnemySkillData
         {
@@ -117,6 +126,9 @@ namespace D_Sakurai.Resources.Skills
             public EnemySkillProperty[] SkillProperties;
         }
 
+        /// <summary>
+        /// EnemySkillDataに1種類以上含まれる、実際の行動1つを定義する構造体
+        /// </summary>
         [System.Serializable]
         public class EnemySkillProperty
         {

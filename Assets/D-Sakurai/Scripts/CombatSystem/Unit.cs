@@ -155,6 +155,9 @@ namespace D_Sakurai.Scripts.CombatSystem
                 StatusEffects.Add(ef);
             }
 
+            /// <summary>
+            /// 保持している状態効果を実行し、更新する
+            /// </summary>
             public void UpdateStatusEffects()
             {
                 foreach (var ef in StatusEffects)
@@ -170,7 +173,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             }
 
             /// <summary>
-            /// リストの最も上にあるネガティブな状態効果を無効化する
+            /// リストの最も上にあるネガティブな状態効果を除去する
             /// </summary>
             private void RemoveFirstNegativeStatusEffect()
             {
@@ -182,16 +185,29 @@ namespace D_Sakurai.Scripts.CombatSystem
                 Debug.Log(target);
             }
 
+            /// <summary>
+            /// 最初に見つかった特定の状態効果を除去する
+            /// </summary>
+            /// <param name="target">無効化する状態効果</param>
             private void RemoveStatusEffect(StatusEffectData target)
             {
                 StatusEffects.Remove(target);
             }
 
+            /// <summary>
+            /// 特定の対象のネガティブな状態効果を1つ除去する
+            /// </summary>
+            /// <param name="target"></param>
             public void GiveDeEffect(Unit target)
             {
                 target.RemoveFirstNegativeStatusEffect();
             }
 
+            /// <summary>
+            /// 特定の対象を回復する
+            /// </summary>
+            /// <param name="target">回復する対象</param>
+            /// <param name="amount">素の回復量(ステータスによる補正前)</param>
             public void GiveHeal(Unit target, float amount)
             {
                 var adjustedAmount = amount;
@@ -200,6 +216,10 @@ namespace D_Sakurai.Scripts.CombatSystem
                 target.ReceiveHeal(adjustedAmount);
             }
 
+            /// <summary>
+            /// 回復を受ける
+            /// </summary>
+            /// <param name="amount">素の回復量(発動者のステータス補正が乗った、被回復主体が受ける量)</param>
             public void ReceiveHeal(float amount)
             {
                 var adjustedAmount = amount;
@@ -208,6 +228,11 @@ namespace D_Sakurai.Scripts.CombatSystem
                 Hp += Mathf.RoundToInt(adjustedAmount);
             }
             
+            /// <summary>
+            /// 特定の対象にダメージを与える
+            /// </summary>
+            /// <param name="target">ダメージを与える対象</param>
+            /// <param name="amount">素のダメージ量(ステータスによる補正前)</param>
             public void GiveDamage(Unit target, float amount)
             {
                 var adjustedAmount = amount;
@@ -216,6 +241,10 @@ namespace D_Sakurai.Scripts.CombatSystem
                 target.ReceiveDamage(adjustedAmount);
             }
 
+            /// <summary>
+            /// ダメージを受ける
+            /// </summary>
+            /// <param name="amount">素のダメージ量(発動者のステータス補正が乗った、被ダメージ主体が受ける量)</param>
             public void ReceiveDamage(float amount)
             {
                 var adjustedAmount = amount;
@@ -224,16 +253,29 @@ namespace D_Sakurai.Scripts.CombatSystem
                 Hp -= Mathf.RoundToInt(adjustedAmount);
             }
 
+            /// <summary>
+            /// 特定の対象に状態効果を付与する
+            /// </summary>
+            /// <param name="target">除去する対象</param>
+            /// <param name="ef">付与する状態効果</param>
             public void GiveEffect(Unit target, StatusEffectData ef)
             {
                 target.ReceiveEffect(ef);
             }
-
+            
+            /// <summary>
+            /// 特定の状態効果を受ける
+            /// </summary>
+            /// <param name="ef">受ける状態効果</param>
             public void ReceiveEffect(StatusEffectData ef)
             {
                 StatusEffects.Add(ef);
             }
 
+            /// <summary>
+            /// 一般的な攻撃
+            /// </summary>
+            /// <param name="target">攻撃対象</param>
             public void GenericAttack(Unit target)
             {
                 // 値を算出

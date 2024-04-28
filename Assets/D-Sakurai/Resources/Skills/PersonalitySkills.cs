@@ -6,7 +6,5 @@ namespace D_Sakurai.Resources.Skills
     public class PersonalitySkills : ScriptableObject
     {
         public SkillBase.BraverSkillData[] PersonalitySkillArray;
-        // public SkillBase.BraverSkillData[] Active;
-        // public SkillBase.BraverSkillData[] Sociable;
     }
 }
