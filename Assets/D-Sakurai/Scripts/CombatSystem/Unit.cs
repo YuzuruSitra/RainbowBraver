@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using D_Sakurai.Resources.Skills;
 using D_Sakurai.Resources.Skills.SkillBase;
+using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using UnityEngine;
 
 namespace D_Sakurai.Scripts.CombatSystem
@@ -22,6 +25,34 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// </summary>
         public enum Personality{Active, Sociable, Humble, Intelligent}
 
+        public struct UnitStatusEffectData
+        {
+            public float _hp { get; }
+            public float _mp{ get; }
+
+            public float _pAtk{ get; }
+            public float _pDef{ get; }
+
+            public float _mAtk{ get; }
+            public float _mDef{ get; }
+
+            public float _speed{ get; }
+
+            public UnitStatusEffectData(float value = 0)
+            {
+                _hp = value;
+                _mp = value;
+
+                _pAtk = value;
+                _pDef = value;
+
+                _mAtk = value;
+                _mDef = value;
+
+                _speed = value;
+            }
+        }
+
         /// <summary>
         /// ユニットのインターフェイス
         /// </summary>
@@ -43,6 +74,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             int Speed { get; }
             
             bool Actioned { get; }
+
+            // UnitStatusEffectData StatusEffects { get; }
         }
 
         /// <summary>
@@ -81,10 +114,14 @@ namespace D_Sakurai.Scripts.CombatSystem
             public float MDef{ get; }
 
             // 素早さ
-            public int Speed{ get; }
-            
+            public int Speed { get; }
+
             // そのターン行動したか
-            public bool Actioned { get; }
+            public bool Actioned { get;  set; }
+
+            public List<StatusEffectData> StatusEffects { get; set; }
+
+            // public UnitStatusEffectData StatusEffects { get; }
 
             private GameObject GameObject { get; set; }
             private Animator Animator { get; set; }
@@ -108,6 +145,100 @@ namespace D_Sakurai.Scripts.CombatSystem
                 Animator.SetTrigger(trigger);
             }
 
+            /// <summary>
+            /// 状態効果を付与する
+            /// </summary>
+            /// <param name="ef">付与する状態効果</param>
+            public void ApplyStatusEffect(StatusEffectData ef)
+            {
+                ef.Elapsed = 0;
+                StatusEffects.Add(ef);
+            }
+
+            public void UpdateStatusEffects()
+            {
+                foreach (var ef in StatusEffects)
+                {
+                    ef.Elapsed++;
+                }
+
+                StatusEffectData[] removals = StatusEffects.FindAll(ef => ef.Elapsed >= ef.Durability).ToArray();
+                foreach (var ef in removals)
+                {
+                    RemoveStatusEffect(ef);
+                }
+            }
+
+            /// <summary>
+            /// リストの最も上にあるネガティブな状態効果を無効化する
+            /// </summary>
+            private void RemoveFirstNegativeStatusEffect()
+            {
+                var target = StatusEffects.Find(ef => !ef.IsFriendly);
+                
+                RemoveStatusEffect(target);
+
+                // nullりそう　参照が入ってそうだから
+                Debug.Log(target);
+            }
+
+            private void RemoveStatusEffect(StatusEffectData target)
+            {
+                StatusEffects.Remove(target);
+            }
+
+            public void GiveDeEffect(Unit target)
+            {
+                target.RemoveFirstNegativeStatusEffect();
+            }
+
+            public void GiveHeal(Unit target, float amount)
+            {
+                var adjustedAmount = amount;
+                // 値を補正
+                
+                target.ReceiveHeal(adjustedAmount);
+            }
+
+            public void ReceiveHeal(float amount)
+            {
+                var adjustedAmount = amount;
+                // 値を補正
+
+                Hp += Mathf.RoundToInt(adjustedAmount);
+            }
+            
+            public void GiveDamage(Unit target, float amount)
+            {
+                var adjustedAmount = amount;
+                // 値を補正
+                
+                target.ReceiveDamage(adjustedAmount);
+            }
+
+            public void ReceiveDamage(float amount)
+            {
+                var adjustedAmount = amount;
+                // 値を補正
+
+                Hp -= Mathf.RoundToInt(adjustedAmount);
+            }
+
+            public void GiveEffect(Unit target, StatusEffectData ef)
+            {
+                target.ReceiveEffect(ef);
+            }
+
+            public void ReceiveEffect(StatusEffectData ef)
+            {
+                StatusEffects.Add(ef);
+            }
+
+            public void GenericAttack(Unit target)
+            {
+                // 値を算出
+            }
+
             protected Unit(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed){
                 Affiliation = affiliation;
                 MaxHp = maxHp;
@@ -127,6 +258,8 @@ namespace D_Sakurai.Scripts.CombatSystem
 
                 Speed = speed;
 
+                StatusEffects = new List<StatusEffectData>();
+                
                 Actioned = false;
             }
         }
@@ -142,12 +275,12 @@ namespace D_Sakurai.Scripts.CombatSystem
             public Personality Personality { get; private set; }
             
             // ユニットが持つ職業固有スキルのインデックス(複数の技を用意する場合に備えて)
-            public int JobSkillIndex{ get; private set; }
-            // public BraverSkillData JobSkill { get; private set; }
+            // public int JobSkillIndex{ get; private set; }
+            public BraverSkillData JobSkill { get; private set; }
 
             // ユニットが持つ性格固有スキルのインデックス
-            public int PersonalitySkillIndex{ get; private set; }
-            // public BraverSkillData PersonalitySkill { get; private set; }
+            // public int PersonalitySkillIndex{ get; private set; }
+            public BraverSkillData PersonalitySkill { get; private set; }
 
             public float FriendshipLevel;
 
@@ -158,45 +291,18 @@ namespace D_Sakurai.Scripts.CombatSystem
 
             private void RecognizeSelfSkills()
             {
-                HasHeal = HasEffect = HasDeEffect = false;
-                
-                JobSkills jobSkills = UnityEngine.Resources.Load<JobSkills>("Skills/JobSkills");
-                foreach (var property in jobSkills.JobSkillArray[JobSkillIndex].SkillProperties)
-                {
-                    switch (property.Type)
-                    {
-                        case SkillType.Heal: HasHeal = true;
-                            break;
-                        case SkillType.Effect: HasEffect = true;
-                            break;
-                        case SkillType.DeEffect: HasDeEffect = true;
-                            break;
-                    }
-                }
-
-                PersonalitySkills personalitySkills = UnityEngine.Resources.Load<PersonalitySkills>("Skills/PersonalitySkills");
-                foreach (var property in personalitySkills.PersonalitySkillArray[PersonalitySkillIndex].SkillProperties)
-                {
-                    switch (property.Type)
-                    {
-                        case SkillType.Heal: HasHeal = true;
-                            break;
-                        case SkillType.Effect: HasEffect = true;
-                            break;
-                        case SkillType.DeEffect: HasDeEffect = true;
-                            break;
-                    }
-                }
+                // HasHeal = HasEffect = HasDeEffect = false;
             }
 
             public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, Personality personality, int jobSkillIndex, int personalitySkillIndex, float friendShipLevel) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
                 Job = job;
                 Personality = personality;
-                JobSkillIndex = jobSkillIndex;
-                PersonalitySkillIndex = personalitySkillIndex;
                 FriendshipLevel = friendShipLevel;
 
+                JobSkill = UnityEngine.Resources.Load<JobSkills>("Skills/JobSkills").JobSkillArray[jobSkillIndex];
+                PersonalitySkill = UnityEngine.Resources.Load<PersonalitySkills>("Skills/PersonalitySkills").PersonalitySkillArray[personalitySkillIndex];
+                
                 // ヒール・バフデバフ・状態異常技を持っているか先に判定しておく
                 RecognizeSelfSkills();
             }
@@ -209,10 +315,13 @@ namespace D_Sakurai.Scripts.CombatSystem
             // 敵ユニットの種類
             // ScriptableObjectの情報を元に生成する方針に変更したため不要
             // public int Kind { get; private set; }
+
+            public EnemySkillData[] Skills { get; private set; }
             
-            public UnitEnemy(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            public UnitEnemy(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, int[] enemySkillIdxs) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
-                // Kind = kind;
+                EnemySkillData[] allSkills = UnityEngine.Resources.Load<EnemySkills>("Skills/EnemySkills").EnemySkillsData;
+                Skills = allSkills.Where((value, idx) => enemySkillIdxs.Contains(idx)).Select(val => val).ToArray();
             }
         }        
     }

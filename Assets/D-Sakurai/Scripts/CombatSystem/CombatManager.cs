@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Numerics;
+using Random = UnityEngine.Random;
+using Vector4 = UnityEngine.Vector4;
+
 using Resources.Duty;
 using D_Sakurai.Resources.Enemy;
-using D_Sakurai.Resources.Skills;
+
 using D_Sakurai.Scripts.CombatSystem.Units;
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 using Unit = D_Sakurai.Scripts.CombatSystem.Units.Unit;
-using Vector3 = UnityEngine.Vector3;
+using CUtil = D_Sakurai.Scripts.CombatSystem.CombatUtilities;
 
 namespace D_Sakurai.Scripts.CombatSystem
 {
@@ -25,24 +25,23 @@ namespace D_Sakurai.Scripts.CombatSystem
         private float _specialAttackGauge;
         
         [System.Serializable]
-        private struct DecisionThreshData
+        public struct DecisionThreshData
         {
-            [Header("行動の閾値(%)の設定。x: 状態異常の解除確率, y: 回復の発動基準体力残量, z: バフ・デバフがかかっていない際の使用確率")]
+            [Header("行動の閾値(%)の設定。x: 状態異常の解除確率, y: 回復の発動基準体力残量, z: バフ・デバフがかかっていない際の使用確率, w: MPを消費する攻撃スキルの仕様確率")]
             [Header("ガンガンいこうぜ")]
-            [SerializeField] public Vector3 Offensive;
+            [SerializeField] public Vector4 Offensive;
             [Header("命大事に")]
-            [SerializeField] public Vector3 Defensive;
+            [SerializeField] public Vector4 Defensive;
             [Header("搦め手優先")]
-            [SerializeField] public Vector3 Technical;
+            [SerializeField] public Vector4 Technical;
             [Header("おまかせ")]
-            [SerializeField] public Vector3 Default;
+            [SerializeField] public Vector4 Default;
         }
 
         [SerializeField] private DecisionThreshData Thresholds;
-        protected Vector3 DecisionThreshold;
+        private Vector4 _decisionThreshold;
 
         private enum Strategies {Offensive, Defensive, Technical, Default};
-
         [SerializeField] private Strategies Strategy;
         
         public void Setup(int id, UnitAlly[] allies)
@@ -62,16 +61,16 @@ namespace D_Sakurai.Scripts.CombatSystem
             switch (Strategy)
             {
                 case Strategies.Offensive:
-                    DecisionThreshold = Thresholds.Offensive / 100;
+                    _decisionThreshold = Thresholds.Offensive / 100;
                     break;
                 case Strategies.Defensive:
-                     DecisionThreshold = Thresholds.Defensive / 100;
+                     _decisionThreshold = Thresholds.Defensive / 100;
                     break;
                 case Strategies.Technical:
-                     DecisionThreshold = Thresholds.Technical / 100;
+                     _decisionThreshold = Thresholds.Technical / 100;
                     break;
                 case Strategies.Default:
-                     DecisionThreshold = Thresholds.Default / 100;
+                     _decisionThreshold = Thresholds.Default / 100;
                     break;
             }
 
@@ -116,7 +115,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             UnitEnemy[] enemies = new UnitEnemy[neededEnemyData.Length];
             foreach ((var unt, int idx) in neededEnemyData.Select((unt, idx) => (unt, idx)))
             {
-                enemies[idx] = new UnitEnemy(Affiliation.Enemy, unt.MaxHp, 999, unt.PAtk, unt.GenericAttackLabel, unt.PDef, unt.MAtk, unt.GenericAttackLabel, unt.MDef, unt.Speed);
+                enemies[idx] = new UnitEnemy(Affiliation.Enemy, unt.MaxHp, 999, unt.PAtk, unt.GenericAttackLabel, unt.PDef, unt.MAtk, unt.GenericAttackLabel, unt.MDef, unt.Speed, unt.EnemySkillIds);
             }
             
             // Make array of all units for convenience
@@ -133,7 +132,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 Turn(allUnits, enemies, currentTurn);
                 currentTurn++;
 
-                annihilationData = CheckAnnihilation(_allies, enemies);
+                annihilationData = CUtil.CheckAnnihilation(_allies, enemies);
             } while (annihilationData.Item1);
             
             //  PostPhase
@@ -152,58 +151,23 @@ namespace D_Sakurai.Scripts.CombatSystem
         {
             //  PreTurn
             // ------------------
-            Unit next = GetNextUnit(allUnits);
+            Unit next = CUtil.GetNextUnit(allUnits);
             
             
             //  Eval / Action
             // -----------------------
-            if (next is UnitAlly unt)
+            if (next is UnitAlly ally)
             {
                 // Eval / Action code for Player
-                EvalAlly(unt, allUnits, _allies, enemies, Thresholds, DecisionThreshold);
+                CUtil.EvalAlly(ally, allUnits, _allies, enemies, _decisionThreshold);
             }
-        }
-        
-        private static (bool, Affiliation) CheckAnnihilation(UnitAlly[] allies, UnitEnemy[] enemies)
-        {
-            // Extract living UnitAlly
-            UnitAlly[] livingAllies = Array.FindAll(allies, elem => elem.Hp > 0);
-            // Return true(annihilated) if livingAllies.Length is 0 or shorter
-            if (livingAllies.Length <= 0) return (true, Affiliation.Player);
-
-            // Extract living UnitEnemy
-            UnitEnemy[] livingEnemies = Array.FindAll(enemies, elem => elem.Hp > 0);
-            // Return true(annihilated) if livingEnemies.Length is 0 or shorter
-            if (livingEnemies.Length <= 0) return (true, Affiliation.Enemy);
-
-            // Return false(dont annihilated)
-            return (false, Affiliation.Player);
-        }
-
-        private static Unit GetNextUnit(Unit[] allUnits)
-        {
-            Unit result = allUnits[0];
-            float currentFastest = allUnits[0].Speed;
-
-            foreach (var unit in allUnits)
+            else if (next is UnitEnemy enemy)
             {
-                // If unit is not yet actioned and faster than current fastest unit
-                if (unit.Actioned && unit.Speed > currentFastest)
-                {
-                    result = unit;
-                }
+                CUtil.EvalEnemy(enemy, allUnits, enemies, _allies);
             }
-
-            return result;
-        }
-
-        private static void EvalAlly(UnitAlly subject, Unit[] allUnits, UnitAlly[] allies, UnitEnemy[] enemies, DecisionThreshData threshData, Vector3 decisionThresh)
-        {
-            // TODO: 戦略を変更できるようにする予定はないので、DecisionThreshDataを引数に渡すのはスマートじゃない。Duty.Commenceの最初でdecisionThreshに代入しそれだけを使うべき。
-            // TODO: うお～　"状態異常になっているか"の確認もする必要がある
-            if (subject.HasHeal && Random.value < decisionThresh.x)
+            else
             {
-                
+                Debug.LogError("[CombatManager -> Duty -> Phase -> Turn -> Eval]: Unit with unexpected type was given.");
             }
         }
         
