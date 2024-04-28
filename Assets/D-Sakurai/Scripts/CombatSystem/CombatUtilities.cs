@@ -1,8 +1,5 @@
 using System;
-using System.Linq;
-using D_Sakurai.Resources.Skills;
 using D_Sakurai.Resources.Skills.SkillBase;
-using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using Vector4 = UnityEngine.Vector4;
 using Random = UnityEngine.Random;
 using D_Sakurai.Scripts.CombatSystem.Units;
@@ -99,7 +96,7 @@ namespace D_Sakurai.Scripts.CombatSystem
 
             if (deEffectables.Length > 0 && hasUsableDeEffect && Random.value < decisionThresh.x)
             {
-                CallSkill(subject,
+                CallBraverSkill(subject,
                     enemies[0],
                     deEffectables[0],
                     enoughMpForJobSkill ? subject.JobSkill : subject.PersonalitySkill
@@ -118,7 +115,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                     }
                 }
 
-                CallSkill(subject,
+                CallBraverSkill(subject,
                     enemies[0],
                     healTarget,
                     enoughMpForJobSkill ? subject.JobSkill : subject.PersonalitySkill
@@ -126,7 +123,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             }
             else if (hasUsableEffect && Random.value < decisionThresh.z)
             {
-                CallSkill(subject,
+                CallBraverSkill(subject,
                     enemies[0],
                     allies[0],
                     enoughMpForJobSkill ? subject.JobSkill : subject.PersonalitySkill
@@ -155,7 +152,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                     useSkill = subject.JobSkill.IsAttackSkill ? subject.JobSkill : subject.PersonalitySkill;
                 }
                 
-                CallSkill(subject,
+                CallBraverSkill(subject,
                     attackTarget,
                     subject,
                     useSkill
@@ -179,10 +176,46 @@ namespace D_Sakurai.Scripts.CombatSystem
 
         public static void EvalEnemy(UnitEnemy subject, Unit[] allUnits, UnitEnemy[] allies, UnitAlly[] enemies)
         {
+            // TODO: 状態効果技を連発しないようにする
+            var chosenSkill = subject.Skills[
+                Random.Range(0, subject.Skills.Length - 1)
+            ];
+
+            // 敵から見たロジックなので敵味方が反転することに注意
+            var targetEnemy = enemies[Random.Range(0, allies.Length - 1)];
+            var targetAlly = allies[Random.Range(0, allies.Length - 1)];
             
+            CallEnemySkill(subject, targetEnemy, targetAlly, chosenSkill);
         }
 
-        private static void CallSkill(Unit subject, Unit targetEnemy, Unit targetAlly, BraverSkillData skill)
+        // Interfaceを使ってBraverSkillDataとEnemySkillDataを共通化したいが、Interfaceを継承するとSerializableでなくなってしまうっぽい
+        // この辺理解が足りていないので多分もっとちゃんとした形があると思われる(今の以下のコードはあまりにもダサい)
+        private static void CallBraverSkill(Unit subject, Unit targetEnemy, Unit targetAlly, BraverSkillData skill)
+        {
+            foreach (var property in skill.SkillProperties)
+            {
+                switch (property.Type)
+                {
+                    case SkillType.DeEffect:
+                        subject.GiveDeEffect(targetAlly);
+                        break;
+                    case SkillType.Heal:
+                        subject.GiveHeal(targetAlly, property.Amount);
+                        break;
+                    case SkillType.Effect:
+                        subject.GiveEffect(
+                            property.StatusEffect.IsFriendly ? targetAlly : targetEnemy,
+                            property.StatusEffect
+                        );
+                        break;
+                    case SkillType.Attack:
+                        subject.GiveDamage(targetEnemy, property.Amount);
+                        break;
+                }
+            }
+        }
+
+        private static void CallEnemySkill(Unit subject, Unit targetEnemy, Unit targetAlly, EnemySkillData skill)
         {
             foreach (var property in skill.SkillProperties)
             {
