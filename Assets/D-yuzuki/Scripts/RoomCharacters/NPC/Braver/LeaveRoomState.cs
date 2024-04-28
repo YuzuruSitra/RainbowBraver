@@ -2,58 +2,39 @@ using UnityEngine;
 
 public class LeaveRoomState: IRoomAIState
 {
-    private GameObject _npc;
-    private float _moveSpeed;
-    private float _rotSpeed;
-    private float _distance;
+    private InnNPCMover _innNpcMover;
     private Vector3 _targetPos;
     private bool _isWalk;
-    private bool _isStateFin;
 
     public bool IsWalk => _isWalk;
-    public bool IsStateFin => _isStateFin;
+    private bool _launchState;
+    public bool IsStateFin => _innNpcMover.IsAchieved && _launchState;
 
-    public LeaveRoomState(GameObject npc, float moveSpeed, float rotSpeed, float distance)
+    private int _targetRoomNum;
+
+    public LeaveRoomState(InnNPCMover mover)
     {
-        _npc = npc;
-        _moveSpeed = moveSpeed;
-        _rotSpeed = rotSpeed;
-        _distance = distance;
+        _innNpcMover = mover;
     }
 
     // ステートに入った時の処理
-    public void EnterState(Vector3 pos)
+    public void EnterState(Vector3 pos, int targetRoom)
     {
         _targetPos = pos;
-        _isStateFin = false;
+        _innNpcMover.SetTarGetPos(_targetPos);
+        _targetRoomNum = targetRoom;
         _isWalk = true;
+        _launchState = true;
     }
 
     // ステートの更新
     public void UpdateState()
     {
-        Vector3 direction = (_targetPos - _npc.transform.position).normalized;
-        direction.y = 0f;
-        _npc.transform.position += direction * _moveSpeed * Time.deltaTime;
-
-        // ターゲットの方向を向く
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(-direction);
-            _npc.transform.rotation = Quaternion.Slerp(_npc.transform.rotation, targetRotation, _rotSpeed * Time.deltaTime);
-        }
-
-        MonitorStateExit();
+        _innNpcMover.Moving();
     }
-
-    // ステートの終了を監視
-    public void MonitorStateExit()
+    
+    public void ExitState()
     {
-        Vector3 tmp1 = _npc.transform.position;
-        tmp1.y = 0;
-        Vector3 tmp2 = _targetPos;
-        tmp2.y = 0;
-        if (Vector3.Distance(tmp1, tmp2) <= _distance) _isStateFin = true;
+        _launchState = false;
     }
-
 }

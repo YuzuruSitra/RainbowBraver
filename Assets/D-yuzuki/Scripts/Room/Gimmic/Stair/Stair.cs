@@ -47,15 +47,11 @@ public class Stair : MonoBehaviour
         BraverController braver = _targetObj.GetComponent<BraverController>();
         braver.IsFreedom = false;
 
-        // エントリー
-        while (Vector3.Distance(_targetObj.transform.position, _entryPos) >= braver.StoppingDistance)
+        // エントリー 
+        braver.InnNPCMover.SetTarGetPos(_entryPos);
+        while (!braver.InnNPCMover.IsAchieved)
         {
-            Vector3 direction1 = (_entryPos - _targetObj.transform.position).normalized;
-            direction1.y = 0f;
-            _targetObj.transform.position += direction1 * braver.MoveSpeed * Time.deltaTime;
-
-            Quaternion targetRotation1 = Quaternion.LookRotation(-direction1);
-            _targetObj.transform.rotation = Quaternion.Slerp(_targetObj.transform.rotation, targetRotation1, braver.RotationSpeed * Time.deltaTime);
+            braver.InnNPCMover.Moving();
             yield return null;
         }
 
@@ -66,15 +62,13 @@ public class Stair : MonoBehaviour
         yield return _waitTime;
 
         // 退出    
-        while (Vector3.Distance(_targetObj.transform.position, targetFloor.NPCOutPos) >= braver.StoppingDistance)
+        braver.InnNPCMover.SetTarGetPos(targetFloor.NPCOutPos);
+        while (!braver.InnNPCMover.IsAchieved)
         {
-            Vector3 direction2 = (targetFloor.NPCOutPos - _targetObj.transform.position).normalized;
-            direction2.y = 0f;
-            _targetObj.transform.position += direction2 * braver.MoveSpeed * Time.deltaTime;
-            Quaternion targetRotation2 = Quaternion.LookRotation(-direction2);
-            _targetObj.transform.rotation = Quaternion.Slerp(_targetObj.transform.rotation, targetRotation2, braver.RotationSpeed * Time.deltaTime);
+            braver.InnNPCMover.Moving();
             yield return null;
         }
+
         braver.IsFreedom = true;
         int targetStairNum = targetFloor.RoomDetails.RoomNum;
         braver.FinWarpHandler(targetStairNum);
