@@ -1,4 +1,3 @@
-using D_Sakurai.Resources.Skills.SkillBase;
 using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 
 namespace D_Sakurai.Resources.Skills
@@ -28,10 +27,10 @@ namespace D_Sakurai.Resources.Skills
         public class BraverSkillData
         {
             // スキルがヒール/状態効果付与/状態効果解除機能を持つか 自動生成されるため記入不要
-            public bool IsHealSkill { get; private set; } = false;
-            public bool IsEffectSkill { get; private set; } = false;
-            public bool IsDeEffectSkill { get; private set; } = false;
-            public bool IsAttackSkill { get; private set; } = false;
+            public bool IsHealSkill { get; private set; }
+            public bool IsEffectSkill { get; private set; }
+            public bool IsDeEffectSkill { get; private set; }
+            public bool IsAttackSkill { get; private set; }
 
             // スキル名
             public string Name;
@@ -106,7 +105,7 @@ namespace D_Sakurai.Resources.Skills
         }
 
         [System.Serializable]
-        public struct EnemySkillData
+        public class EnemySkillData
         {
             // スキル名
             public string Name;
@@ -119,7 +118,7 @@ namespace D_Sakurai.Resources.Skills
         }
 
         [System.Serializable]
-        public struct EnemySkillProperty
+        public class EnemySkillProperty
         {
             // 行動の属性
             public SkillAttribute SkillAttribute;
@@ -129,6 +128,8 @@ namespace D_Sakurai.Resources.Skills
 
             // 行動の素の効果量
             public float Amount;
+
+            public StatusEffectData StatusEffect;
         }
     }
 }
