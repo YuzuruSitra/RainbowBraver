@@ -13,19 +13,21 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   EnemiesData:
-  - MaxHp: 10
+  - Name: Enemy 0
+    MaxHp: 100
     PAtk: 5
     MAtk: 0
     GenericAttackLabel: Enemy 0 generic attack
     PDef: 0
     MDef: 0
-    Speed: 0
+    Speed: 1
     EnemySkillIds: 00000000
-  - MaxHp: 10
+  - Name: Enemy 1
+    MaxHp: 100
     PAtk: 0
     MAtk: 5
     GenericAttackLabel: Enemy 1 generic attack
     PDef: 0
     MDef: 0
-    Speed: 0
+    Speed: 2
     EnemySkillIds: 01000000
