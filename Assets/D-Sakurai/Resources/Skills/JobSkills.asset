@@ -12,18 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858afcc344c54c5da122719ac4383113, type: 3}
   m_Name: JobSkills
   m_EditorClassIdentifier: 
-  Swordsman:
-  - Name: Swordsman dummy job skill
-    Description: Dummy data of swordsman's job skill
+  JobSkillArray:
+  - Name: Simple job skill
+    Description: Perform attack
+    SpecialGaugeIncreaseRate: 0
+    CostMp: 0
+    CostHp: 0
     SkillProperties:
-    - IsBasic: 1
+    - IsBasic: 0
+      IsFriendly: 0
       SkillAttribute: 0
       Type: 0
-      Amount: 5
-      CostMp: 0
-      CostHp: 0
-  Gladiator: []
-  Lancer: []
-  Hunter: []
-  Oracle: []
-  Sorcerer: []
+      Amount: 10
+      StatusEffectIndex: 0

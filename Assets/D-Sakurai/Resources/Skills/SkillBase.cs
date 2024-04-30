@@ -1,4 +1,6 @@
+using System.Linq;
 using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
+using UnityEngine.Serialization;
 
 namespace D_Sakurai.Resources.Skills
 {
@@ -55,7 +57,7 @@ namespace D_Sakurai.Resources.Skills
             // スキルに含まれる行動の配列
             public BraverSkillProperty[] SkillProperties;
 
-            public BraverSkillData()
+            public void OnEnable()
             {
                 try
                 {
@@ -87,10 +89,10 @@ namespace D_Sakurai.Resources.Skills
         }
 
         /// <summary>
-        /// SkillDataに1つ以上含まれる、実際の行動1つを定義する構造体
+        /// SkillDataに1つ以上含まれる、実際の行動1つを定義するクラス
         /// </summary>
         [System.Serializable]
-        public struct BraverSkillProperty
+        public class BraverSkillProperty
         {
             // 汎用的な行動か(いらなくなりそう)
             public bool IsBasic;
@@ -107,7 +109,14 @@ namespace D_Sakurai.Resources.Skills
             // 行動の素の効果量
             public float Amount;
 
-            public StatusEffectData StatusEffect;
+            public int StatusEffectIndex;
+
+            public StatusEffectData StatusEffect { get; private set; }
+
+            public void OnEnable()
+            {
+                StatusEffect = UnityEngine.Resources.Load<StatusEffects.StatusEffects>("StatusEffects/StatusEffects").StatusEffectsData[StatusEffectIndex];
+            }
         }
 
         /// <summary>

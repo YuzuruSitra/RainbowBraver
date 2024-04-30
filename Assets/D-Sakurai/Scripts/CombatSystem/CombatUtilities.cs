@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using D_Sakurai.Resources.Skills.SkillBase;
 using Vector4 = UnityEngine.Vector4;
 using Random = UnityEngine.Random;
@@ -19,15 +20,11 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// <returns>(全滅しているか(bool), 全滅した勢力(Unit.Affiliation))</returns>
         public static (bool, Affiliation) CheckAnnihilation(UnitAlly[] allies, UnitEnemy[] enemies)
         {
-            // Extract living UnitAlly
-            UnitAlly[] livingAllies = Array.FindAll(allies, elem => elem.Hp > 0);
-            // Return true(annihilated) if livingAllies.Length is 0 or shorter
-            if (livingAllies.Length <= 0) return (true, Affiliation.Player);
+            bool alliesAnnihilated = allies.All(unit => unit.Hp <= 0);
+            if (alliesAnnihilated) return (true, Affiliation.Player);
 
-            // Extract living UnitEnemy
-            UnitEnemy[] livingEnemies = Array.FindAll(enemies, elem => elem.Hp > 0);
-            // Return true(annihilated) if livingEnemies.Length is 0 or shorter
-            if (livingEnemies.Length <= 0) return (true, Affiliation.Enemy);
+            bool enemiesAnnihilated = enemies.All(unit => unit.Hp <= 0);
+            if (enemiesAnnihilated) return (true, Affiliation.Enemy);
 
             // Return false(dont annihilated)
             return (false, Affiliation.Player);
@@ -55,12 +52,13 @@ namespace D_Sakurai.Scripts.CombatSystem
             foreach (var unit in allUnits)
             {
                 // If unit is not yet actioned and faster than current fastest unit
-                if (unit.Actioned && unit.Speed > currentFastest)
+                if (!unit.Actioned && unit.Speed > currentFastest)
                 {
                     result = unit;
                 }
             }
 
+            result.Actioned = true;
             return result;
         }
 

@@ -14,6 +14,8 @@ namespace D_Sakurai.Resources.Enemy
     [System.Serializable]
     public struct EnemyData
     {
+        public string Name;
+        
         public int MaxHp;
 
         public float PAtk;

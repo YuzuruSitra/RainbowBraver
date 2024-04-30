@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Vector4 = UnityEngine.Vector4;
 
 using Resources.Duty;
@@ -12,6 +13,9 @@ using CUtil = D_Sakurai.Scripts.CombatSystem.CombatUtilities;
 
 namespace D_Sakurai.Scripts.CombatSystem
 {
+    /// <summary>
+    /// 戦闘を管理するクラス
+    /// </summary>
     public class CombatManager : MonoBehaviour
     {
         private Duty _data;
@@ -103,7 +107,7 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// 敵1グループが出現してから、プレイヤー側か敵側のどちらかが全滅するまでの期間
         /// </summary>
         /// <param name="phaseData">Phaseの内容の定義</param>
-        private void Phase(Phase phaseData)
+        private async void Phase(Phase phaseData)
         {
             //  PrePhase
             // -------------------
@@ -125,6 +129,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             foreach ((var unt, int idx) in neededEnemyData.Select((unt, idx) => (unt, idx)))
             {
                 enemies[idx] = new UnitEnemy(
+                    unt.Name,
                     Affiliation.Enemy,
                     unt.MaxHp,
                     9999,// 敵にはMP概念が無いので
@@ -144,21 +149,24 @@ namespace D_Sakurai.Scripts.CombatSystem
             Array.Copy(_allies, allUnits, _allies.Length);
             Array.Copy(enemies, 0, allUnits, _allies.Length, enemies.Length);
 
+            
             //  Turn
             // ---------------
             var currentTurn = 0;
             (bool, Affiliation) annihilationData;
             do
             {
-                Turn(allUnits, enemies, currentTurn);
                 currentTurn++;
+                Turn(allUnits, enemies, currentTurn);
 
                 annihilationData = CUtil.CheckAnnihilation(_allies, enemies);
-            } while (annihilationData.Item1);
+
+                await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            } while (!annihilationData.Item1);
             
             //  PostPhase
             // --------------------
-            Debug.Log(annihilationData.Item2 == Affiliation.Player ? "Player team win" : "Enemy team win");
+            Debug.Log(annihilationData.Item2 == Affiliation.Enemy ? $"Player team win, Elapsed turns: {currentTurn}" : $"Enemy team win, Elapsed turns: {currentTurn}");
         }
 
         /// <summary>

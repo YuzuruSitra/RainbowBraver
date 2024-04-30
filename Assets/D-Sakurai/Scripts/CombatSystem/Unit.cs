@@ -58,6 +58,8 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// </summary>
         interface IUnitData
         {
+            string Name { get; }
+            
             Affiliation Affiliation { get; }
 
             int MaxHp { get; }
@@ -84,6 +86,8 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// </summary>
         public class Unit : IUnitData
         {
+            public string Name { get; }
+            
             // 所属
             public Affiliation Affiliation{ get; }
 
@@ -212,6 +216,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             {
                 var adjustedAmount = amount;
                 // 値を補正
+
+                Debug.Log($"{Name}: [ GIVE HEAL ] [ {amount} ] ->");
                 
                 target.ReceiveHeal(adjustedAmount);
             }
@@ -224,6 +230,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             {
                 var adjustedAmount = amount;
                 // 値を補正
+                
+                Debug.Log($"{Name}: [ RECEIVE HEAL ] -> [ {amount} ] | HP REMAINING: {Hp}");
 
                 Hp += Mathf.RoundToInt(adjustedAmount);
             }
@@ -238,6 +246,8 @@ namespace D_Sakurai.Scripts.CombatSystem
                 var adjustedAmount = amount;
                 // 値を補正
                 
+                Debug.Log($"{Name}: [ GIVE DAMAGE ] [ {amount} ] ->");
+                
                 target.ReceiveDamage(adjustedAmount);
             }
 
@@ -249,6 +259,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             {
                 var adjustedAmount = amount;
                 // 値を補正
+                
+                Debug.Log($"{Name}: [ RECEIVE DAMAGE ] -> [ {amount} ] | HP REMAINING: {Hp}");
 
                 Hp -= Mathf.RoundToInt(adjustedAmount);
             }
@@ -278,10 +290,16 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// <param name="target">攻撃対象</param>
             public void GenericAttack(Unit target)
             {
+                float amount = PAtk;
                 // 値を算出
+                
+                GiveDamage(target, amount);
             }
 
-            protected Unit(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed){
+            protected Unit(string name, Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed)
+            {
+                Name = name;
+                
                 Affiliation = affiliation;
                 MaxHp = maxHp;
                 MaxMp = maxMp;
@@ -336,7 +354,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 // HasHeal = HasEffect = HasDeEffect = false;
             }
 
-            public UnitAlly(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, Personality personality, int jobSkillIndex, int personalitySkillIndex, float friendShipLevel) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            public UnitAlly(string name, Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, Job job, Personality personality, int jobSkillIndex, int personalitySkillIndex, float friendShipLevel) : base(name, affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
                 Job = job;
                 Personality = personality;
@@ -360,7 +378,7 @@ namespace D_Sakurai.Scripts.CombatSystem
 
             public EnemySkillData[] Skills { get; private set; }
             
-            public UnitEnemy(Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, int[] enemySkillIdxs) : base(affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            public UnitEnemy(string name, Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, int[] enemySkillIdxs) : base(name, affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
                 EnemySkillData[] allSkills = UnityEngine.Resources.Load<EnemySkills>("Skills/EnemySkills").EnemySkillsData;
                 Skills = allSkills.Where((value, idx) => enemySkillIdxs.Contains(idx)).Select(val => val).ToArray();
