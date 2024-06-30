@@ -5542,6 +5542,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Doujou
       objectReference: {fileID: 0}
+    - target: {fileID: 1725937785271309925, guid: b7b03200639058349acb7963098fb474, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7b03200639058349acb7963098fb474, type: 3}
 --- !u!1001 &3044176956549940602
@@ -5599,8 +5603,69 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elevator
       objectReference: {fileID: 0}
+    - target: {fileID: 1219647974410198773, guid: cbfe74861d036384ebd29cfcd9fa0e1d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbfe74861d036384ebd29cfcd9fa0e1d, type: 3}
+--- !u!1001 &4248992816502215987
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599780, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5233922502335599781, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
+      propertyPath: m_Name
+      value: Kyokai
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 67da89de99845ad4cb471a28bce36b5a, type: 3}
 --- !u!1001 &6382184384385810124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5655,6 +5720,10 @@ PrefabInstance:
     - target: {fileID: 4498815987546832675, guid: 23d6ae282f0c84347951e83006fc0462, type: 3}
       propertyPath: m_Name
       value: Shokudou
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498815987546832675, guid: 23d6ae282f0c84347951e83006fc0462, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23d6ae282f0c84347951e83006fc0462, type: 3}
