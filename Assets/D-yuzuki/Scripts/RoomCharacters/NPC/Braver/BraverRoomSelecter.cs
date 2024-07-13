@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// –Ú“I•”‰®‚Ì‘I’è
+// ç›®çš„éƒ¨å±‹ã®é¸å®š
 public class BraverRoomSelecter
 {
-    // ƒVƒ“ƒOƒ‹ƒgƒ“
+    // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
     private static BraverRoomSelecter instance;
     public static BraverRoomSelecter Instance => instance ?? (instance = new BraverRoomSelecter());
 
@@ -27,7 +27,7 @@ public class BraverRoomSelecter
         return nextRoomNum;
     }
 
-    // N“ü‰Â”\‚È•”‰®‚Ì‘I‘ğˆ‚ğì¬
+    // ä¾µå…¥å¯èƒ½ãªéƒ¨å±‹ã®é¸æŠè‚¢ã‚’ä½œæˆ
     private List<int> CreateContenderRoomList(int npcRoom)
     {
         List<int> contenderRoom;
@@ -45,7 +45,7 @@ public class BraverRoomSelecter
         return outRooms;
     }
 
-    // ŠK’i‚ğl—¶‚µ‚½’Tõ
+    // éšæ®µã‚’è€ƒæ…®ã—ãŸæ¢ç´¢
     private List<int> SearchStairs(List<int> rooms, int npcRoom)
     {
         List<int> updatedRooms = new List<int>(rooms);
@@ -56,7 +56,7 @@ public class BraverRoomSelecter
             bool isDel = true;
             int floor = roomNum / _roomBunker.FloorRoomCount;
 
-            // ãŠK‚Ì•”‰®‚ğ’Ç‰Á
+            // ä¸Šéšã®éƒ¨å±‹ã‚’è¿½åŠ 
             if (floor != _roomBunker.TopFloor)
             {
                 int upperStairRoom = roomNum + _roomBunker.FloorRoomCount;
@@ -69,7 +69,7 @@ public class BraverRoomSelecter
             }
             if (floor != 0)
             {
-                // ‰ºŠK‚Ì•”‰®‚ğ’Ç‰Á
+                // ä¸‹éšã®éƒ¨å±‹ã‚’è¿½åŠ 
                 int lowerStairRoom = roomNum - _roomBunker.FloorRoomCount;
                 if (_roomBunker.RoomDetails[lowerStairRoom].IsRoomAcceptance(npcRoom))
                 {
@@ -79,13 +79,13 @@ public class BraverRoomSelecter
                 }
             }
             
-            // ã‰ºŠK‚Ì•”‰®‚ª‹¤‚É•s‰Â‚È‚ç‚ÎŒ»İ‚Ì•”‰®‚ğíœ
+            // ä¸Šä¸‹éšã®éƒ¨å±‹ãŒå…±ã«ä¸å¯ãªã‚‰ã°ç¾åœ¨ã®éƒ¨å±‹ã‚’å‰Šé™¤
             if (isDel) updatedRooms.Remove(roomNum);
         }
         return updatedRooms;
     }
 
-    // ƒŠƒtƒg‚ğl—¶‚µ‚½’Tõ
+    // ãƒªãƒ•ãƒˆã‚’è€ƒæ…®ã—ãŸæ¢ç´¢
     private List<int> SearchLift(List<int> rooms, int npcRoom)
     {
         List<int> updatedRooms = new List<int>(rooms);
@@ -96,15 +96,15 @@ public class BraverRoomSelecter
             if (roomType != RoomType.Lift) continue;
             GameObject room = _roomBunker.RoomDetails[roomNum].gameObject;
             Lift lift = room.GetComponent<Lift>();
-            // ŠK‘w‚ğŒŸõ
+            // éšå±¤ã‚’æ¤œç´¢
             int targetLiftNum;
             if (lift.Info == Lift.LiftInfo.UPPER)
                 targetLiftNum = roomNum - _roomBunker.FloorRoomCount;
             else
                 targetLiftNum = roomNum + _roomBunker.FloorRoomCount;
-            // ’[‚©‚Ç‚¤‚©‚Ì”»’è
+            // ç«¯ã‹ã©ã†ã‹ã®åˆ¤å®š
             int outerNum = targetLiftNum % _roomBunker.FloorRoomCount; 
-            // ƒŠƒtƒg‚Ì¶‰E‚ğŒó•â‚É’Ç‰Á
+            // ãƒªãƒ•ãƒˆã®å·¦å³ã‚’å€™è£œã«è¿½åŠ 
             if (outerNum != 0 && _roomBunker.RoomDetails[targetLiftNum - 1].IsRoomAcceptance(npcRoom))
             {
                 isAdd = true;
@@ -121,7 +121,7 @@ public class BraverRoomSelecter
         return updatedRooms;
     }
 
-    // ÅI“I‚È‘I‘ğˆ‚ğ‘I’è
+    // æœ€çµ‚çš„ãªé¸æŠè‚¢ã‚’é¸å®š
     private List<int> SelectAlternativeRooms(List<int> rooms, int currentRoomNum)
     {
         List<int> alternativeRooms = new List<int>();
@@ -137,7 +137,7 @@ public class BraverRoomSelecter
         return alternativeRooms;
     }
 
-    // ƒ‰ƒ“ƒ_ƒ€‚Å•”‰®‚ğ‘I’è
+    // ãƒ©ãƒ³ãƒ€ãƒ ã§éƒ¨å±‹ã‚’é¸å®š
     private int SelectNextRoom(List<int> rooms)
     {
         int randomIndex = Random.Range(0, rooms.Count);

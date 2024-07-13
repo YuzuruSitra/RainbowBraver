@@ -1,8 +1,9 @@
+using D_yuzuki.Scripts.RoomCharacters.NPC.Braver;
 using UnityEngine;
 
 public enum RoomType
 {
-    Enpty,
+    None,
     Private,
     Facility,
     Stair,

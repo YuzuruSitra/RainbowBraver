@@ -53,6 +53,7 @@ MonoBehaviour:
   _selectionObj: {fileID: 5754505288337379916}
   _parent: {fileID: 3341004900942829965}
   _roomsFPrefab: {fileID: 2676375702478338594, guid: cf7ed41e6f7ea3a45bc6be6d46c0be38, type: 3}
+  _roomsPair: []
 --- !u!1 &9088320963123584025
 GameObject:
   m_ObjectHideFlags: 0

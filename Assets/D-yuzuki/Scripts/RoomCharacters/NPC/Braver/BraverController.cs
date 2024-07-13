@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using D_yuzuki.Scripts.RoomCharacters.NPC.Braver;
 using UnityEngine;
 
 public interface IRoomAIState
@@ -21,6 +22,9 @@ public enum RoomAIState
 // ルームNPCの制御クラス
 public class BraverController : MonoBehaviour
 {
+    [Header("キャラクターの番号")]
+    [SerializeField]
+    private int _braverNum;
     [Header("キャラクターの部屋")]
     [SerializeField]
     private int _baseRoom = 0;
@@ -51,9 +55,12 @@ public class BraverController : MonoBehaviour
     // 移動用クラス
     private InnNPCMover _innNPCMover;
     public InnNPCMover InnNPCMover => _innNPCMover;
-
+    private ParameterCalc _parameterCalc;
+    private RoomType _stayRoomType;
+    
     void Start()
     {
+        _parameterCalc = new ParameterCalc();
         InitializeNPC();
     }
 
@@ -63,6 +70,8 @@ public class BraverController : MonoBehaviour
         _states[_currentState].UpdateState();
         // ChangeAnimWalk(_states[_currentState].IsWalk);
         if (_states[_currentState].IsStateFin) NextState(_currentState);
+        // パラメータ更新
+        _parameterCalc.UpdateParameter(_braverNum, _stayRoomType);
     }
 
     void InitializeNPC()
@@ -102,6 +111,7 @@ public class BraverController : MonoBehaviour
                 _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(_baseRoom, _targetRoomNum);
                 newState = RoomAIState.EXIT_ROOM;
                 _targetPos = _roomPosAllocation.TargetPosSelection(_targetRoomNum, RoomPosAllocation.PointKind.EXIT_POINT, transform.position.y);
+                _stayRoomType = RoomType.None;
                 break;
             case RoomAIState.EXIT_ROOM:
                 newState = RoomAIState.LEAVE_ROOM;
@@ -115,6 +125,7 @@ public class BraverController : MonoBehaviour
                 break;
             case RoomAIState.GO_TO_ROOM:
                 newState = RoomAIState.STAY_ROOM;
+                _stayRoomType = _parameterCalc.FindRoomType(_targetRoomNum);
                 _targetPos = _roomPosAllocation.TargetPosSelection(_targetRoomNum, RoomPosAllocation.PointKind.IN_POINT, transform.position.y);
                 break;
             default:
