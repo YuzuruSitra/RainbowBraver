@@ -68,14 +68,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c8509d602c25e44ae68b112f24eba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseRoom: 0
   _moveSpeed: 2
   _stoppingDistance: 0.3
-  _minStayTime: 4
-  _maxStayTime: 4
-  _stayRoomRayLength: 0.5
-  _goToRoomRayLength: 2
-  _goToAvoidDistance: 2.5
   IsFreedom: 1
 --- !u!212 &1990325152592395906
 SpriteRenderer:

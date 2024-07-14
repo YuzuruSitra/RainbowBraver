@@ -3,7 +3,7 @@ using UnityEngine;
 public class InnNPCMover
 {
     private Vector3 _targetPos;
-    private const float GRAVITY = 20.0f;
+    private const float GRAVITY = 500.0f;
     private float _speed;
     private GameObject _character;
     public GameObject Character => _character;

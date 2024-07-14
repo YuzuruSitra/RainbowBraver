@@ -53,6 +53,7 @@ namespace D_yuzuki.Scripts.RoomCharacters.NPC.Braver
         public void UpdateStatus(int braverNum, Parameter targetParam, float newValue)
         {
             Parameters[braverNum, (int)targetParam] = newValue;
+            Debug.Log(newValue);
         }
         
         public void UpdateFriendship(int braverNum, int targetNum, float newValue)

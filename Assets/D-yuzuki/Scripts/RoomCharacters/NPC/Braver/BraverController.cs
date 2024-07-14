@@ -22,13 +22,10 @@ public enum RoomAIState
 // ルームNPCの制御クラス
 public class BraverController : MonoBehaviour
 {
-    [Header("キャラクターの番号")]
-    [SerializeField]
-    private int _braverNum;
-    [Header("キャラクターの部屋")]
-    [SerializeField]
-    private int _baseRoom = 0;
-    public int BaseRoom => _baseRoom;
+    public int BraverNum { get; private set; }
+
+    public int BaseRoom { get; private set; }
+
     [Header("移動速度")]
     [SerializeField] 
     private float _moveSpeed;
@@ -37,7 +34,7 @@ public class BraverController : MonoBehaviour
     [SerializeField] 
     private float _stoppingDistance = 0.1f;
 
-    private RoomAIState _currentState;
+    public RoomAIState CurrentState { get; private set; }
     private Dictionary<RoomAIState, IRoomAIState> _states = new Dictionary<RoomAIState, IRoomAIState>();
 
     // 目標ルーム選定クラス
@@ -45,7 +42,7 @@ public class BraverController : MonoBehaviour
     private RoomPosAllocation _roomPosAllocation;
     //private Animator _animator;
     // 滞在中の部屋番号を保持
-    private int _targetRoomNum;
+    public int StayRoomNum { get; private set; }
     // 次の部屋番号を保持
     private int _nextRoomNum;
     // ターゲット座標を保持
@@ -55,29 +52,24 @@ public class BraverController : MonoBehaviour
     // 移動用クラス
     private InnNPCMover _innNPCMover;
     public InnNPCMover InnNPCMover => _innNPCMover;
-    private ParameterCalc _parameterCalc;
-    private RoomType _stayRoomType;
     
     void Start()
     {
-        _parameterCalc = new ParameterCalc();
         InitializeNPC();
     }
 
     void Update()
     {
         if (!IsFreedom) return;
-        _states[_currentState].UpdateState();
+        _states[CurrentState].UpdateState();
         // ChangeAnimWalk(_states[_currentState].IsWalk);
-        if (_states[_currentState].IsStateFin) NextState(_currentState);
-        // パラメータ更新
-        _parameterCalc.UpdateParameter(_braverNum, _stayRoomType);
+        if (_states[CurrentState].IsStateFin) NextState(CurrentState);
     }
 
     void InitializeNPC()
     {
         _innNPCMover = new InnNPCMover(gameObject, _moveSpeed, _stoppingDistance);
-        _targetRoomNum = _baseRoom;
+        StayRoomNum = BaseRoom;
         _braverRoomSelecter = BraverRoomSelecter.Instance;
         _roomPosAllocation = RoomPosAllocation.Instance;
         //_animator = gameObject.GetComponent<Animator>();
@@ -88,8 +80,8 @@ public class BraverController : MonoBehaviour
         _states.Add(RoomAIState.LEAVE_ROOM, new LeaveRoomState(_innNPCMover));
         _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(_innNPCMover));
         // STAY_ROOMから開始
-        _currentState = RoomAIState.STAY_ROOM;
-        _states[_currentState].EnterState(_roomPosAllocation.ErrorVector, _targetRoomNum);
+        CurrentState = RoomAIState.STAY_ROOM;
+        _states[CurrentState].EnterState(_roomPosAllocation.ErrorVector, StayRoomNum);
     }
 
     // アニメーションの遷移
@@ -108,25 +100,23 @@ public class BraverController : MonoBehaviour
         switch (state)
         {
             case RoomAIState.STAY_ROOM:
-                _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(_baseRoom, _targetRoomNum);
+                _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, StayRoomNum);
                 newState = RoomAIState.EXIT_ROOM;
-                _targetPos = _roomPosAllocation.TargetPosSelection(_targetRoomNum, RoomPosAllocation.PointKind.EXIT_POINT, transform.position.y);
-                _stayRoomType = RoomType.None;
+                _targetPos = _roomPosAllocation.TargetPosSelection(StayRoomNum, RoomPosAllocation.PointKind.EXIT_POINT, transform.position.y);
                 break;
             case RoomAIState.EXIT_ROOM:
                 newState = RoomAIState.LEAVE_ROOM;
-                _targetPos = _roomPosAllocation.TargetPosSelection(_targetRoomNum, RoomPosAllocation.PointKind.OUT_POINT, transform.position.y);
+                _targetPos = _roomPosAllocation.TargetPosSelection(StayRoomNum, RoomPosAllocation.PointKind.OUT_POINT, transform.position.y);
                 break;
             case RoomAIState.LEAVE_ROOM:
                 newState = RoomAIState.GO_TO_ROOM;
                 // 部屋の移動
-                _targetRoomNum = _nextRoomNum;
-                _targetPos = _roomPosAllocation.TargetPosSelection(_targetRoomNum, RoomPosAllocation.PointKind.OUT_POINT, transform.position.y);
+                StayRoomNum = _nextRoomNum;
+                _targetPos = _roomPosAllocation.TargetPosSelection(StayRoomNum, RoomPosAllocation.PointKind.OUT_POINT, transform.position.y);
                 break;
             case RoomAIState.GO_TO_ROOM:
                 newState = RoomAIState.STAY_ROOM;
-                _stayRoomType = _parameterCalc.FindRoomType(_targetRoomNum);
-                _targetPos = _roomPosAllocation.TargetPosSelection(_targetRoomNum, RoomPosAllocation.PointKind.IN_POINT, transform.position.y);
+                _targetPos = _roomPosAllocation.TargetPosSelection(StayRoomNum, RoomPosAllocation.PointKind.IN_POINT, transform.position.y);
                 break;
             default:
                 newState = state;
@@ -137,9 +127,9 @@ public class BraverController : MonoBehaviour
             _targetPos = _roomPosAllocation.ErrorVector;
             newState = RoomAIState.STAY_ROOM;
         }
-        _states[_currentState].ExitState();
-        _states[newState].EnterState(_targetPos, _targetRoomNum);
-        _currentState = newState;
+        _states[CurrentState].ExitState();
+        _states[newState].EnterState(_targetPos, StayRoomNum);
+        CurrentState = newState;
     }
 
     // 外部からの参照
@@ -151,8 +141,14 @@ public class BraverController : MonoBehaviour
 
     public void FinWarpHandler(int currentRoom)
     {
-        _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(_baseRoom, currentRoom);
+        _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, currentRoom);
         NextState(RoomAIState.EXIT_ROOM);
+    }
+
+    public void SetNumber(int braverNum, int roomNum)
+    {
+        BraverNum = braverNum;
+        BaseRoom = roomNum;
     }
 
 }
