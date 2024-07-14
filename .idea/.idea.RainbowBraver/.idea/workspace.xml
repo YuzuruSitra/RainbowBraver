@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/BtAddListener.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/BtAddListener.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/DayTimeKeeper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/DayTimeKeeper.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/InnStateHolder.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/InnStateHolder.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/PanelChanger.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/PanelChanger.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/PostProcessHandler.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/PostProcessHandler.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/RoomBunker.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/RoomBunker.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/RoomCamera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/RoomCamera.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/RoomEditor.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Resources/Prefabs/Functions/RoomEditor.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Scene/TryNPC.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Scene/TryNPC.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/Room/RoomDetails.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/Room/RoomDetails.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverRoomSelecter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverRoomSelecter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportAssets/Terasurware/excel sample.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverParameter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverParameter.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +116,8 @@
       <workItem from="1712844635207" duration="9860000" />
       <workItem from="1720829157690" duration="413000" />
       <workItem from="1720829584400" duration="13772000" />
+      <workItem from="1720918764270" duration="2886000" />
+      <workItem from="1720923729782" duration="571000" />
     </task>
     <task id="LOCAL-00001" summary="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。">
       <option name="closed" value="true" />

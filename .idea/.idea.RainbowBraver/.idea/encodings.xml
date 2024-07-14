@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/Room/RoomBunker.cs" charset="windows-31j" />
     <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/Room/RoomDetails.cs" charset="windows-31j" />
     <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverController.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverParameter.cs" charset="windows-31j" />
     <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/ExitRoomState.cs" charset="windows-31j" />
     <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/StayRoomState.cs" charset="windows-31j" />
     <file url="PROJECT" charset="windows-31j" />
