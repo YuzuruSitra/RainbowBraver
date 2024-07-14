@@ -14,10 +14,8 @@ namespace D_yuzuki.Scripts.RoomCharacters.NPC.Braver
             // ロード処理を挟む
             
             // 仮置き
-            for (var i = 0; i < 1; i++)
-            {
-                NewBraverIns(i, 0);
-            }
+            NewBraverIns(0, 0);
+            NewBraverIns(1, 2);
         }
 
         // 新しいブレーバーの生成処理

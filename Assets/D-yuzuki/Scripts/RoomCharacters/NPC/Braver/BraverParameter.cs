@@ -14,7 +14,7 @@ namespace D_yuzuki.Scripts.RoomCharacters.NPC.Braver
             Defense,
             MagicPower,
             MagicDefence,
-            Speed
+            Speed,
         }
         
         // _upValueはParameterに対応した7要素
@@ -23,12 +23,13 @@ namespace D_yuzuki.Scripts.RoomCharacters.NPC.Braver
         {
             public RoomType _roomType;
             public float[] _upValue;
+            public float _friendPoint;
         }
 
         [Header("部屋のステータス上昇値")] [SerializeField] private RoomEffect[] _roomEffects;
         public RoomEffect[] RoomEffects => _roomEffects;
         // 今後ロード予定
-        private int _braverCount = 1;
+        private int _braverCount = 2;
         public float[,] Parameters { get; private set; }
         public List<List<float>> Friendship { get; private set; }
         private void Start()
@@ -53,7 +54,6 @@ namespace D_yuzuki.Scripts.RoomCharacters.NPC.Braver
         public void UpdateStatus(int braverNum, Parameter targetParam, float newValue)
         {
             Parameters[braverNum, (int)targetParam] = newValue;
-            Debug.Log(newValue);
         }
         
         public void UpdateFriendship(int braverNum, int targetNum, float newValue)
