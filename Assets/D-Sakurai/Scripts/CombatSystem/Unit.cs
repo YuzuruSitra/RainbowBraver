@@ -4,6 +4,7 @@ using D_Sakurai.Resources.Skills;
 using D_Sakurai.Resources.Skills.SkillBase;
 using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace D_Sakurai.Scripts.CombatSystem
 {
@@ -61,6 +62,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             string Name { get; }
             
             Affiliation Affiliation { get; }
+            
+            bool IsDead { get; }
 
             int MaxHp { get; }
             int MaxMp { get; }
@@ -90,6 +93,9 @@ namespace D_Sakurai.Scripts.CombatSystem
             
             // 所属
             public Affiliation Affiliation{ get; }
+            
+            // 倒されたか
+            public bool IsDead { get; private set; }
 
             // 最大HP
             public int MaxHp{ get; }
@@ -121,7 +127,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             public int Speed { get; }
 
             // そのターン行動したか
-            public bool Actioned { get;  set; }
+            public bool Actioned { get; set; }
 
             public List<StatusEffectData> StatusEffects { get; set; }
 
@@ -143,10 +149,19 @@ namespace D_Sakurai.Scripts.CombatSystem
                 Animator = obj.GetComponent<Animator>();
             }
             
-            // Animatorの特定のステートを呼び出す(Async/Awaitを利用してステートを抜けた際に戻すように書く予定)
+            // Animatorの特定のステートを呼び出す
+            // TODO: Async/Awaitを利用してステートを抜けた際に戻すように書く
             public void CallAnimState(string trigger)
             {
                 Animator.SetTrigger(trigger);
+            }
+
+            /// <summary>
+            /// Unitが倒されたか判定する。Unit.Hpを読んで0以下ならUnit.IsDeadを更新する。
+            /// </summary>
+            public void HealthCheck()
+            {
+                if (Hp <= 0) IsDead = true;
             }
 
             /// <summary>

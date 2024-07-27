@@ -19,9 +19,36 @@ MonoBehaviour:
     - SkillAttribute: 0
       Type: 0
       Amount: 2
+      StatusEffect:
+        IsFriendly: 0
+        Name: 
+        Description: 
+        Durability: 0
+        Elapsed: 0
+        Properties: []
   - Name: Dummy magical attack
     Description: Perform magical attack
     SkillProperties:
     - SkillAttribute: 1
       Type: 0
       Amount: 2
+      StatusEffect:
+        IsFriendly: 0
+        Name: 
+        Description: 
+        Durability: 0
+        Elapsed: 0
+        Properties: []
+  - Name: Dummy magical attack
+    Description: Perform magical attack
+    SkillProperties:
+    - SkillAttribute: 1
+      Type: 0
+      Amount: 2
+      StatusEffect:
+        IsFriendly: 0
+        Name: 
+        Description: 
+        Durability: 0
+        Elapsed: 0
+        Properties: []

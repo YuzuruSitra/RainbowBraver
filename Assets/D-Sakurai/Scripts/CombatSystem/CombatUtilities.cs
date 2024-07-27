@@ -4,6 +4,8 @@ using D_Sakurai.Resources.Skills.SkillBase;
 using Vector4 = UnityEngine.Vector4;
 using Random = UnityEngine.Random;
 using D_Sakurai.Scripts.CombatSystem.Units;
+using UnityEditor.PackageManager;
+using UnityEngine;
 
 namespace D_Sakurai.Scripts.CombatSystem
 {
@@ -20,13 +22,13 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// <returns>(全滅しているか(bool), 全滅した勢力(Unit.Affiliation))</returns>
         public static (bool, Affiliation) CheckAnnihilation(UnitAlly[] allies, UnitEnemy[] enemies)
         {
-            bool alliesAnnihilated = allies.All(unit => unit.Hp <= 0);
+            var alliesAnnihilated = allies.All(unit => unit.Hp <= 0);
             if (alliesAnnihilated) return (true, Affiliation.Player);
 
-            bool enemiesAnnihilated = enemies.All(unit => unit.Hp <= 0);
+            var enemiesAnnihilated = enemies.All(unit => unit.Hp <= 0);
             if (enemiesAnnihilated) return (true, Affiliation.Enemy);
 
-            // Return false(dont annihilated)
+            // Return false(don't annihilated)
             return (false, Affiliation.Player);
         }
 
@@ -37,22 +39,30 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// <returns>次に行動するUnit</returns>
         public static Unit GetNextUnit(Unit[] allUnits)
         {
-            // check if all units are actioned unit
-            if (Array.FindAll(allUnits, unit => unit.Actioned).Length == allUnits.Length)
+            // unit can perform action
+            Unit[] actionables = allUnits.Where(unt => !unt.Actioned).ToArray();
+            
+            // check if all units are actioned unit or not
+            if (actionables.Length == 0)
             {
                 foreach (var unit in allUnits)
                 {
                     unit.Actioned = false;
+                    actionables = allUnits;
                 }
             }
 
-            Unit result = allUnits[0];
+            Unit result = actionables[0];
             float currentFastest = result.Speed;
 
-            foreach (var unit in allUnits)
+            foreach (var unit in actionables)
             {
-                // If unit is not yet actioned and faster than current fastest unit
-                if (!unit.Actioned && unit.Speed > currentFastest)
+                // If unit is not yet actioned, is fastest, and is alive
+                if (
+                    !unit.Actioned &&
+                    unit.Speed > currentFastest &&
+                    !unit.IsDead
+                    )
                 {
                     result = unit;
                 }
@@ -69,9 +79,13 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// <param name="allUnits">全Unitを格納した配列</param>
         /// <param name="allies">味方のUnitを格納した配列</param>
         /// <param name="enemies">敵のUnitを格納した配列</param>
-        /// <param name="decisionThresh">判断に用いる閾値</param>
+        /// <param name="decisionThresh">判断に用いる閾値を格納したvec4</param>
         public static void EvalAlly(UnitAlly subject, Unit[] allUnits, UnitAlly[] allies, UnitEnemy[] enemies, Vector4 decisionThresh)
         {
+            // 生存している味方 / 敵
+            var aliveAllies = allies.Where(e => !e.IsDead).ToArray();
+            var aliveEnemies = enemies.Where(e => !e.IsDead).ToArray();
+            
             // Get ally unit that has negative effect
             var deEffectables = Array.FindAll(allies,
                 ally => ally.StatusEffects.FindAll(status => !status.IsFriendly).Count > 0);
@@ -94,15 +108,17 @@ namespace D_Sakurai.Scripts.CombatSystem
 
             var hasUsableAttack = (subject.JobSkill.IsAttackSkill && enoughMpForJobSkill) ||
                                   (subject.PersonalitySkill.IsAttackSkill && enoughMpForPersonalitySkill);
-
+            
+            // DEEFFECT (remove debuff)
             if (deEffectables.Length > 0 && hasUsableDeEffect && Random.value < decisionThresh.x)
             {
                 CallBraverSkill(subject,
-                    enemies[0],
+                    aliveEnemies[0],
                     deEffectables[0],
                     enoughMpForJobSkill ? subject.JobSkill : subject.PersonalitySkill
                 );
             }
+            // JOB / PERSONALITY SKILL (HEAL)
             else if (healables.Length > 0 && hasUsableHeal)
             {
                 Unit healTarget = healables[0];
@@ -122,6 +138,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                     enoughMpForJobSkill ? subject.JobSkill : subject.PersonalitySkill
                 );
             }
+            // JOB / PERSONALITY SKILL (EFFECT)
             else if (hasUsableEffect && Random.value < decisionThresh.z)
             {
                 CallBraverSkill(subject,
@@ -130,15 +147,16 @@ namespace D_Sakurai.Scripts.CombatSystem
                     enoughMpForJobSkill ? subject.JobSkill : subject.PersonalitySkill
                 );
             }
+            // JOB / PERSONALITY SKILL (ATTACK)
             else if (hasUsableAttack && Random.value > decisionThresh.w)
             {
-                UnitEnemy attackTarget = enemies[0];
-
-                if (enemies.Length > 1)
+                // get enemy with lowest hp
+                UnitEnemy attackTarget = aliveEnemies[0];
+                foreach (var en in aliveEnemies)
                 {
-                    if (enemies[1].Hp < enemies[0].Hp)
+                    if (en.Hp < attackTarget.Hp)
                     {
-                        attackTarget = enemies[1];
+                        attackTarget = aliveEnemies[1];
                     }
                 }
 
@@ -159,11 +177,12 @@ namespace D_Sakurai.Scripts.CombatSystem
                     useSkill
                     );
             }
+            // GENERIC ATTACK
             else
             {
-                UnitEnemy target = enemies[0];
+                UnitEnemy target = aliveEnemies[0];
 
-                foreach (var en in enemies)
+                foreach (var en in aliveEnemies)
                 {
                     if (en.Hp < target.Hp)
                     {
@@ -197,7 +216,7 @@ namespace D_Sakurai.Scripts.CombatSystem
         }
 
         // Interfaceを使ってBraverSkillDataとEnemySkillDataを共通化したいが、Interfaceを継承するとSerializableでなくなってしまうっぽい
-        // この辺理解が足りていないので多分もっとちゃんとした形があると思われる(今の以下のコードはあまりにもダサい)
+        // この辺理解が足りていないので多分もっとちゃんとした形があると思われる
         private static void CallBraverSkill(Unit subject, Unit targetEnemy, Unit targetAlly, BraverSkillData skill)
         {
             foreach (var property in skill.SkillProperties)
@@ -218,6 +237,9 @@ namespace D_Sakurai.Scripts.CombatSystem
                         break;
                     case SkillType.Attack:
                         subject.GiveDamage(targetEnemy, property.Amount);
+                        break;
+                    default:
+                        Debug.LogError("CombatUtilities > CallBraverSkill(): invalid skill property type. ( " + property.Type + " )");
                         break;
                 }
             }

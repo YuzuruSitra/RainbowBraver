@@ -44,6 +44,8 @@ namespace D_Sakurai.Scripts.CombatSystem
 
         private enum Strategies {Offensive, Defensive, Technical, Default};
         [SerializeField] private Strategies Strategy;
+
+        [SerializeField] private bool logCombat; 
         
         /// <summary>
         /// 開始する依頼のセットアップ
@@ -113,8 +115,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             // -------------------
             
             // Load all enemy data from scriptable
-            // NOTE: phaseData.enemyIdsを使って.Selectか何かで必要な要素だけを直接配列に格納したら軽い気がしたけど、
-            // 読みだす段階で一度メモリに置かれてそうで結局変わらない気がするのでやめた。
+            // TODO: load > .Select > .toArrayのほうが安い？(そんなことなさそうなので、そんなことないと検証する必要がある)
+            // あるとしたら一度全て読んでフィルタする(現行)よりすぐGCしてくれる？ 不要な変数が存在しなくなるから
             EnemyData[] enemiesData = UnityEngine.Resources.Load<Enemies>("Enemy/EnemyData").EnemiesData;
 
             // Store needed EnemyData in enemies
@@ -156,11 +158,19 @@ namespace D_Sakurai.Scripts.CombatSystem
             (bool, Affiliation) annihilationData;
             do
             {
+                // TURN
                 currentTurn++;
                 Turn(allUnits, enemies, currentTurn);
-
+                
+                // check unit health
+                foreach (var unt in allUnits)
+                {
+                    unt.HealthCheck();
+                }
+                
                 annihilationData = CUtil.CheckAnnihilation(_allies, enemies);
 
+                // (DEV) delay for preview
                 await UniTask.Delay(TimeSpan.FromSeconds(1f));
             } while (!annihilationData.Item1);
             
@@ -179,8 +189,7 @@ namespace D_Sakurai.Scripts.CombatSystem
         {
             //  PreTurn
             // ------------------
-            Unit next = CUtil.GetNextUnit(allUnits);
-            
+            var next = CUtil.GetNextUnit(allUnits);
             
             //  Eval / Action
             // -----------------------
@@ -197,27 +206,6 @@ namespace D_Sakurai.Scripts.CombatSystem
             {
                 Debug.LogError("[CombatManager -> Duty -> Phase -> Turn -> Eval]: Unit with unexpected type was given.");
             }
-        }
-        
-        // Unit.GiveDamage -> Unit.ReceiveDamage等にリプレイス予定
-        // TODO: 前述の仕組みが無事に動いたら消す
-        void PhysicalAttack(Unit subject, Unit target){
-            Debug.Log("sub: " + subject + "\nobj: " + target);
-            return;
-        }
-        void MagicalAttack(Unit subject, Unit target){
-            Debug.Log("sub: " + subject + "\nobj: " + target);
-            return;
-        }
-
-        void Heal(Unit subject, Unit target){
-            Debug.Log("sub: " + subject + "\nobj: " + target);
-            return;
-        }
-
-        void Effect(Unit subject, Unit target){
-            Debug.Log("sub: " + subject + "\nobj: " + target);
-            return;
         }
     }
 }
