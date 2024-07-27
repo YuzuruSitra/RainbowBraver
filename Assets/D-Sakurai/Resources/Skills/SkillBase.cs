@@ -57,6 +57,7 @@ namespace D_Sakurai.Resources.Skills
             // スキルに含まれる行動の配列
             public BraverSkillProperty[] SkillProperties;
 
+            // スキルが攻撃・効果・効果解除・回復のそれぞれを持つかフラグを立てる
             public void OnEnable()
             {
                 try
