@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BG_Mat_Panel
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: c4086068bc3004b418869d98dc7559e0, type: 3}
   m_ValidKeywords:
   - _ALPHATEST_ON
   - _RECEIVE_SHADOWS_OFF
@@ -83,6 +83,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_7dd811a3e5a24fe49fcbcc144412cc82_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 2923469a03eec4443a67707119d57d45, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -118,6 +122,7 @@ Material:
     - _BaseLight: 0.35
     - _Blend: 0
     - _BumpScale: 1
+    - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 0
@@ -151,10 +156,15 @@ Material:
     - _WINDQUALITY: 4
     - _WindQuality: 0
     - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
+    - _mul: 0.1
+    - _scale: 24.05
+    - _speed: 0.06
     m_Colors:
     - _BaseColor: {r: 0.8537736, g: 0.97378963, b: 1, a: 1}
-    - _Color: {r: 0.8537736, g: 0.97378963, b: 1, a: 1}
+    - _Color: {r: 0.26713243, g: 0.8207547, b: 0.63590115, a: 1}
     - _EmissionColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 1}
@@ -164,6 +174,8 @@ Material:
     - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
+    - _offset: {r: 1, g: 1, b: 0, a: 0}
+    - _tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2935025071423596460
 MonoBehaviour:
