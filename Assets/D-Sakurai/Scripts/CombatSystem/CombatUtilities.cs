@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using D_Sakurai.Resources.Skills.SkillBase;
+using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using Vector4 = UnityEngine.Vector4;
 using Random = UnityEngine.Random;
 using D_Sakurai.Scripts.CombatSystem.Units;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace D_Sakurai.Scripts.CombatSystem
@@ -40,7 +41,7 @@ namespace D_Sakurai.Scripts.CombatSystem
         public static Unit GetNextUnit(Unit[] allUnits)
         {
             // unit can perform action
-            Unit[] actionables = allUnits.Where(unt => !unt.Actioned).ToArray();
+            Unit[] actionables = allUnits.Where(unt => !unt.IsDead && !unt.Actioned).ToArray();
             
             // check if all units are actioned unit or not
             if (actionables.Length == 0)
@@ -48,8 +49,9 @@ namespace D_Sakurai.Scripts.CombatSystem
                 foreach (var unit in allUnits)
                 {
                     unit.Actioned = false;
-                    actionables = allUnits;
                 }
+                
+                actionables = allUnits;
             }
 
             Unit result = actionables[0];
@@ -86,6 +88,27 @@ namespace D_Sakurai.Scripts.CombatSystem
             var aliveAllies = allies.Where(e => !e.IsDead).ToArray();
             var aliveEnemies = enemies.Where(e => !e.IsDead).ToArray();
             
+            // 洗脳
+            var brainWashed = HasEffectType(subject.StatusEffects, StatusEffectType.BrainWash);
+            
+            // 怒り
+            if (HasEffectType(subject.StatusEffects, StatusEffectType.Anger))
+            {
+                UnitEnemy target = aliveEnemies[0];
+
+                foreach (var en in aliveEnemies)
+                {
+                    if (en.Hp < target.Hp)
+                    {
+                        target = en;
+                    }
+                }
+                
+                subject.GenericAttack(target);
+
+                return;
+            }
+            
             // Get ally unit that has negative effect
             var deEffectables = Array.FindAll(allies,
                 ally => ally.StatusEffects.FindAll(status => !status.IsFriendly).Count > 0);
@@ -110,7 +133,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                                   (subject.PersonalitySkill.IsAttackSkill && enoughMpForPersonalitySkill);
             
             // DEEFFECT (remove debuff)
-            if (deEffectables.Length > 0 && hasUsableDeEffect && Random.value < decisionThresh.x)
+            if (!brainWashed && deEffectables.Length > 0 && hasUsableDeEffect && Random.value < decisionThresh.x)
             {
                 CallBraverSkill(subject,
                     aliveEnemies[0],
@@ -119,7 +142,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 );
             }
             // JOB / PERSONALITY SKILL (HEAL)
-            else if (healables.Length > 0 && hasUsableHeal)
+            else if (!brainWashed && healables.Length > 0 && hasUsableHeal)
             {
                 Unit healTarget = healables[0];
 
@@ -139,7 +162,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 );
             }
             // JOB / PERSONALITY SKILL (EFFECT)
-            else if (hasUsableEffect && Random.value < decisionThresh.z)
+            else if (!brainWashed && hasUsableEffect && Random.value < decisionThresh.z)
             {
                 CallBraverSkill(subject,
                     enemies[0],
@@ -150,13 +173,21 @@ namespace D_Sakurai.Scripts.CombatSystem
             // JOB / PERSONALITY SKILL (ATTACK)
             else if (hasUsableAttack && Random.value > decisionThresh.w)
             {
-                // get enemy with lowest hp
-                UnitEnemy attackTarget = aliveEnemies[0];
-                foreach (var en in aliveEnemies)
+                Unit attackTarget = aliveEnemies[0];
+
+                // 洗脳
+                if (brainWashed)
                 {
-                    if (en.Hp < attackTarget.Hp)
+                    attackTarget = aliveAllies[Random.Range(0, aliveAllies.Length - 1)];
+                }
+                else
+                {
+                    // get enemy with the lowest hp
+                    foreach (var en in aliveEnemies)
                     {
-                        attackTarget = aliveEnemies[1];
+                        if (en.Hp > attackTarget.Hp) continue;
+                        
+                        attackTarget = en;
                     }
                 }
 
@@ -180,17 +211,25 @@ namespace D_Sakurai.Scripts.CombatSystem
             // GENERIC ATTACK
             else
             {
-                UnitEnemy target = aliveEnemies[0];
+                Unit target = aliveEnemies[0];
 
-                foreach (var en in aliveEnemies)
+                // 洗脳
+                if (brainWashed)
                 {
-                    if (en.Hp < target.Hp)
+                    target = aliveAllies[Random.Range(0, aliveAllies.Length - 1)];
+                }
+                else
+                {
+                    // get enemy with the lowest hp
+                    foreach (var en in aliveEnemies)
                     {
+                        if (en.Hp > target.Hp) continue;
+                        
                         target = en;
                     }
                 }
                 
-                CallGenericAttack(subject, target);
+                subject.GenericAttack(target);
             }
         }
 
@@ -203,16 +242,40 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// <param name="enemies">敵のUnitを格納した配列</param>
         public static void EvalEnemy(UnitEnemy subject, Unit[] allUnits, UnitEnemy[] allies, UnitAlly[] enemies)
         {
-            // TODO: 状態効果技を連発しないようにする
-            var chosenSkill = subject.Skills[
-                Random.Range(0, subject.Skills.Length - 1)
-            ];
-
             // 敵から見たロジックなので敵味方が反転することに注意
-            var targetEnemy = enemies[Random.Range(0, allies.Length - 1)];
+            Unit targetEnemy = enemies[Random.Range(0, enemies.Length - 1)];
             var targetAlly = allies[Random.Range(0, allies.Length - 1)];
             
-            CallEnemySkill(subject, targetEnemy, targetAlly, chosenSkill);
+            // 洗脳
+            if (HasEffectType(subject.StatusEffects, StatusEffectType.BrainWash))
+            {
+                targetEnemy = allies[Random.Range(0, allies.Length - 1)];
+            }
+            
+            // 怒り
+            if (HasEffectType(subject.StatusEffects, StatusEffectType.Anger))
+            {
+                subject.GenericAttack(targetEnemy);
+            }
+            
+            if (subject.IsUnderSkillCooldown)
+            {
+                subject.GenericAttack(targetEnemy);
+                subject.IsUnderSkillCooldown = false;
+                return;
+            }
+
+            if (Random.value < subject.SkillThreshold)
+            {
+                var chosenSkill = subject.Skills[
+                    Random.Range(0, subject.Skills.Length - 1)
+                ];
+                
+                CallEnemySkill(subject, targetEnemy, targetAlly, chosenSkill);
+                return;
+            }
+            
+            subject.GenericAttack(targetEnemy);
         }
 
         // Interfaceを使ってBraverSkillDataとEnemySkillDataを共通化したいが、Interfaceを継承するとSerializableでなくなってしまうっぽい
@@ -236,7 +299,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                         );
                         break;
                     case SkillType.Attack:
-                        subject.GiveDamage(targetEnemy, property.Amount);
+                        subject.GiveDamage(targetEnemy, property.Amount, property.SkillAttribute);
                         break;
                     default:
                         Debug.LogError("CombatUtilities > CallBraverSkill(): invalid skill property type. ( " + property.Type + " )");
@@ -264,15 +327,105 @@ namespace D_Sakurai.Scripts.CombatSystem
                         );
                         break;
                     case SkillType.Attack:
-                        subject.GiveDamage(targetEnemy, property.Amount);
+                        subject.GiveDamage(targetEnemy, property.Amount, property.SkillAttribute);
                         break;
                 }
             }
         }
 
-        private static void CallGenericAttack(Unit subject, Unit target)
+        public static void InitStatusEffect(Unit target, StatusEffectData ef)
         {
-            subject.GenericAttack(target);
+            foreach (var prop in ef.Properties)
+            {
+                switch (prop.Type)
+                {
+                    case StatusEffectType.Mp:
+                        Debug.Log($"{target.Name}: [ ADD EFFECT ] MP modified by {prop.Amount}");
+                        target.MpModifier += (int) Math.Round(prop.Amount);
+                        break;
+                    case StatusEffectType.PAtk:
+                        Debug.Log($"{target.Name}: [ ADD EFFECT ] PATK modified by {prop.Amount}");
+                        target.PAtkModifier += (int)Math.Round(prop.Amount);
+                        break;
+                    case StatusEffectType.PDef:
+                        Debug.Log($"{target.Name}: [ ADD EFFECT ] PDEF modified by {prop.Amount}");
+                        target.PDefModifier += (int)Math.Round(prop.Amount);
+                        break;
+                    case StatusEffectType.MAtk:
+                        Debug.Log($"{target.Name}: [ ADD EFFECT ] MATK modified by {prop.Amount}");
+                        target.MAtkModifier += (int)Math.Round(prop.Amount);
+                        break;
+                    case StatusEffectType.MDef:
+                        Debug.Log($"{target.Name}: [ ADD EFFECT ] MDEF modified by {prop.Amount}");
+                        target.MDefModifier += (int)Math.Round(prop.Amount);
+                        break;
+                    case StatusEffectType.Speed:
+                        Debug.Log($"{target.Name}: [ ADD EFFECT ] SPEED modified by {prop.Amount}");
+                        target.SpeedModifier += (int)Math.Round(prop.Amount);
+                        break;
+                    case StatusEffectType.Weak:
+                        Debug.Log($"{target.Name}: [ ADD EFFECT ] MULTIPLE DAMAGE (Weak) {prop.Amount} time(s)");
+                        target.WeakMultipliers.Add(prop.Amount);
+                        break;
+                    default:
+                        Debug.Log($"{target.Name}: [ REGISTER EFFECT ] {prop.Type}");
+                        break;
+                    
+                }
+            }
+        }
+        
+        public static void RemoveStatusEffect(Unit target, StatusEffectData ef)
+        {
+            foreach (var prop in ef.Properties)
+            {
+                switch (prop.Type)
+                {
+                    case StatusEffectType.Mp:
+                        Debug.Log($"{target.Name}: [ SUBTRACT EFFECT ] MP modified by {prop.Amount}");
+                        target.MpModifier = Math.Max(0, target.MpModifier - (int)Math.Round(prop.Amount));
+                        break;
+                    case StatusEffectType.PAtk:
+                        Debug.Log($"{target.Name}: [ SUBTRACT EFFECT ] PATK modified by {prop.Amount}");
+                        target.PAtkModifier = Math.Max(0, target.PAtkModifier - (int)Math.Round(prop.Amount));
+                        break;
+                    case StatusEffectType.PDef:
+                        Debug.Log($"{target.Name}: [ SUBTRACT EFFECT ] PDEF modified by {prop.Amount}");
+                        target.PDefModifier = Math.Max(0, target.PDefModifier - (int)Math.Round(prop.Amount));
+                        break;
+                    case StatusEffectType.MAtk:
+                        Debug.Log($"{target.Name}: [ SUBTRACT EFFECT ] MATK modified by {prop.Amount}");
+                        target.MAtkModifier = Math.Max(0, target.MAtkModifier - (int)Math.Round(prop.Amount));
+                        break;
+                    case StatusEffectType.MDef:
+                        Debug.Log($"{target.Name}: [ SUBTRACT EFFECT ] MDEF modified by {prop.Amount}");
+                        target.MDefModifier = Math.Max(0, target.MDefModifier - (int)Math.Round(prop.Amount));
+                        break;
+                    case StatusEffectType.Speed:
+                        Debug.Log($"{target.Name}: [ SUBTRACT EFFECT ] SPEED modified by {prop.Amount}");
+                        target.SpeedModifier = Math.Max(0, target.SpeedModifier - (int)Math.Round(prop.Amount));
+                        break;
+                    case StatusEffectType.Weak:
+                        Debug.Log($"{target.Name}: [ SUBTRACT EFFECT ] MULTIPLE DAMAGE (Weak) {prop.Amount} time(s)");
+                        target.WeakMultipliers.Remove(prop.Amount);
+                        break;
+                    default:
+                        Debug.Log($"{target.Name}: [ UNREGISTER EFFECT ] {prop.Type}");
+                        break;
+                }
+            }
+        }
+        
+        public static void Miasma(Unit target, float rate)
+        {
+            target.ReceiveDamage(target.MaxHp * rate, SkillAttribute.Physical);
+        }
+
+        public static bool HasEffectType(List<StatusEffectData> effAry, StatusEffectType targetType)
+        {
+            return effAry
+                .SelectMany(ef => ef.Properties)
+                .Any(prop => prop.Type == targetType);
         }
     }
 }

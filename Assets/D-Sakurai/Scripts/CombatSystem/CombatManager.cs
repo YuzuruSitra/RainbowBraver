@@ -6,8 +6,10 @@ using Vector4 = UnityEngine.Vector4;
 
 using Resources.Duty;
 using D_Sakurai.Resources.Enemy;
-
+using D_Sakurai.Resources.Skills.SkillBase;
+using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using D_Sakurai.Scripts.CombatSystem.Units;
+using UnityEngine.Serialization;
 using Unit = D_Sakurai.Scripts.CombatSystem.Units.Unit;
 using CUtil = D_Sakurai.Scripts.CombatSystem.CombatUtilities;
 
@@ -18,6 +20,8 @@ namespace D_Sakurai.Scripts.CombatSystem
     /// </summary>
     public class CombatManager : MonoBehaviour
     {
+        [SerializeField] public float miasmaDamageRate;
+
         private Duty _data;
         private UnitAlly[] _allies;
         
@@ -28,7 +32,7 @@ namespace D_Sakurai.Scripts.CombatSystem
         [System.Serializable]
         public struct DecisionThreshData
         {
-            [Header("行動の閾値(%)の設定。x: 状態異常の解除確率, y: 回復の発動基準体力残量, z: バフ・デバフがかかっていない際の使用確率, w: MPを消費する攻撃スキルの仕様確率")]
+            [Header("行動の閾値(%)の設定。\nx: 状態異常の解除確率\ny: 回復の発動基準体力残量\nz: バフ・デバフがかかっていない際の使用確率\nw: MPを消費する攻撃スキルの仕様確率")]
             [Header("ガンガンいこうぜ")]
             [SerializeField] public Vector4 Offensive;
             [Header("命大事に")]
@@ -142,7 +146,9 @@ namespace D_Sakurai.Scripts.CombatSystem
                     unt.GenericAttackLabel,
                     unt.MDef,
                     unt.Speed,
-                    unt.EnemySkillIds
+                    unt.EnemySkillIds,
+                    unt.GenericSkillAttribute,
+                    unt.SkillThreshold
                     );
             }
             
@@ -158,12 +164,39 @@ namespace D_Sakurai.Scripts.CombatSystem
             (bool, Affiliation) annihilationData;
             do
             {
+                var aliveAllies = _allies.Where(unt => !unt.IsDead).ToArray();
+                var aliveEnemies = enemies.Where(unt => !unt.IsDead).ToArray();
+                
+                foreach (var unt in allUnits)
+                {
+                    unt.UpdateStatusEffects();
+                }
+                
                 // TURN
                 currentTurn++;
-                Turn(allUnits, enemies, currentTurn);
+                var currentUnit = CUtil.GetNextUnit(allUnits);
+                
+                // 眠り
+                if (CUtil.HasEffectType(currentUnit.StatusEffects, StatusEffectType.Sleep))
+                {
+                    Debug.Log($"{currentUnit.Name}: [ SKIP TURN ]");
+                }
+                else
+                {
+                    Turn(allUnits, aliveAllies, aliveEnemies, currentTurn, currentUnit);
+                }
+                
+                // 瘴気
+                if (
+                    !currentUnit.IsDead &&
+                    CUtil.HasEffectType(currentUnit.StatusEffects, StatusEffectType.Miasma)
+                    )
+                {
+                    CUtil.Miasma(currentUnit, miasmaDamageRate);
+                }
                 
                 // check unit health
-                foreach (var unt in allUnits)
+                foreach (var unt in allUnits.Where(unt => !unt.IsDead).ToArray())
                 {
                     unt.HealthCheck();
                 }
@@ -180,27 +213,25 @@ namespace D_Sakurai.Scripts.CombatSystem
         }
 
         /// <summary>
-        /// 戦闘に参加しているUnitが行動を行う期間
+        /// 戦闘に参加しているUnit一体が行動を行う期間
         /// </summary>
         /// <param name="allUnits">全てのUnitを格納した配列</param>
         /// <param name="enemies">敵のUnitを格納した配列</param>
+        /// <param name="allies">プレイヤー側のUnitを格納した配列</param>
         /// <param name="current">現在の経過ターン数</param>
-        private void Turn(Unit[] allUnits, UnitEnemy[] enemies, int current)
+        /// <param name="next">このターン行動するUnit</param>
+        private void Turn(Unit[] allUnits, UnitAlly[] allies, UnitEnemy[] enemies, int current, Unit next)
         {
-            //  PreTurn
-            // ------------------
-            var next = CUtil.GetNextUnit(allUnits);
-            
             //  Eval / Action
             // -----------------------
             if (next is UnitAlly ally)
             {
                 // Eval / Action code for Player
-                CUtil.EvalAlly(ally, allUnits, _allies, enemies, _decisionThreshold);
+                CUtil.EvalAlly(ally, allUnits, allies, enemies, _decisionThreshold);
             }
             else if (next is UnitEnemy enemy)
             {
-                CUtil.EvalEnemy(enemy, allUnits, enemies, _allies);
+                CUtil.EvalEnemy(enemy, allUnits, enemies, allies);
             }
             else
             {

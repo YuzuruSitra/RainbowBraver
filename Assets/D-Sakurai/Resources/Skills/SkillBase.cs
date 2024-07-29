@@ -103,7 +103,7 @@ namespace D_Sakurai.Resources.Skills
 
             // 行動の属性
             public SkillAttribute SkillAttribute;
-
+            
             // 行動の種類
             public SkillType Type;
 

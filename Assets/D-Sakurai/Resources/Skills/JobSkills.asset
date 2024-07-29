@@ -23,5 +23,17 @@ MonoBehaviour:
       IsFriendly: 0
       SkillAttribute: 0
       Type: 0
+      Amount: 20
+      StatusEffectIndex: 0
+  - Name: Simple job skill
+    Description: Perform DeEffect
+    SpecialGaugeIncreaseRate: 0
+    CostMp: 0
+    CostHp: 0
+    SkillProperties:
+    - IsBasic: 0
+      IsFriendly: 1
+      SkillAttribute: 0
+      Type: 3
       Amount: 10
       StatusEffectIndex: 0

@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using D_Sakurai.Resources.Skills;
 using D_Sakurai.Resources.Skills.SkillBase;
 using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using UnityEngine;
 using UnityEngine.UI;
+
+using CUtil = D_Sakurai.Scripts.CombatSystem.CombatUtilities;
 
 namespace D_Sakurai.Scripts.CombatSystem
 {
@@ -80,6 +84,12 @@ namespace D_Sakurai.Scripts.CombatSystem
             
             bool Actioned { get; }
 
+            GameObject GameObject { get; }
+            UnitViewer Viewer { get; }
+            Animator Animator { get; }
+            
+            SkillAttribute GenericSkillAttribute { get; }
+
             // UnitStatusEffectData StatusEffects { get; }
         }
 
@@ -90,62 +100,76 @@ namespace D_Sakurai.Scripts.CombatSystem
         public class Unit : IUnitData
         {
             public string Name { get; }
-            
+
             // 所属
-            public Affiliation Affiliation{ get; }
-            
+            public Affiliation Affiliation { get; }
+
             // 倒されたか
             public bool IsDead { get; private set; }
 
             // 最大HP
-            public int MaxHp{ get; }
+            public int MaxHp { get; }
+
             // 最大MP
-            public int MaxMp{ get; }
-            
+            public int MaxMp { get; }
+
             // HP
             // 戦闘中実際に変動するのはこちらの値
-            public int Hp{ get; private set; }
+            public int Hp { get; private set; }
+
             // MP
             // 戦闘中実際に変動するのはこちらの値
-            public int Mp{ get; private set; }
+            public int Mp { get; private set; }
 
             // 物理攻撃力
-            public float PAtk{ get; }
+            public float PAtk { get; }
+
             // 通常物理攻撃用の技名
-            public string PAtkLabel{ get; }
+            public string PAtkLabel { get; }
+
             // 物理防御力
-            public float PDef{ get; }
+            public float PDef { get; }
 
             // 魔法攻撃力
-            public float MAtk{ get; }
+            public float MAtk { get; }
+
             // 通常魔法攻撃用の技名
-            public string MAtkLabel{ get; }
+            public string MAtkLabel { get; }
+
             // 魔法防御力
-            public float MDef{ get; }
+            public float MDef { get; }
 
             // 素早さ
             public int Speed { get; }
 
-            // そのターン行動したか
+            public SkillAttribute GenericSkillAttribute { get; protected set; }
+
+            // 状態効果の影響を受けるステータスの、補正値
+            public int MpModifier { get; set; }
+            public int PAtkModifier { get; set; }
+            public int PDefModifier { get; set; }
+            public int MAtkModifier { get; set; }
+            public int MDefModifier { get; set; }
+            public int SpeedModifier { get; set; }
+            public List<float> WeakMultipliers { get; set; } = new();
+
+        // そのターン行動したか
             public bool Actioned { get; set; }
 
             public List<StatusEffectData> StatusEffects { get; set; }
 
             // public UnitStatusEffectData StatusEffects { get; }
 
-            private GameObject GameObject { get; set; }
-            private Animator Animator { get; set; }
+            public GameObject GameObject { get; private set; }
+            public UnitViewer Viewer { get; private set; }
+            public Animator Animator { get; private set; }
 
-            // このUnitとして扱うGameObjectを取得する
+            // このUnitとして扱うGameObjectを割り当てる
+            // ほかの実装を優先すべきと判断したのでいったん先送り
             public void AssignGameObject(GameObject obj)
             {
                 GameObject = obj;
-                AssignAnimator(obj);
-            }
-            
-            // このUnitとして扱うGameObjectのAnimatorを取得する
-            private void AssignAnimator(GameObject obj)
-            {
+                Viewer = obj.GetComponent<UnitViewer>();
                 Animator = obj.GetComponent<Animator>();
             }
             
@@ -161,7 +185,10 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// </summary>
             public void HealthCheck()
             {
-                if (Hp <= 0) IsDead = true;
+                if (Hp > 0) return;
+                
+                Debug.Log($"{Name}: [ DEAD ]");
+                IsDead = true;
             }
 
             /// <summary>
@@ -171,6 +198,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             public void ApplyStatusEffect(StatusEffectData ef)
             {
                 ef.Elapsed = 0;
+                
+                CUtil.InitStatusEffect(this, ef);
                 StatusEffects.Add(ef);
             }
 
@@ -181,10 +210,11 @@ namespace D_Sakurai.Scripts.CombatSystem
             {
                 foreach (var ef in StatusEffects)
                 {
+                    // CUtil.ExecuteStatusEffect(this, ef);
                     ef.Elapsed++;
                 }
 
-                StatusEffectData[] removals = StatusEffects.FindAll(ef => ef.Elapsed >= ef.Durability).ToArray();
+                var removals = StatusEffects.FindAll(ef => ef.Elapsed >= ef.Durability).ToArray();
                 foreach (var ef in removals)
                 {
                     RemoveStatusEffect(ef);
@@ -199,9 +229,6 @@ namespace D_Sakurai.Scripts.CombatSystem
                 var target = StatusEffects.Find(ef => !ef.IsFriendly);
                 
                 RemoveStatusEffect(target);
-
-                // nullりそう　参照が入ってそうだから
-                Debug.Log(target);
             }
 
             /// <summary>
@@ -210,6 +237,8 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// <param name="target">無効化する状態効果</param>
             private void RemoveStatusEffect(StatusEffectData target)
             {
+                Debug.Log($"{Name}: [ EFFECT REMOVED ] {target.Name}");
+                CUtil.RemoveStatusEffect(this, target);
                 StatusEffects.Remove(target);
             }
 
@@ -219,6 +248,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// <param name="target"></param>
             public void GiveDeEffect(Unit target)
             {
+                Debug.Log($"{Name}: [ REMOVE EFFECT ] -> {target.Name}");
                 target.RemoveFirstNegativeStatusEffect();
             }
 
@@ -232,7 +262,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 var adjustedAmount = amount;
                 // 値を補正
 
-                Debug.Log($"{Name}: [ GIVE HEAL ] [ {amount} ] ->");
+                Debug.Log($"{Name}: [ GIVE HEAL ] amount: {amount} -> {target.Name}");
                 
                 target.ReceiveHeal(adjustedAmount);
             }
@@ -246,9 +276,11 @@ namespace D_Sakurai.Scripts.CombatSystem
                 var adjustedAmount = amount;
                 // 値を補正
                 
-                Debug.Log($"{Name}: [ RECEIVE HEAL ] -> [ {amount} ] | HP REMAINING: {Hp}");
+                var newHp = Math.Min(Hp, Hp + Mathf.RoundToInt(adjustedAmount));
+                
+                Debug.Log($"{Name}: [ RECEIVE HEAL ] amount: {amount}, HP REMAINING: {newHp}");
 
-                Hp += Mathf.RoundToInt(adjustedAmount);
+                Hp += newHp;
             }
             
             /// <summary>
@@ -256,28 +288,47 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// </summary>
             /// <param name="target">ダメージを与える対象</param>
             /// <param name="amount">素のダメージ量(ステータスによる補正前)</param>
-            public void GiveDamage(Unit target, float amount)
+            /// <param name="attr">使用する技の属性(物/魔)</param>
+            public void GiveDamage(Unit target, float amount, SkillAttribute attr)
             {
-                var adjustedAmount = amount;
-                // 値を補正
+                // 基本ステータスによる補正
+                var adjustedAmount =
+                    GenericSkillAttribute is SkillAttribute.Physical ?
+                        amount + PAtkModifier:
+                        amount + MAtkModifier;
                 
-                Debug.Log($"{Name}: [ GIVE DAMAGE ] [ {amount} ] ->");
+                Debug.Log($"{Name}: [ GIVE DAMAGE ] amount: {adjustedAmount} -> {target.Name}");
                 
-                target.ReceiveDamage(adjustedAmount);
+                target.ReceiveDamage(adjustedAmount, attr);
             }
 
             /// <summary>
             /// ダメージを受ける
             /// </summary>
             /// <param name="amount">素のダメージ量(発動者のステータス補正が乗った、被ダメージ主体が受ける量)</param>
-            public void ReceiveDamage(float amount)
+            /// /// <param name="attr">使用された技の属性(物/魔)</param>
+            public void ReceiveDamage(float amount, SkillAttribute attr)
             {
-                var adjustedAmount = amount;
-                // 値を補正
-                
-                Debug.Log($"{Name}: [ RECEIVE DAMAGE ] -> [ {amount} ] | HP REMAINING: {Hp}");
+                // 基本ステータスによる補正
+                var adjustedAmount =
+                    attr is SkillAttribute.Physical ?
+                    amount - PDef - PDefModifier:
+                    amount - MDef - MDefModifier;
 
-                Hp -= Mathf.RoundToInt(adjustedAmount);
+                // 衰弱補正
+                var multiplier = 1f;
+                if (WeakMultipliers.Count > 0)
+                {
+                    multiplier = WeakMultipliers.Aggregate((prev, cur) => prev + (cur - 1f)) + 1f;
+                }
+
+                adjustedAmount *= multiplier;
+
+                var newHp = Math.Max(0, Hp - Mathf.RoundToInt(adjustedAmount));
+                
+                Debug.Log($"{Name}: [ RECEIVE DAMAGE ] amount: {amount}, HP REMAINING: {newHp}");
+
+                Hp = newHp;
             }
 
             /// <summary>
@@ -287,6 +338,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// <param name="ef">付与する状態効果</param>
             public void GiveEffect(Unit target, StatusEffectData ef)
             {
+                Debug.Log($"{Name}: [ GIVE EFFECT ] {ef.Name} -> {target.Name}");
                 target.ReceiveEffect(ef);
             }
             
@@ -296,19 +348,25 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// <param name="ef">受ける状態効果</param>
             public void ReceiveEffect(StatusEffectData ef)
             {
-                StatusEffects.Add(ef);
+                Debug.Log($"{Name}: [ RECEIVE EFFECT ] {ef.Name} for {ef.Durability} turns");
+                ApplyStatusEffect(ef);
             }
 
             /// <summary>
             /// 一般的な攻撃
             /// </summary>
             /// <param name="target">攻撃対象</param>
+            /// <param name="anger">怒り状態であるか(任意)</param>
             public void GenericAttack(Unit target)
             {
-                float amount = PAtk;
-                // 値を算出
+                var anger = CUtil.HasEffectType(StatusEffects, StatusEffectType.Anger);
                 
-                GiveDamage(target, amount);
+                // TODO: 倍率定数の置き場所を考える
+                var multiplier = 1.5f;
+                
+                var amount = (PAtk + PAtkModifier) * (anger ? multiplier : 1f);
+                
+                GiveDamage(target, amount, GenericSkillAttribute);
             }
 
             protected Unit(string name, Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed)
@@ -342,6 +400,7 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// <summary>
         /// 味方のUnit
         /// </summary>
+        [Serializable]
         public class UnitAlly : Unit
         {
             // ユニットの職業
@@ -380,23 +439,37 @@ namespace D_Sakurai.Scripts.CombatSystem
                 
                 // ヒール・バフデバフ・状態異常技を持っているか先に判定しておく
                 RecognizeSelfSkills();
+
+                GenericSkillAttribute =
+                    Job is 
+                    Job.Gladiator or
+                    Job.Hunter or
+                    Job.Lancer or
+                    Job.Swordsman ? SkillAttribute.Physical : SkillAttribute.Magical;
             }
         }
 
         /// <summary>
         /// 敵のUnit
         /// </summary>
-        public class UnitEnemy : Unit{
-            // 敵ユニットの種類
-            // ScriptableObjectの情報を元に生成する方針に変更したため不要
-            // public int Kind { get; private set; }
+        public class UnitEnemy : Unit
+        {
+            public bool IsUnderSkillCooldown { get; set; }
+            
+            public float SkillThreshold { get; private set; }
 
             public EnemySkillData[] Skills { get; private set; }
             
-            public UnitEnemy(string name, Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, int[] enemySkillIdxs) : base(name, affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
+            public UnitEnemy(string name, Affiliation affiliation, int maxHp, int maxMp, float pAtk, string pAtkLabel, float pDef, float mAtk, string mAtkLabel, float mDef, int speed, int[] enemySkillIdxs, SkillAttribute genericSkillAttribute, float skillThreshold) : base(name, affiliation, maxHp, maxMp, pAtk, pAtkLabel, pDef, mAtk, mAtkLabel, mDef, speed)
             {
                 EnemySkillData[] allSkills = UnityEngine.Resources.Load<EnemySkills>("Skills/EnemySkills").EnemySkillsData;
                 Skills = allSkills.Where((value, idx) => enemySkillIdxs.Contains(idx)).Select(val => val).ToArray();
+
+                IsUnderSkillCooldown = false;
+
+                SkillThreshold = skillThreshold;
+                
+                GenericSkillAttribute = genericSkillAttribute;
             }
         }        
     }

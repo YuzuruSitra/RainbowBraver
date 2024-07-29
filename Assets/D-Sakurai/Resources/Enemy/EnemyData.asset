@@ -15,19 +15,23 @@ MonoBehaviour:
   EnemiesData:
   - Name: Enemy 0
     MaxHp: 100
-    PAtk: 5
-    MAtk: 0
+    PAtk: 8
+    MAtk: 7
     GenericAttackLabel: Enemy 0 generic attack
     PDef: 0
     MDef: 0
     Speed: 1
+    GenericSkillAttribute: 0
+    SkillThreshold: 0.5
     EnemySkillIds: 00000000
   - Name: Enemy 1
     MaxHp: 100
-    PAtk: 0
-    MAtk: 5
+    PAtk: 9
+    MAtk: 6
     GenericAttackLabel: Enemy 1 generic attack
     PDef: 0
     MDef: 0
     Speed: 2
-    EnemySkillIds: 01000000
+    GenericSkillAttribute: 0
+    SkillThreshold: 0.5
+    EnemySkillIds: 02000000

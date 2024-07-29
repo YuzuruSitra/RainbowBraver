@@ -13,10 +13,11 @@ namespace D_Sakurai.Resources.StatusEffects
             MAtk,
             MDef,
             Speed,
+            Miasma,
             Weak,
-            Skip,
+            Sleep,
             Anger,
-            BrainWashed
+            BrainWash
         }
 
         /// <summary>

@@ -18,13 +18,23 @@ MonoBehaviour:
     SkillProperties:
     - SkillAttribute: 0
       Type: 0
-      Amount: 2
+      Amount: 4
       StatusEffect:
         IsFriendly: 0
         Name: 
         Description: 
         Durability: 0
         Elapsed: 0
+        Properties: []
+    - SkillAttribute: 0
+      Type: 2
+      Amount: 4
+      StatusEffect:
+        IsFriendly: 0
+        Name: 
+        Description: 
+        Durability: 0
+        Elapsed: 1
         Properties: []
   - Name: Dummy magical attack
     Description: Perform magical attack
@@ -39,16 +49,18 @@ MonoBehaviour:
         Durability: 0
         Elapsed: 0
         Properties: []
-  - Name: Dummy magical attack
-    Description: Perform magical attack
+  - Name: Dummy effect
+    Description: Perform effect
     SkillProperties:
     - SkillAttribute: 1
-      Type: 0
+      Type: 2
       Amount: 2
       StatusEffect:
         IsFriendly: 0
-        Name: 
+        Name: Brainwash Effect
         Description: 
-        Durability: 0
-        Elapsed: 0
-        Properties: []
+        Durability: 3
+        Elapsed: 3
+        Properties:
+        - Type: 9
+          Amount: 15

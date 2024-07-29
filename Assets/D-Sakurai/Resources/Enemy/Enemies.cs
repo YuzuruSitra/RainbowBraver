@@ -1,3 +1,4 @@
+using D_Sakurai.Resources.Skills.SkillBase;
 using UnityEngine;
 
 namespace D_Sakurai.Resources.Enemy
@@ -26,6 +27,12 @@ namespace D_Sakurai.Resources.Enemy
         public float MDef;
 
         public int Speed;
+
+        // 通常攻撃の属性
+        public SkillAttribute GenericSkillAttribute;
+
+        // スキルを使用するか決定する際の閾値(0. - 1.)
+        public float SkillThreshold;
 
         public int[] EnemySkillIds;
     }

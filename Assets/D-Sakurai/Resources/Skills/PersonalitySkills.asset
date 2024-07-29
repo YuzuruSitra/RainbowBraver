@@ -23,5 +23,5 @@ MonoBehaviour:
       IsFriendly: 0
       SkillAttribute: 1
       Type: 1
-      Amount: 5
+      Amount: 10
       StatusEffectIndex: 0
