@@ -238,7 +238,10 @@ namespace D_Sakurai.Scripts.CombatSystem
             private void RemoveStatusEffect(StatusEffectData target)
             {
                 Debug.Log($"{Name}: [ EFFECT REMOVED ] {target.Name}");
+                
+                // パラメータの変更を伴う効果の場合調整パラメータを戻す
                 CUtil.RemoveStatusEffect(this, target);
+                
                 StatusEffects.Remove(target);
             }
 
@@ -280,7 +283,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                 
                 Debug.Log($"{Name}: [ RECEIVE HEAL ] amount: {amount}, HP REMAINING: {newHp}");
 
-                Hp += newHp;
+                Hp = newHp;
             }
             
             /// <summary>

@@ -133,6 +133,10 @@ namespace D_Sakurai.Scripts.CombatSystem
                                   (subject.PersonalitySkill.IsAttackSkill && enoughMpForPersonalitySkill);
             
             // DEEFFECT (remove debuff)
+            // is not brainwashed &&
+            // party has ally with bad effect &&
+            // has usable deEffect skill &&
+            // random value is less than decision threshold
             if (!brainWashed && deEffectables.Length > 0 && hasUsableDeEffect && Random.value < decisionThresh.x)
             {
                 CallBraverSkill(subject,
@@ -142,6 +146,9 @@ namespace D_Sakurai.Scripts.CombatSystem
                 );
             }
             // JOB / PERSONALITY SKILL (HEAL)
+            // is not brainwashed &&
+            // party has ally can receive heal &&
+            // has usable heal skill
             else if (!brainWashed && healables.Length > 0 && hasUsableHeal)
             {
                 Unit healTarget = healables[0];
@@ -162,6 +169,9 @@ namespace D_Sakurai.Scripts.CombatSystem
                 );
             }
             // JOB / PERSONALITY SKILL (EFFECT)
+            // is not brainwashed &&
+            // has usable effect skill &&
+            // random value is less than decision threshold 
             else if (!brainWashed && hasUsableEffect && Random.value < decisionThresh.z)
             {
                 CallBraverSkill(subject,
@@ -171,6 +181,8 @@ namespace D_Sakurai.Scripts.CombatSystem
                 );
             }
             // JOB / PERSONALITY SKILL (ATTACK)
+            // has usable attack skill &&
+            // random value is less than decision threshold
             else if (hasUsableAttack && Random.value > decisionThresh.w)
             {
                 Unit attackTarget = aliveEnemies[0];
