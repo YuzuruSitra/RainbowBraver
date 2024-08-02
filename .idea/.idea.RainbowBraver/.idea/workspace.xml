@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="" />
+    <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Shoma/Assets/Background/BG_Enviroment/BG_Mount/BG_T_Mount/1001_Normal_OpenGL.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Shoma/Assets/Background/BG_Enviroment/BG_Mount/BG_T_Mount/1001_Normal_OpenGL.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +34,7 @@
     <setting file="mock://C:/Users/skr/Documents/UnityProjects/RainbowBraver/Assets/D-Sakurai/Scripts/CombatSystem/CombatManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/skr/Documents/UnityProjects/RainbowBraver/Assets/D-Sakurai/Scripts/CombatSystem/CombatUtilities.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/skr/Documents/UnityProjects/RainbowBraver/Assets/D-Sakurai/Scripts/CombatSystem/CombatUtilities.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{

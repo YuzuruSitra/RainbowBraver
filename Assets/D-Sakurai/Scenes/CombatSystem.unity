@@ -214,13 +214,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3235f19b18964ab7862b637e45444278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miasmaDamageRate: 0.3
-  Thresholds:
-    Offensive: {x: 0, y: 0, z: 0, w: 0}
-    Defensive: {x: 0, y: 0, z: 0, w: 0}
-    Technical: {x: 100, y: 90, z: 60, w: 50}
-    Default: {x: 0, y: 0, z: 0, w: 0}
-  Strategy: 2
+  thresholds:
+    offensive: {x: 0, y: 0, z: 0, w: 0}
+    defensive: {x: 0, y: 0, z: 0, w: 0}
+    technical: {x: 0, y: 0, z: 0, w: 0}
+    normal: {x: 0, y: 0, z: 0, w: 0}
+  strategy: 0
   logCombat: 0
 --- !u!1 &376066851
 GameObject:

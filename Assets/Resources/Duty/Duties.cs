@@ -13,6 +13,8 @@ namespace Resources.Duty
     {
         public string Title;
         public string Description;
+
+        public Vector3 IconPosition;
         
         public Phase[] Phases;
     }

@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Button text="Button" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; white-space: nowrap;" />
+    <ui:Label text="Label" display-tooltip-when-elided="true" />
+    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/D-Shoma/Assets/In_Room/room/Jouzoudai/Magic_Circle/3.png?fileID=2800000&amp;guid=f4a66ef5bf29b284c922aed6ae1cba4d&amp;type=3#3&apos;); width: 2048px; height: 2048px; scale: 1 1; transform-origin: center; -unity-background-scale-mode: scale-to-fit; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0;" />
+</ui:UXML>

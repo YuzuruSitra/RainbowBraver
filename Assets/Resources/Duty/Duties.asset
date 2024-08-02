@@ -15,5 +15,11 @@ MonoBehaviour:
   DutiesData:
   - Title: Dummy duty
     Description: Dummy duty data
+    IconPosition: {x: 0.6, y: 0.2, z: 0.3}
+    Phases:
+    - EnemyIds: 0000000001000000
+  - Title: Dummy duty
+    Description: Dummy duty data
+    IconPosition: {x: 0.2, y: 0.5, z: 0.6}
     Phases:
     - EnemyIds: 0000000001000000
