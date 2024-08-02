@@ -26,16 +26,6 @@ MonoBehaviour:
         Durability: 0
         Elapsed: 0
         Properties: []
-    - SkillAttribute: 0
-      Type: 2
-      Amount: 4
-      StatusEffect:
-        IsFriendly: 0
-        Name: 
-        Description: 
-        Durability: 0
-        Elapsed: 1
-        Properties: []
   - Name: Dummy magical attack
     Description: Perform magical attack
     SkillProperties:
