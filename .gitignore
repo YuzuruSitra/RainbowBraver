@@ -82,4 +82,4 @@ ehthumbs.db
 Thumbs.db
 
 # ignore .idea directory from JetBrains Rider
-.idea/
+.idea/*

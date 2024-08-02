@@ -13,6 +13,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/YuzuruSitra/RainbowBraver.git",
+    "accountId": "e879f66b-7500-420d-b3ed-fe28bdbd27db"
+  }
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Users/skr/Documents/UnityProjects/RainbowBraver/Assets/D-Sakurai/Resources/Skills/EnemySkills.asset" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/skr/Documents/UnityProjects/RainbowBraver/Assets/D-Sakurai/Resources/Skills/EnemySkills.asset" root0="SKIP_HIGHLIGHTING" />
@@ -36,6 +42,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Standalone Player.Start Unity.executor": "Run",
+    "git-widget-placeholder": "combatSystem",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -144,6 +151,17 @@
     <option name="unityProjectFolder" value="true" />
   </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。" />
