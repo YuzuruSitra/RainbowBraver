@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using D_Sakurai.Resources.Skills;
 using D_Sakurai.Resources.Skills.SkillBase;
 using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using UnityEngine;
-using UnityEngine.UI;
 
 using CUtil = D_Sakurai.Scripts.CombatSystem.CombatUtilities;
 
@@ -29,34 +27,6 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// UnitAllyの性格を表すEnum
         /// </summary>
         public enum Personality{Active, Sociable, Humble, Intelligent}
-
-        public struct UnitStatusEffectData
-        {
-            public float _hp { get; }
-            public float _mp{ get; }
-
-            public float _pAtk{ get; }
-            public float _pDef{ get; }
-
-            public float _mAtk{ get; }
-            public float _mDef{ get; }
-
-            public float _speed{ get; }
-
-            public UnitStatusEffectData(float value = 0)
-            {
-                _hp = value;
-                _mp = value;
-
-                _pAtk = value;
-                _pDef = value;
-
-                _mAtk = value;
-                _mDef = value;
-
-                _speed = value;
-            }
-        }
 
         /// <summary>
         /// ユニットのインターフェイス
@@ -359,15 +329,11 @@ namespace D_Sakurai.Scripts.CombatSystem
             /// 一般的な攻撃
             /// </summary>
             /// <param name="target">攻撃対象</param>
-            /// <param name="anger">怒り状態であるか(任意)</param>
             public void GenericAttack(Unit target)
             {
                 var anger = CUtil.HasEffectType(StatusEffects, StatusEffectType.Anger);
                 
-                // TODO: 倍率定数の置き場所を考える
-                var multiplier = 1.5f;
-                
-                var amount = (PAtk + PAtkModifier) * (anger ? multiplier : 1f);
+                var amount = (PAtk + PAtkModifier) * (anger ? CombatManager.AngerDamageMultiplier : 1f);
                 
                 GiveDamage(target, amount, GenericSkillAttribute);
             }
@@ -419,7 +385,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             // public int PersonalitySkillIndex{ get; private set; }
             public BraverSkillData PersonalitySkill { get; private set; }
 
-            public float FriendshipLevel;
+            public float FriendshipLevel { get; private set; }
 
             // 回復技、エフェクト技(状態異常・バフ・デバフ)、エフェクト解除技をそれぞれ持っているか
             public bool HasHeal{ get; private set; }

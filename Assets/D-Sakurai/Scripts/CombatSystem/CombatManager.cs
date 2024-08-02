@@ -6,10 +6,8 @@ using Vector4 = UnityEngine.Vector4;
 
 using Resources.Duty;
 using D_Sakurai.Resources.Enemy;
-using D_Sakurai.Resources.Skills.SkillBase;
 using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using D_Sakurai.Scripts.CombatSystem.Units;
-using UnityEngine.Serialization;
 using Unit = D_Sakurai.Scripts.CombatSystem.Units.Unit;
 using CUtil = D_Sakurai.Scripts.CombatSystem.CombatUtilities;
 
@@ -20,7 +18,8 @@ namespace D_Sakurai.Scripts.CombatSystem
     /// </summary>
     public class CombatManager : MonoBehaviour
     {
-        [SerializeField] public float miasmaDamageRate;
+        public const float MiasmaDamageRate = .3f;
+        public const float AngerDamageMultiplier = 1.5f;
 
         private Duty _data;
         private UnitAlly[] _allies;
@@ -29,25 +28,25 @@ namespace D_Sakurai.Scripts.CombatSystem
 
         private float _specialAttackGauge;
         
-        [System.Serializable]
+        [Serializable]
         public struct DecisionThreshData
         {
             [Header("行動の閾値(%)の設定。\nx: 状態異常の解除確率\ny: 回復の発動基準体力残量\nz: バフ・デバフがかかっていない際の使用確率\nw: MPを消費する攻撃スキルの仕様確率")]
             [Header("ガンガンいこうぜ")]
-            [SerializeField] public Vector4 Offensive;
+            [SerializeField] public Vector4 offensive;
             [Header("命大事に")]
-            [SerializeField] public Vector4 Defensive;
+            [SerializeField] public Vector4 defensive;
             [Header("搦め手優先")]
-            [SerializeField] public Vector4 Technical;
+            [SerializeField] public Vector4 technical;
             [Header("おまかせ")]
-            [SerializeField] public Vector4 Default;
+            [SerializeField] public Vector4 normal;
         }
 
-        [SerializeField] private DecisionThreshData Thresholds;
+        [SerializeField] private DecisionThreshData thresholds;
         private Vector4 _decisionThreshold;
 
         private enum Strategies {Offensive, Defensive, Technical, Default};
-        [SerializeField] private Strategies Strategy;
+        [SerializeField] private Strategies strategy;
 
         [SerializeField] private bool logCombat; 
         
@@ -71,19 +70,19 @@ namespace D_Sakurai.Scripts.CombatSystem
             
             // 各種閾値を0. - 1.に
             // ここ処理ダサい
-            switch (Strategy)
+            switch (strategy)
             {
                 case Strategies.Offensive:
-                    _decisionThreshold = Thresholds.Offensive / 100;
+                    _decisionThreshold = thresholds.offensive / 100;
                     break;
                 case Strategies.Defensive:
-                     _decisionThreshold = Thresholds.Defensive / 100;
+                     _decisionThreshold = thresholds.defensive / 100;
                     break;
                 case Strategies.Technical:
-                     _decisionThreshold = Thresholds.Technical / 100;
+                     _decisionThreshold = thresholds.technical / 100;
                     break;
                 case Strategies.Default:
-                     _decisionThreshold = Thresholds.Default / 100;
+                     _decisionThreshold = thresholds.normal / 100;
                     break;
             }
 
@@ -119,15 +118,14 @@ namespace D_Sakurai.Scripts.CombatSystem
             // -------------------
             
             // Load all enemy data from scriptable
-            // TODO: load > .Select > .toArrayのほうが安い？(そんなことなさそうなので、そんなことないと検証する必要がある)
             // あるとしたら一度全て読んでフィルタする(現行)よりすぐGCしてくれる？ 不要な変数が存在しなくなるから
             EnemyData[] enemiesData = UnityEngine.Resources.Load<Enemies>("Enemy/EnemyData").EnemiesData;
 
             // Store needed EnemyData in enemies
             EnemyData[] neededEnemyData = new EnemyData[phaseData.EnemyIds.Length];
-            foreach (var (value, idx) in phaseData.EnemyIds.Select((value, idx) => (value, idx)))
+            foreach (var (enemyIdx, arrayIdx) in phaseData.EnemyIds.Select((value, idx) => (value, idx)))
             {
-                neededEnemyData[idx] = enemiesData[value];
+                neededEnemyData[arrayIdx] = enemiesData[enemyIdx];
             }
 
             // List of instantiated UnitEnemy
@@ -192,7 +190,7 @@ namespace D_Sakurai.Scripts.CombatSystem
                     CUtil.HasEffectType(currentUnit.StatusEffects, StatusEffectType.Miasma)
                     )
                 {
-                    CUtil.Miasma(currentUnit, miasmaDamageRate);
+                    CUtil.Miasma(currentUnit, MiasmaDamageRate);
                 }
                 
                 // check unit health
