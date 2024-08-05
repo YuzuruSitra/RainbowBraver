@@ -16,7 +16,7 @@ public class Lift : MonoBehaviour
     [SerializeField]
     private Lift _pairLift;
 
-    [Header("ˆÚ“®‚Ì‘Ò‹@ŠÔ")]
+    [Header("ç§»å‹•æ™‚ã®å¾…æ©Ÿæ™‚é–“")]
     [SerializeField] 
     private float _waitTime;
     private RoomDetails _roomDetails;
@@ -41,7 +41,7 @@ public class Lift : MonoBehaviour
     {
         if (other.CompareTag("RoomNPC"))
         {
-            // è‘O‚©‚ç‚ÌN“ü‚Ì‚İ‹–‰Â
+            // æ‰‹å‰ã‹ã‚‰ã®ä¾µå…¥ã®ã¿è¨±å¯
             Vector3 direction = (transform.position - other.transform.position).normalized;
             if (direction.z <= 0) return;
             _targetObj = other.gameObject;
@@ -54,7 +54,7 @@ public class Lift : MonoBehaviour
         BraverController braver = _targetObj.GetComponent<BraverController>();
         braver.IsFreedom = false;
 
-        // ƒGƒ“ƒgƒŠ[ 
+        // ï¿½Gï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ 
         braver.InnNPCMover.SetTarGetPos(_entryPos);
         while (!braver.InnNPCMover.IsAchieved)
         {
@@ -62,11 +62,11 @@ public class Lift : MonoBehaviour
             yield return null;
         }
 
-        // ŠK‘w‚Ìƒ[ƒv
+        // éšå±¤ã®ãƒ¯ãƒ¼ãƒ—
         _targetObj.transform.position = _pairLift.EntryPos;
         yield return _waitTime;
 
-        // ‘Şo    
+        // ï¿½Şo    
         braver.InnNPCMover.SetTarGetPos(_pairLift.NPCOutPos);
         while (!braver.InnNPCMover.IsAchieved)
         {

@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559e4c885a934cc3a8c39f42a7f0420f, type: 3}
+  m_Name: EnemySkills
+  m_EditorClassIdentifier: 
+  EnemySkillsData:
+  - Name: Dummy physical attack
+    Description: Perform physical attack
+    SkillProperties:
+    - SkillAttribute: 0
+      Type: 0
+      Amount: 4
+      StatusEffect:
+        IsFriendly: 0
+        Name: 
+        Description: 
+        Durability: 0
+        Elapsed: 0
+        Properties: []
+    - SkillAttribute: 0
+      Type: 2
+      Amount: 4
+      StatusEffect:
+        IsFriendly: 0
+        Name: 
+        Description: 
+        Durability: 0
+        Elapsed: 1
+        Properties: []
+  - Name: Dummy magical attack
+    Description: Perform magical attack
+    SkillProperties:
+    - SkillAttribute: 1
+      Type: 0
+      Amount: 2
+      StatusEffect:
+        IsFriendly: 0
+        Name: 
+        Description: 
+        Durability: 0
+        Elapsed: 0
+        Properties: []
+  - Name: Dummy effect
+    Description: Perform effect
+    SkillProperties:
+    - SkillAttribute: 1
+      Type: 2
+      Amount: 2
+      StatusEffect:
+        IsFriendly: 0
+        Name: Brainwash Effect
+        Description: 
+        Durability: 3
+        Elapsed: 3
+        Properties:
+        - Type: 9
+          Amount: 15
