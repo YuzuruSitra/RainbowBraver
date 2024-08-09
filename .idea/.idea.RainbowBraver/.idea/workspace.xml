@@ -5,12 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Materials.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Materials/RoadPreview.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Materials/RoadPreview.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyButton.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyButton.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyIconSetter.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyIconSetter.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyIconHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyIconHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyInfo.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Shoma/Assets/Background/BG_Enviroment/BG_Mount/BG_T_Mount/1001_Normal_OpenGL.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Shoma/Assets/Background/BG_Enviroment/BG_Mount/BG_T_Mount/1001_Normal_OpenGL.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,12 +30,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/YuzuruSitra/RainbowBraver.git",
-    "accountId": "e879f66b-7500-420d-b3ed-fe28bdbd27db"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/YuzuruSitra/RainbowBraver.git&quot;,
+    &quot;accountId&quot;: &quot;e879f66b-7500-420d-b3ed-fe28bdbd27db&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Users/skr/Documents/UnityProjects/RainbowBraver/Assets/D-Sakurai/Resources/Skills/EnemySkills.asset" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/skr/Documents/UnityProjects/RainbowBraver/Assets/D-Sakurai/Resources/Skills/EnemySkills.asset" root0="SKIP_HIGHLIGHTING" />
@@ -50,7 +60,8 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Standalone Player.Start Unity.executor": "Run",
-    "git-widget-placeholder": "combatSystem",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,13 +71,13 @@
   },
   "keyToStringList": {
     "rider.external.source.directories": [
-      "C:\\Users\\S1r4n\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\S1r4n\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\S1r4n\\AppData\\Local\\Symbols\\src"
+      "C:\\Users\\sabarin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\sabarin\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\sabarin\\AppData\\Local\\Symbols\\src"
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Attach to Unity Editor.Unity エディターにアタッチ">
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="ユニットテスト (バッチモード)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\DevDataGit\RainbowBraver -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
@@ -99,7 +110,7 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Unity エディターにアタッチ" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
@@ -109,7 +120,7 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Unity エディターにアタッチして再生" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
@@ -136,6 +147,7 @@
       <workItem from="1720923729782" duration="571000" />
       <workItem from="1720956789239" duration="6590000" />
       <workItem from="1720988581142" duration="6655000" />
+      <workItem from="1723202855978" duration="3000000" />
     </task>
     <task id="LOCAL-00001" summary="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。">
       <option name="closed" value="true" />

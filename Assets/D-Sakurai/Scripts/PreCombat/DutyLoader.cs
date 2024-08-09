@@ -5,10 +5,9 @@ namespace D_Sakurai.Scripts.PreCombat
 {
     public class DutyLoader : MonoBehaviour
     {
-        [SerializeField] private GameObject iconParent;
-        [SerializeField] private GameObject iconPrefab;
         [SerializeField] private Terrain terrain;
         [SerializeField] private float heightScale;
+        [SerializeField] private IconSetter _iconSetter;
 
         private Duty[] _duties;
 
@@ -18,15 +17,15 @@ namespace D_Sakurai.Scripts.PreCombat
             
             _duties = UnityEngine.Resources.Load<Duties>("Duty/Duties").DutiesData;
 
-            foreach (var d in _duties)
-            {
-                var icon = Instantiate(iconPrefab, iconParent.transform, true);
+            _iconSetter.SetIcons();
+        }
 
-                var ip = d.IconPosition;
-                var wPos = new Vector3(ip.x * tScale.x, ip.y * heightScale, ip.z * tScale.z);
+        public DutyInfo GetDutyInfo(int idx)
+        {
+            var duty = _duties[idx];
 
-                icon.transform.position = wPos;
-            }
+            var result = new DutyInfo(duty.Title, duty.Description);
+            return result;
         }
 
         // Update is called once per frame
