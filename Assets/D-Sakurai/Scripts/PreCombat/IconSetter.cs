@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using System.Linq;
+using D_Sakurai.Scripts.PreCombat;
 
 public class IconSetter : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class IconSetter : MonoBehaviour
 
     [SerializeField] private Camera MainCam;
 
-    public void SetIcons()
+    public void SetIcons(DutyLoader loaderInstance)
     {
         var nSetters = SetterParent.childCount;
         var setters = new Transform[nSetters];

@@ -1,13 +1,19 @@
 using D_Sakurai.Scripts.CombatSystem.Units;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace D_Sakurai.Scripts
 {
-    public class SceneTransitioner
+    public static class SceneTransitioner
     {
-        public static void Transition(string name)
+        public static void TransitionToCombat(int id, UnitAlly[] allies)
         {
-            SceneManager.LoadScene(name);
+            SceneManager.sceneLoaded += (next, mode) =>
+            {
+                
+            };
+
+            SceneManager.LoadScene("CombatSystem");
         }
     }
 }

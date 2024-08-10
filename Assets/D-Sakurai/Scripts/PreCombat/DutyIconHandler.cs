@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace D_Sakurai.Scripts.PreCombat
@@ -15,7 +16,8 @@ namespace D_Sakurai.Scripts.PreCombat
             _btn = GetComponent<Button>();
             _btn.clicked += () =>
             {
-                SceneTransitioner.Transition("CombatSystem");
+                SceneManager.LoadScene("CombatSystem");
+                // SceneTransitioner.Transition("CombatSystem");
             };
         }
     }
