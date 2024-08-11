@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Button = UnityEngine.UIElements.Button;
 
 namespace D_Sakurai.Scripts.PreCombat
 {
     public class DutyButton : MonoBehaviour
     {
-        [SerializeField] private int DutyIdx;
         private DutyLoader _loader;
 
         public void SetLoader(DutyLoader loaderInstance)
@@ -14,14 +12,15 @@ namespace D_Sakurai.Scripts.PreCombat
             _loader = loaderInstance;
         }
 
-        public void SetEvent()
+        public void SetEvent(int dutyIdx)
         {
             var btn = GetComponent<Button>();
-
-            btn.clicked += () =>
+            
+            btn.onClick.AddListener(() =>
             {
-                SceneTransitioner.TransitionToCombat(DutyIdx, _loader.GetAllies());
-            };
+                Debug.Log($"Call Scenetransitioner.TransitionToCombat().\nDuty idx: {dutyIdx}, allies: {_loader.GetAllies()}");
+                SceneTransitioner.TransitionToCombat(dutyIdx, _loader.GetAllies());
+            });
         }
     }
 }

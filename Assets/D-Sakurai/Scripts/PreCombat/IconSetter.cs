@@ -25,9 +25,15 @@ public class IconSetter : MonoBehaviour
         
         foreach (var str in setters)
         {
+            var holder = str.gameObject.GetComponent<IconDataHolder>();
+            
             var btn = Instantiate(ButtonPrefab, ButtonParent);
 
             btn.transform.position = MainCam.WorldToScreenPoint(str.position);
+
+            var btnScript = btn.GetComponent<DutyButton>();
+            btnScript.SetLoader(loaderInstance);
+            btnScript.SetEvent(holder.GetDutyIdx());
             
             str.gameObject.SetActive(false);
         }

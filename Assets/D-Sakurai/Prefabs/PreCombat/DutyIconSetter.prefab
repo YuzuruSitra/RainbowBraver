@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7662405147002874220}
   - component: {fileID: 3317109300569887244}
+  - component: {fileID: -5267254438909777202}
   m_Layer: 0
   m_Name: DutyIconSetter
   m_TagString: Untagged
@@ -162,19 +163,19 @@ MonoBehaviour:
     useClippedPercent: 0
     keys: []
   _clipFromSample:
-    position: {x: 0, y: 0, z: 0}
-    up: {x: 0, y: 0, z: 0}
-    forward: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    size: 0
+    position: {x: 19.280073, y: 4.935475, z: -0.28708267}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.59381723, y: -0.14628416, z: 0.7911902}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
     percent: 0
   _clipToSample:
-    position: {x: 0, y: 0, z: 0}
-    up: {x: 0, y: 0, z: 0}
-    forward: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    size: 0
-    percent: 0
+    position: {x: 89.15107, y: 0, z: 16.98766}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.9103821, y: -0.2540262, z: 0.3266117}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
+    percent: 1
   _loopSamples: 0
   _clipFrom: 0
   _clipTo: 1
@@ -211,29 +212,29 @@ MonoBehaviour:
     applyScaleX: 0
     applyScaleY: 0
     applyScaleZ: 0
-    targetUser: {fileID: 0}
+    targetUser: {fileID: 3317109300569887244}
   targetRigidbody: {fileID: 0}
   targetRigidbody2D: {fileID: 0}
   targetTransform: {fileID: 7662405147002874220}
   _result:
-    position: {x: 0, y: 0, z: 0}
-    up: {x: 0, y: 0, z: 0}
-    forward: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    size: 0
-    percent: 0
+    position: {x: 89.15107, y: 0, z: 16.98766}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.9103821, y: -0.2540262, z: 0.3266117}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
+    percent: 1
   _finalResult:
-    position: {x: 0, y: 0, z: 0}
-    up: {x: 0, y: 0, z: 0}
-    forward: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    size: 0
-    percent: 0
+    position: {x: 89.15107, y: 0, z: 16.98766}
+    up: {x: 0, y: 1, z: 0}
+    forward: {x: 0.9103821, y: -0.2540262, z: 0.3266117}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    size: 1
+    percent: 1
   wrapMode: 0
   followMode: 0
   autoStartPosition: 0
   _follow: 0
-  _startPosition: 0
+  _startPosition: 1
   preserveUniformSpeedWithOffset: 0
   _followSpeed: 1
   _followDuration: 1
@@ -247,3 +248,16 @@ MonoBehaviour:
   _unityOnBeginningReached:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-5267254438909777202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7269365590559958723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c905ad123b3a40f49fca347a4961ec7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DutyIdx: 0

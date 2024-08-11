@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/CombatSequencer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/CombatSequencer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconDataHolder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconDataHolder.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyIconHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyIconHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyButton.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyButton.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyIconSetter.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyIconSetter.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatPrepare.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatPrepare.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconSetter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconSetter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs" afterDir="false" />
     </list>
@@ -142,7 +141,8 @@
       <workItem from="1720956789239" duration="6590000" />
       <workItem from="1720988581142" duration="6655000" />
       <workItem from="1723202855978" duration="3194000" />
-      <workItem from="1723294070332" duration="5989000" />
+      <workItem from="1723294070332" duration="6593000" />
+      <workItem from="1723366516142" duration="1954000" />
     </task>
     <task id="LOCAL-00001" summary="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。">
       <option name="closed" value="true" />
