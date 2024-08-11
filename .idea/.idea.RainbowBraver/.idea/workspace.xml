@@ -4,16 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconDataHolder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconDataHolder.cs.meta" afterDir="false" />
+    <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="UIからID付きでシーンチェンジできるように実装">
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/InfoPanel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/InfoPanel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/Utility/DragCameraControl.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/Utility/DragCameraControl.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyButton.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyButton.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyIconSetter.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Prefabs/PreCombat/DutyIconSetter.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatPrepare.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatPrepare.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconSetter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconSetter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Duty/Duties.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +144,7 @@
       <workItem from="1720988581142" duration="6655000" />
       <workItem from="1723202855978" duration="3194000" />
       <workItem from="1723294070332" duration="6593000" />
-      <workItem from="1723366516142" duration="1954000" />
+      <workItem from="1723366516142" duration="14683000" />
     </task>
     <task id="LOCAL-00001" summary="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。">
       <option name="closed" value="true" />
@@ -152,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712844459866</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="UIからID付きでシーンチェンジできるように実装">
+      <option name="closed" value="true" />
+      <created>1723368803855</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1723368803855</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,6 +190,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="UIからID付きでシーンチェンジできるように実装" />
+    <option name="LAST_COMMIT_MESSAGE" value="UIからID付きでシーンチェンジできるように実装" />
   </component>
 </project>

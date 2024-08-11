@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3601401101824134486}
   - component: {fileID: 6499580752450847183}
   - component: {fileID: 8515180793811131263}
-  - component: {fileID: 5626523848676564821}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5626523848676564821
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7207222594535000896}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7269365590559958723
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,11 +203,11 @@ MonoBehaviour:
   targetRigidbody2D: {fileID: 0}
   targetTransform: {fileID: 7662405147002874220}
   _result:
-    position: {x: 89.15107, y: 0, z: 16.98766}
-    up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.9103821, y: -0.2540262, z: 0.3266117}
-    color: {r: 1, g: 1, b: 1, a: 1}
-    size: 1
+    position: {x: 0, y: 0, z: 0}
+    up: {x: 0, y: 0, z: 0}
+    forward: {x: 0, y: 0, z: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    size: 0
     percent: 1
   _finalResult:
     position: {x: 89.15107, y: 0, z: 16.98766}

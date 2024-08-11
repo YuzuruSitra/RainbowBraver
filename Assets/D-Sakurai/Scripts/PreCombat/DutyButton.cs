@@ -7,17 +7,19 @@ namespace D_Sakurai.Scripts.PreCombat
     {
         private DutyLoader _loader;
 
-        public void SetLoader(DutyLoader loaderInstance)
+        public void SetEvent(DutyLoader loader, InfoPanel panel, int dutyIdx)
         {
-            _loader = loaderInstance;
-        }
-
-        public void SetEvent(int dutyIdx)
-        {
+            _loader = loader;
+            
             var btn = GetComponent<Button>();
             
-            btn.onClick.AddListener(() =>
+            btn.onClick.AddListener(async () =>
             {
+                Debug.Log("close");
+                await panel.Close();
+                Debug.Log("open");
+                panel.Open(dutyIdx);
+                
                 Debug.Log($"Call Scenetransitioner.TransitionToCombat().\nDuty idx: {dutyIdx}, allies: {_loader.GetAllies()}");
                 SceneTransitioner.TransitionToCombat(dutyIdx, _loader.GetAllies());
             });

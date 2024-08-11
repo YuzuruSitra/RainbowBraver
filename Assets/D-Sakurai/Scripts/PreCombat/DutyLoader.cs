@@ -8,9 +8,8 @@ namespace D_Sakurai.Scripts.PreCombat
     public class DutyLoader : MonoBehaviour
     {
         [SerializeField] private Terrain Terrain;
-        // [SerializeField] private float HeightScale;
         [SerializeField] private IconSetter IconSetter;
-
+        
         [SerializeField] private UnitAlly[] Allies;
 
         public UnitAlly[] GetAllies()
@@ -29,11 +28,15 @@ namespace D_Sakurai.Scripts.PreCombat
             IconSetter.SetIcons(this);
         }
 
-        public DutyInfo GetDutyInfo(int idx)
+        public Duty GetDuty(int idx)
         {
-            var duty = _duties[idx];
-
-            var result = new DutyInfo(duty.Title, duty.Description);
+            if (idx < 0 || idx >= _duties.Length )
+            {
+                Debug.LogError($"Given duty index {idx} is out of range. (_duties.Length: {_duties.Length})");
+                return Duty.Empty();
+            }
+            
+            var result = _duties[idx];
             return result;
         }
     }
