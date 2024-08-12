@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using System.Linq;
+using D_Sakurai.Scripts.Utility;
 
 namespace D_Sakurai.Scripts.PreCombat
 {
@@ -17,6 +18,7 @@ namespace D_Sakurai.Scripts.PreCombat
         [SerializeField] private InfoPanel InfoPanel;
 
         [SerializeField] private Camera MainCam;
+        [SerializeField] private DragCameraControl CameraController;
 
         private (Transform, RectTransform)[] _btnData;
 
@@ -43,7 +45,7 @@ namespace D_Sakurai.Scripts.PreCombat
 
                 // UIのボタンのイベントを設定する
                 var btnScript = uiBtn.GetComponent<DutyButton>();
-                btnScript.SetEvent(loaderInstance, InfoPanel, holder.GetDutyIdx());
+                btnScript.SetEvent(loaderInstance, InfoPanel, holder.GetDutyIdx(), CameraController, setter.position);
 
                 // プレビュー用のキューブを消す
                 setter.GetChild(0).gameObject.SetActive(false);
@@ -59,7 +61,10 @@ namespace D_Sakurai.Scripts.PreCombat
             {
                 if (!data.Item2) continue;
 
-                data.Item2.position = MainCam.WorldToScreenPoint(data.Item1.position);
+                var outOfFrame = new Vector3(Screen.width, Screen.height, 0f);
+                var screenPos = MainCam.WorldToScreenPoint(data.Item1.position);
+
+                data.Item2.position = screenPos.z > 0 ? screenPos : outOfFrame;
             }
         }
     }

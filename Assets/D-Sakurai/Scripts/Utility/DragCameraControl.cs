@@ -1,6 +1,9 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace D_Sakurai.Scripts.Utility
 {
@@ -22,6 +25,11 @@ namespace D_Sakurai.Scripts.Utility
 
         private Vector2 _velocity;
 
+        [SerializeField] private int FocusAnimLengthInFr;
+        [SerializeField] private float IconFocusDistance;
+        private bool _focusing = false;
+        private Vector3 _unfocusedCamPosition;
+
         private void Start()
         {
             _prevMousePos = Input.mousePosition;
@@ -29,7 +37,13 @@ namespace D_Sakurai.Scripts.Utility
 
         private void Update()
         {
-            // Œ¸‘¬
+            if (_focusing)
+            {
+                IconSetter.RepositionIcons();
+                return;
+            }
+            
+            // ï¿½ï¿½ï¿½ï¿½
             if (_velocity.magnitude > .001)
             {
                 _velocity *= FrictionRate;
@@ -44,7 +58,7 @@ namespace D_Sakurai.Scripts.Utility
             
             var mousePos = Input.mousePosition;
             
-            // ƒhƒ‰ƒbƒO‚ª‚ ‚ê‚Î
+            // ï¿½hï¿½ï¿½ï¿½bï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (Input.GetMouseButton(0))
             {
                 var diff3 = mousePos - _prevMousePos;
@@ -53,32 +67,79 @@ namespace D_Sakurai.Scripts.Utility
             
             _prevMousePos = mousePos;
 
-            // ƒhƒ‰ƒbƒO—Ê‚ªè‡’lˆÈã‚Å‚ ‚ê‚Î
+            // ï¿½hï¿½ï¿½ï¿½bï¿½Oï¿½Ê‚ï¿½è‡’lï¿½Èï¿½Å‚ï¿½ï¿½ï¿½ï¿½
             if (diff.magnitude > DragThresh)
             {
                 _velocity += diff * (DragScale * -1);
 
-                // ‘¬‚·‚¬‚éê‡
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡
                 if (_velocity.magnitude > MaxSpeed)
                 {
                     _velocity = _velocity.normalized * MaxSpeed;
                 }
             }
             
-            // ”ñí‚É’x‚¢ê‡‚ÍÄ”z’u‚¹‚¸‚É—£’E
+            // ï¿½ï¿½ï¿½É’xï¿½ï¿½ï¿½ê‡ï¿½ÍÄ”zï¿½uï¿½ï¿½ï¿½ï¿½ï¿½É—ï¿½ï¿½E
             if (_velocity.magnitude < .001) return;
             
-            // “K—p
+            // ï¿½Kï¿½p
             var cp = new Vector2(MainCam.position.x, MainCam.position.z);
             cp += _velocity;
 
-            // ”ÍˆÍŠO‚È‚ç~‚ß‚é
+            // ï¿½ÍˆÍŠOï¿½È‚ï¿½~ï¿½ß‚ï¿½
             var clampedX = Mathf.Clamp(cp.x, CamRangeX.x, CamRangeX.y);
             var clampedY = Mathf.Clamp(cp.y, CamRangeZ.x, CamRangeZ.y);
 
             MainCam.position = new Vector3(clampedX, MainCam.position.y, clampedY);
             
             IconSetter.RepositionIcons();
+        }
+
+        public void Focus(Vector3 targetPosition)
+        {
+            _focusing = true;
+
+            var shiftedCamPosition = new Vector3(targetPosition.x, MainCam.position.y, MainCam.position.z);
+            // å°‘ã—æ‰‹å‰
+            var actualTarget = targetPosition + (shiftedCamPosition - targetPosition).normalized * IconFocusDistance;
+            
+            _unfocusedCamPosition = MainCam.position;
+            FocusAnim(_unfocusedCamPosition, actualTarget).Forget();
+        }
+
+        public async UniTask UnFocus()
+        {
+            if (!_focusing) return;
+            
+            await FocusAnim(MainCam.position, _unfocusedCamPosition);
+            _focusing = false;
+        }
+
+        private async UniTask FocusAnim(Vector3 start, Vector3 end)
+        {
+            // Debug.Log("start");
+            // _focusing = true;
+
+            var animIdx = 0;
+            var animProgress = 0f;
+
+            while (animProgress <= 1f)
+            {
+                MainCam.position = Vector3.Lerp(start, end, EaseOutCubic(animProgress));
+                animIdx++;
+                animProgress = (float) animIdx / FocusAnimLengthInFr;
+                
+                await UniTask.Yield();
+            }
+
+            // _focusing = false;
+            Debug.Log("end");
+        }
+
+        private static float EaseOutCubic(float idx)
+        {
+            // from https://easings.net/ja#easeOutCubic
+            return 1 - Mathf.Pow(1 - idx, 3);
         }
     }
 }

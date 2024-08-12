@@ -27,16 +27,29 @@ namespace D_Sakurai.Scripts.PreCombat
             _animator = GetComponent<Animator>();
         }
 
-        public void Open(int dutyIdx)
+        public async UniTask Open(int dutyIdx)
         {
+            await CloseIfNeeded();
+            
             SetContent(dutyIdx);
             _animator.SetTrigger(TriggerOpen);
         }
 
-        public async UniTask Close()
+        public async UniTask CloseIfNeeded()
         {
+            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("DutyPanelIn"))
+            {
+                return;
+            }
+            
             _animator.SetTrigger(TriggerClose);
+            await UniTask.WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).IsName("DutyPanelOut"));
             await UniTask.WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        }
+
+        public bool IsOpening()
+        {
+            return _animator.GetCurrentAnimatorStateInfo(0).IsName("DutyPanelIn");
         }
         
         private void SetContent(int dutyIdx)
