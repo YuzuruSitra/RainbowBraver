@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/Room/RoomBunker.cs" charset="windows-31j" />
-    <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/Room/RoomDetails.cs" charset="windows-31j" />
-    <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverController.cs" charset="windows-31j" />
-    <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverParameter.cs" charset="windows-31j" />
-    <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/ExitRoomState.cs" charset="windows-31j" />
-    <file url="file://$PROJECT_DIR$/Assets/D-yuzuki/Scripts/RoomCharacters/NPC/Braver/StayRoomState.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/D-Yuzuki/Scripts/Room/RoomBunker.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/D-Yuzuki/Scripts/Room/RoomDetails.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/D-Yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverController.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/D-Yuzuki/Scripts/RoomCharacters/NPC/Braver/BraverParameter.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/D-Yuzuki/Scripts/RoomCharacters/NPC/Braver/ExitRoomState.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/D-Yuzuki/Scripts/RoomCharacters/NPC/Braver/StayRoomState.cs" charset="windows-31j" />
     <file url="PROJECT" charset="windows-31j" />
   </component>
 </project>
