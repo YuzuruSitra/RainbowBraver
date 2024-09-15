@@ -12,8 +12,8 @@ public class RoomEditor : MonoBehaviour
     [SerializeField]
     private LayerMask _targetLayer;
     // RoomChanger
-    //private RoomChanger _roomChanger;
-    // public RoomChanger RoomChanger => _roomChanger;
+    private RoomChanger _roomChanger;
+    public RoomChanger RoomChanger => _roomChanger;
     [Header("部屋交換に必要なパラメーター")]
     [SerializeField]
     private Vector3 _offSet;
@@ -46,18 +46,17 @@ public class RoomEditor : MonoBehaviour
         _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
         _roomOutliner = new RoomOutliner();
         _roomClicker = new RoomClicker(_targetLayer);
-        // _roomChanger = new RoomChanger(_offSet, _selectionObj);
-        //_roomChanger = new RoomChanger(_targetLayer);
+        _roomChanger = new RoomChanger(_targetLayer);
         _roomBuilder = new RoomBuilder(_roomBunker);
         _roomClicker.ChangeRetentionRoom += _roomOutliner.ChangeOutLine;
-        //_roomClicker.ChangeRetentionRoom += _roomChanger.ChangeRoom;
+        _roomClicker.ChangeRetentionRoom += _roomChanger.TouchRoom;
     }
 
     // ルーム選択
     public void InputRoomSelect()
     {
         if (Input.GetMouseButtonDown(0)) _roomClicker.SelectRoomObj();
-        //_roomChanger.MoveToTarget();
+        _roomChanger.MoveToTarget();
     }
 
     // 階の増築
@@ -77,7 +76,7 @@ public class RoomEditor : MonoBehaviour
     {
         if (newState == InnState.EDIT) return;
         _roomOutliner.FinOutLine();
-        // _roomChanger.FinRoomChange();
+        _roomChanger.FinRoomChange();
     }
 
     // 設定ミスをチェック

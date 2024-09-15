@@ -29,7 +29,7 @@ public class BtAddListener : MonoBehaviour
         _changeEditModeButton.onClick.AddListener(_changeInnStateHandler.ChangeEditState);
         _changeDefaultModeButton.onClick.AddListener(_changeInnStateHandler.ChangeDefaultState);
         _addFloorButton.onClick.AddListener(_roomEditor.BuildFloor);
-        // _changeRoomButton.onClick.AddListener(_roomEditor.RoomChanger.ChangerSwitch);
+        _changeRoomButton.onClick.AddListener(_roomEditor.RoomChanger.ChangerSwitch);
     }
 
 }

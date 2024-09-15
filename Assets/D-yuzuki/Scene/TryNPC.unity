@@ -1722,6 +1722,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1107193545}
     m_Modifications:
+    - target: {fileID: 5923637537075801757, guid: b747c86b46b0135489dbeaa8600b3efb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6664462916805032888, guid: b747c86b46b0135489dbeaa8600b3efb, type: 3}
       propertyPath: _info
       value: 0
@@ -2695,6 +2699,10 @@ PrefabInstance:
       propertyPath: _isRoomAcceptance
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2814984475410862353, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
 --- !u!4 &1188842063 stripped
@@ -2795,6 +2803,10 @@ PrefabInstance:
     - target: {fileID: 2125363145467948077, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
       propertyPath: _roomType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2814984475410862353, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7035661137490063408, guid: d6280ced6268ccf4392805eb315ea262, type: 3}
       propertyPath: m_Materials.Array.data[0]
