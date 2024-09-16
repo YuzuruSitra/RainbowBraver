@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b510ab98580ed54ea1788c6dcd5e131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HorizontalRuleTexture: {fileID: 0}
-  HorizontalRuleScale: {x: 1, y: 1}
+  horizontalRuleTexture: {fileID: 0}
+  horizontalRuleScale: {x: 1, y: 1}
   elements: []
   textElementPrefab: {fileID: 0}
 --- !u!1 &6182307289948086807
@@ -164,7 +164,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 006a1ea8361ee0e4a8b3abeba6049faa, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
