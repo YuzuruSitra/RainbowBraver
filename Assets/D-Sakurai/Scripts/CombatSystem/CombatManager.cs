@@ -8,6 +8,7 @@ using Resources.Duty;
 using D_Sakurai.Resources.Enemy;
 using D_Sakurai.Resources.StatusEffects.StatusEffectBase;
 using D_Sakurai.Scripts.CombatSystem.Units;
+using D_Sakurai.Scripts.PreCombat;
 using Unit = D_Sakurai.Scripts.CombatSystem.Units.Unit;
 using CUtil = D_Sakurai.Scripts.CombatSystem.CombatUtilities;
 
@@ -55,18 +56,12 @@ namespace D_Sakurai.Scripts.CombatSystem
         /// </summary>
         /// <param name="id">開始する依頼のID</param>
         /// <param name="allies">味方のUnitAllyを格納した配列</param>
-        /// <exception cref="Exception">既に別の依頼が進行中である場合</exception>
         public void Setup(int id, UnitAlly[] allies)
         {
-            if (!_ongoing)
-            {
-                _data = UnityEngine.Resources.Load<Duties>("Duty/Duties").DutiesData[id];
-                _allies = allies;
-            }
-            else
-            {
-                throw new Exception("Another duty ongoing!");
-            }
+            if (_ongoing) Debug.LogError("Another duty ongoing!");
+            
+            _data = UnityEngine.Resources.Load<Duties>("Duty/Duties").DutiesData[id];
+            _allies = allies;
             
             // 各種閾値を0. - 1.に
             // ここ処理ダサい

@@ -5,6 +5,7 @@ namespace D_Sakurai.Resources.StatusEffects
         /// <summary>
         /// 状態効果の種類を表すEnum
         /// </summary>
+        
         public enum StatusEffectType
         {
             Mp,

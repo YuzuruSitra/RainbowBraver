@@ -21,7 +21,7 @@ namespace D_Sakurai.Scripts.PreCombat
 
         void Start()
         {
-            var tScale = Terrain.terrainData.size;
+            var tSize = Terrain.terrainData.size;
             
             _duties = UnityEngine.Resources.Load<Duties>("Duty/Duties").DutiesData;
 
