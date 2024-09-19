@@ -486,7 +486,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DontUseSingleton: 1
   DutyId: 0
-  Allies: []
+  Allies:
+  - name: "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u305F\u304B\u3057"
+    affiliation: 0
+    maxHp: 100
+    maxMp: 100
+    pAtk: 10
+    pAtkLabel: "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u305F\u304B\u3057\u7269\u7406\u30A2\u30BF\u30C3\u30AF"
+    pDef: 10
+    mAtk: 10
+    mAtkLabel: "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u305F\u304B\u3057\u9B54\u6CD5\u30A2\u30BF\u30C3\u30AF"
+    mDef: 10
+    speed: 10
+    job: 0
+    personality: 0
+    jobSkillIndex: 0
+    personalitySkillIndex: 0
+    friendShipLevel: 0
+  - name: "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u3072\u308D\u3057"
+    affiliation: 0
+    maxHp: 100
+    maxMp: 100
+    pAtk: 10
+    pAtkLabel: "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u3072\u308D\u3057\u7269\u7406\u30A2\u30BF\u30C3\u30AF"
+    pDef: 10
+    mAtk: 10
+    mAtkLabel: "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u3072\u308D\u3057\u9B54\u6CD5\u30A2\u30BF\u30C3\u30AF"
+    mDef: 10
+    speed: 10
+    job: 0
+    personality: 0
+    jobSkillIndex: 0
+    personalitySkillIndex: 0
+    friendShipLevel: 0
 --- !u!114 &1699346515
 MonoBehaviour:
   m_ObjectHideFlags: 0

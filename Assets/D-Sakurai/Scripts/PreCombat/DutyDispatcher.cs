@@ -25,6 +25,15 @@ namespace D_Sakurai.Scripts.PreCombat
             DontDestroyOnLoad(this);
         }
         
+        //  DISPATCH
+        // -------------------
+        public static void Dispatch(int dutyIdx)
+        {
+            SingletonInstance.DutyId = dutyIdx;
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene("CombatSystem");
+        }
+        
         
         //  CONFIGURE
         // --------------------

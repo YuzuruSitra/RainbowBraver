@@ -26,10 +26,10 @@ namespace D_Sakurai.Scripts.PreCombat
             {
                 cameraController.Focus(_3dPosition);
                 
+                // 内容をセットしてパネルをオープン
                 panel.Open(dutyIdx).Forget();
                 
                 Debug.Log($"Call Scenetransitioner.TransitionToCombat().\nDuty idx: {dutyIdx}, allies: {_loader.GetAllies()}");
-                SceneTransitioner.TransitionToCombat(dutyIdx, _loader.GetAllies());
             });
         }
     }

@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace D_Sakurai.Scripts.PreCombat
 {
@@ -7,5 +9,12 @@ namespace D_Sakurai.Scripts.PreCombat
         [SerializeField] private int DutyIdx;
 
         public int GetDutyIdx() => DutyIdx;
+
+        private Button _btn;
+
+        private void Start()
+        {
+            _btn = GetComponent<Button>();
+        }
     }
 }

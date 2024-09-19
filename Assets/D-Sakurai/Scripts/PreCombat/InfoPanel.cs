@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace D_Sakurai.Scripts.PreCombat
 {
@@ -11,6 +12,9 @@ namespace D_Sakurai.Scripts.PreCombat
 
         [SerializeField] private TextMeshProUGUI TitleObj;
         [SerializeField] private TextMeshProUGUI DescObj;
+
+        [SerializeField] private Button CommenceBtn;
+        private CommenceScript _commenceScript;
         
         private string _title;
         private string _description;
@@ -25,6 +29,10 @@ namespace D_Sakurai.Scripts.PreCombat
         private void Start()
         {
             _animator = GetComponent<Animator>();
+
+            _commenceScript = CommenceBtn.gameObject.GetComponent<CommenceScript>();
+            
+            CommenceBtn.onClick.AddListener(() => _commenceScript.Dispatch());
         }
 
         public async UniTask Open(int dutyIdx)
@@ -54,10 +62,13 @@ namespace D_Sakurai.Scripts.PreCombat
         
         private void SetContent(int dutyIdx)
         {
+            // ƒLƒƒƒbƒVƒ…‚µ‚Ä‚ ‚é‚©‚çˆÄ‚¸‚é‚È
             var data = Loader.GetDuty(dutyIdx);
 
             TitleObj.text = data.Title;
-            TitleObj.text = data.Description;
+            DescObj.text = data.Description;
+
+            _commenceScript.DutyIdx = dutyIdx;
         }
     }
 }

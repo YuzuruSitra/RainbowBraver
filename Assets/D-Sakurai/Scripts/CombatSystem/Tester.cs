@@ -16,7 +16,7 @@ public class Tester : MonoBehaviour
     [SerializeField] TestBraver[] testBravers;
 
     [Serializable]
-    class TestBraver
+    public class TestBraver
     {
         public string name;
         public Affiliation affiliation;
@@ -66,6 +66,28 @@ public class Tester : MonoBehaviour
             )).ToArray();
 
         _manager.Setup(dutyId, allies);
+    }
+
+    public static UnitAlly[] GetInstancedBravers(TestBraver[] tester)
+    {
+        return tester.Select(bvr => new UnitAlly(
+            bvr.name,
+            bvr.affiliation,
+            bvr.maxHp,
+            bvr.maxMp,
+            bvr.pAtk,
+            bvr.pAtkLabel,
+            bvr.pDef,
+            bvr.mAtk,
+            bvr.mAtkLabel,
+            bvr.mDef,
+            bvr.speed,
+            bvr.job,
+            bvr.personality,
+            bvr.jobSkillIndex,
+            bvr.personalitySkillIndex,
+            bvr.friendShipLevel
+            )).ToArray();
     }
 
     public void Commence()

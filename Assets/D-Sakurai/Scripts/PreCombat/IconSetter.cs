@@ -29,8 +29,6 @@ namespace D_Sakurai.Scripts.PreCombat
 
             for (int i = 0; i < nSetters; i++)
             {
-                // var btns = _btnData[i];
-
                 var setter = SetterParent.GetChild(i);
 
                 // btn.Item1: icon position in 3d space

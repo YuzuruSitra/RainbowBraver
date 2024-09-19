@@ -5,18 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b545396a-8211-473d-8f78-c704e6bad07d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyDispatcher.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyDispatcher.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/CommenceScript.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/CommenceScript.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RainbowBraver/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Resources/StatusEffects/StatusEffectBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Resources/StatusEffects/StatusEffectBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatPrepare.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatPrepare.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scenes/CombatSystem.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/CombatManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/CombatSequencer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/CombatSequencer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyLoader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/D-Shoma/Assets/Asset_BattleField/Area1_GrassField/Models/Rotten_Tree/Rock/Tex/1001_Normal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Shoma/Assets/Asset_BattleField/Area1_GrassField/Models/Rotten_Tree/Rock/Tex/1001_Normal.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportAssets/Terasurware/excel sample.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/Tester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/CombatSystem/Tester.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyDispatcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/DutyDispatcher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconDataHolder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconDataHolder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconSetter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/IconSetter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/InfoPanel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/PreCombat/InfoPanel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/SceneTransitioner.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/Utility/DragCameraControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/D-Sakurai/Scripts/Utility/DragCameraControl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +147,7 @@
       <workItem from="1723463309426" duration="13508000" />
       <workItem from="1726379349854" duration="392000" />
       <workItem from="1726654947283" duration="1087000" />
-      <workItem from="1726656406043" duration="6242000" />
+      <workItem from="1726656406043" duration="10712000" />
     </task>
     <task id="LOCAL-00001" summary="戦闘システムで使用するクラス類を実装。新しいIDEを使い始めた関係でgitignoreを追記。">
       <option name="closed" value="true" />

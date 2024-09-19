@@ -13,7 +13,7 @@ namespace D_Sakurai.Scripts.CombatSystem
         [SerializeField] private bool DontUseSingleton;
 
         [SerializeField] private int DutyId;
-        [SerializeField] private UnitAlly[] Allies;
+        [SerializeField] private Tester.TestBraver[] Allies;
 
         private int _id;
         private UnitAlly[] _allies;
@@ -24,7 +24,7 @@ namespace D_Sakurai.Scripts.CombatSystem
             {
                 // [DEBUG] インスペクタで設定した値で依頼を開始する際の処理
                 _id = DutyId;
-                _allies = Allies;
+                _allies = Tester.GetInstancedBravers(Allies);
             }
             else
             {

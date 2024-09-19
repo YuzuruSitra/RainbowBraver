@@ -25,7 +25,7 @@ namespace D_Sakurai.Scripts.Utility
 
         private Vector2 _velocity;
 
-        [SerializeField] private int FocusAnimLengthInFr;
+        [SerializeField] private int FocusAnimLengthInMsec;
         [SerializeField] private float IconFocusDistance;
         private bool _focusing = false;
         private Vector3 _unfocusedCamPosition;
@@ -44,7 +44,7 @@ namespace D_Sakurai.Scripts.Utility
             }
             
             // ����
-            if (_velocity.magnitude > .001)
+            if (_velocity.magnitude > 0.001)
             {
                 _velocity *= FrictionRate;
             }
@@ -80,7 +80,7 @@ namespace D_Sakurai.Scripts.Utility
             }
             
             // ���ɒx���ꍇ�͍Ĕz�u�����ɗ��E
-            if (_velocity.magnitude < .001) return;
+            if (_velocity.magnitude < 0.001) return;
             
             // �K�p
             var cp = new Vector2(MainCam.position.x, MainCam.position.z);
@@ -120,14 +120,15 @@ namespace D_Sakurai.Scripts.Utility
             // Debug.Log("start");
             // _focusing = true;
 
-            var animIdx = 0;
+            var animElapsed = 0f;
             var animProgress = 0f;
 
             while (animProgress <= 1f)
             {
                 MainCam.position = Vector3.Lerp(start, end, EaseOutCubic(animProgress));
-                animIdx++;
-                animProgress = (float) animIdx / FocusAnimLengthInFr;
+                
+                animElapsed += Time.deltaTime;
+                animProgress = (animElapsed * 1000) / FocusAnimLengthInMsec;
                 
                 await UniTask.Yield();
             }
