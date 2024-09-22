@@ -1,66 +1,24 @@
 using UnityEngine;
 
-public class StayRoomState : IRoomAIState
+public class BraverStayState : StayRoomState
 {
-    private GameObject _npc;
     private const float RAY_FACTOR = 1.5f;
     private float _rayDistance;
-    private InnNPCMover _innNpcMover;
-    private RoomBunker _roomBunker;
-    private Vector3 _entryTargetPos;
     private Vector3 _inRoomTargetPos;
     private const float TARGET_FACTOR = 3.0f;
-    private Vector3 _errorVector;
-    private bool _isEntry;
     private float _changeTime;
     private int _remainState;
     private bool _obstacleHit;
     private const float MAX_ANGLE = 180.0f;
     private const int MAX_ATTEMP = 100;
-    private float _remainStateTime;
-    private bool _isWalk;
 
-    public bool IsWalk => _isWalk;
-
-    private bool _launchState;
-    public bool IsStateFin => (_remainStateTime <= 0) && _launchState;
-
-    public StayRoomState(InnNPCMover mover, Vector3 errorVector)
+    public BraverStayState(InnNPCMover mover, Vector3 errorVector) : base(mover, errorVector)
     {
-        _innNpcMover = mover;
-        _npc = _innNpcMover.Character;
         _rayDistance = _npc.GetComponent<SpriteRenderer>().bounds.size.x * RAY_FACTOR;
-        _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
-        _errorVector = errorVector;
     }
 
-    // ステートに入った時の処理
-    public void EnterState(Vector3 pos, int targetRoom)
+    protected override void DoAction()
     {
-        _entryTargetPos = pos;
-        _innNpcMover.SetTarGetPos(_entryTargetPos);
-        _remainStateTime = _roomBunker.RoomDetails[targetRoom].RemainTime;
-        _isEntry = false;
-
-        if (_entryTargetPos == _errorVector) _isEntry = true;
-        _launchState = true;
-    }
-
-    // ステートの更新
-
-    public void UpdateState()
-    {
-        // 入場
-        if (!_isEntry)
-        {
-            _isWalk = true;
-            // 部屋に入るまでの移動
-            _innNpcMover.Moving();
-            if (_innNpcMover.IsAchieved) _isEntry = true;
-            
-            return;
-        }
-
         // 自由歩行
         _changeTime -= Time.deltaTime;
 
@@ -85,14 +43,6 @@ public class StayRoomState : IRoomAIState
                 _isWalk = true;
                 break;
         }
-
-        // ステートカウントダウン
-        _remainStateTime -= Time.deltaTime;
-    }
-
-    public void ExitState()
-    {
-        _launchState = false;
     }
 
     private void SetInStateParam()
@@ -142,4 +92,5 @@ public class StayRoomState : IRoomAIState
         }
         _obstacleHit = false;
     }
+
 }

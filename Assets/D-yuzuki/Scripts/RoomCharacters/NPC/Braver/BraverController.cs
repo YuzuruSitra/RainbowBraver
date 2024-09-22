@@ -75,10 +75,10 @@ public class BraverController : MonoBehaviour
         //_animator = gameObject.GetComponent<Animator>();
 
         // 各状態のインスタンスを作成して登録
-        _states.Add(RoomAIState.STAY_ROOM, new StayRoomState(_innNPCMover, _roomPosAllocation.ErrorVector));
-        _states.Add(RoomAIState.EXIT_ROOM, new ExitRoomState(_innNPCMover));
-        _states.Add(RoomAIState.LEAVE_ROOM, new LeaveRoomState(_innNPCMover));
-        _states.Add(RoomAIState.GO_TO_ROOM, new GoToRoomState(_innNPCMover));
+        _states.Add(RoomAIState.STAY_ROOM, new BraverStayState(_innNPCMover, _roomPosAllocation.ErrorVector));
+        _states.Add(RoomAIState.EXIT_ROOM, new BraverExitState(_innNPCMover));
+        _states.Add(RoomAIState.LEAVE_ROOM, new BraverLeaveState(_innNPCMover));
+        _states.Add(RoomAIState.GO_TO_ROOM, new BraverGoToState(_innNPCMover));
         // STAY_ROOMから開始
         CurrentState = RoomAIState.STAY_ROOM;
         _states[CurrentState].EnterState(_roomPosAllocation.ErrorVector, StayRoomNum);
