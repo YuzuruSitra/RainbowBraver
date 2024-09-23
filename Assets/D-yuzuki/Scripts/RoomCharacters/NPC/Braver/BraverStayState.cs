@@ -83,7 +83,7 @@ public class BraverStayState : StayRoomState
         Debug.DrawRay(_npc.transform.position, -_npc.transform.forward * _rayDistance, Color.red);
         if (Physics.Raycast(_npc.transform.position, -_npc.transform.forward, out RaycastHit hit, _rayDistance))
         {
-            if ((hit.collider.CompareTag("Wall") || hit.collider.CompareTag("RoomBraver")) && !_obstacleHit)
+            if ((hit.collider.CompareTag("Wall") || hit.collider.CompareTag("RoomBraver")) || hit.collider.CompareTag("RoomMaid") && !_obstacleHit)
             {
                 SetRandomDirection();
                 _obstacleHit = true;

@@ -3,11 +3,11 @@ using UnityEngine;
 public class BraverGoToState : GoToRoomState
 {
      // レイの距離
-    private float _rayDistance = 1.0f;
+    private float _rayDistance = 1.5f;
     // 回避距離
-    private const float AVOID_DISTANCE = 0.75f;
+    private const float AVOID_DISTANCE = 1.5f;
     // 回避ステート判定閾値
-    private const float AVOID_THRESHOLD = 1.5f;
+    private const float AVOID_THRESHOLD = 0.0f;
 
     public BraverGoToState(InnNPCMover mover) : base(mover)
     {
@@ -41,25 +41,20 @@ public class BraverGoToState : GoToRoomState
             _currentHitObj = null;
             return false;
         }
-
         return true;
     }
 
     // 回避をキャンセルすべきかを判断
     private bool ShouldCancelAvoidance(GameObject otherObj)
     {
-        bool isCancel = false;
-        BraverController otherNPCController = _currentHitObj.GetComponent<BraverController>();
-        float otherDistance = otherNPCController.GetDistanceToTarget();
-        float thisDistance = Vector3.Distance(_npc.transform.position, _targetPos);
+        var isCancel = false;
+        var otherNPCController = _currentHitObj.GetComponent<BraverController>();
+        var otherDistance = otherNPCController.GetDistanceToTarget();
+        var thisDistance = Vector3.Distance(_npc.transform.position, _targetPos);
         if (thisDistance < otherDistance)
         {
             _currentHitObj = null;
             isCancel = true;
-        }
-        else if (thisDistance == otherDistance)
-        {
-            if (otherNPCController.BaseRoom < otherNPCController.BaseRoom) isCancel = true;
         }
         
         return isCancel;
@@ -68,10 +63,12 @@ public class BraverGoToState : GoToRoomState
     // 回避パターンを決定
     private void DecideAvoidancePattern(GameObject otherObj)
     {
-        BraverController otherNPCController = _currentHitObj.GetComponent<BraverController>();
-        float otherDistance = otherNPCController.GetDistanceToTarget();
-        float targetDistance = Vector3.Distance(_npc.transform.position, otherObj.transform.position);
-        _currentAvoid = targetDistance - AVOID_THRESHOLD >= otherDistance ? AvoidPatterns.Wait : AvoidPatterns.Move;
+        var otherNPCController = _currentHitObj.GetComponent<BraverController>();
+        var otherDistance = otherNPCController.GetDistanceToTarget();
+        var targetDistance = Vector3.Distance(_npc.transform.position, otherObj.transform.position);
+        
+        // 閾値に基づいてパターンを決定するロジックを調整
+        _currentAvoid = (targetDistance - AVOID_THRESHOLD >= otherDistance) ? AvoidPatterns.Wait : AvoidPatterns.Move;
     }
 }
 
