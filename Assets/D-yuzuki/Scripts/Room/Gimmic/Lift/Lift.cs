@@ -36,8 +36,7 @@ public class Lift : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // NPC Controller の共通インターフェースを使う
-        if (other.CompareTag("RoomBraver") || other.CompareTag("RoomMaid"))
+        if (other.CompareTag("RoomBraver"))
         {
             // 手前からの侵入のみ許可
             var direction = (transform.position - other.transform.position).normalized;
@@ -50,7 +49,7 @@ public class Lift : MonoBehaviour
     // 汎用的な自動移動処理
     private IEnumerator AutoMoving(GameObject target)
     {
-        var npc = target.GetComponent<INPCController>();
+        var npc = target.GetComponent<BraverController>();
         npc.IsFreedom = false;
 
         npc.InnNPCMover.SetTarGetPos(_entryPos);

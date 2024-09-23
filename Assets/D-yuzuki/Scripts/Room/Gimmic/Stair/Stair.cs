@@ -38,12 +38,6 @@ public class Stair : MonoBehaviour
             if (direction.z <= 0) return;
             StartCoroutine(AutoMovingBraver(other.gameObject));
         }
-        if (other.CompareTag("RoomMaid"))
-        {
-            // 手前からの侵入のみ許可
-            Vector3 direction = (transform.position - other.transform.position).normalized;
-            if (direction.z <= 0) return;
-        }
     }
 
     private IEnumerator AutoMovingBraver(GameObject target)
@@ -76,38 +70,6 @@ public class Stair : MonoBehaviour
         braver.IsFreedom = true;
         int targetStairNum = targetFloor.RoomDetails.RoomNum;
         braver.FinWarpHandler(targetStairNum);
-    }
-
-    private IEnumerator AutoMovingMaid(GameObject target)
-    {
-        var maid = target.GetComponent<MaidController>();
-        maid.IsFreedom = false;
-
-        // エントリー 
-        maid.InnNPCMover.SetTarGetPos(_entryPos);
-        while (!maid.InnNPCMover.IsAchieved)
-        {
-            maid.InnNPCMover.Moving();
-            yield return null;
-        }
-
-        // 階層のワープ メイド用の処理にする
-        //Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor, maid.BaseRoom);
-        // target.transform.position = targetFloor.EntryPos;
-        
-        // yield return _waitTime;
-
-        // // 退出    
-        // maid.InnNPCMover.SetTarGetPos(targetFloor.NPCOutPos);
-        // while (!maid.InnNPCMover.IsAchieved)
-        // {
-        //     maid.InnNPCMover.Moving();
-        //     yield return null;
-        // }
-
-        // maid.IsFreedom = true;
-        // int targetStairNum = targetFloor.RoomDetails.RoomNum;
-        // maid.FinWarpHandler(targetStairNum);
     }
 
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ƒ‹[ƒ€NPC‚Ì§ŒäƒNƒ‰ƒX
-public class BraverController : MonoBehaviour, INPCController
+public class BraverController : MonoBehaviour
 {
     public int BraverNum { get; private set; }
 

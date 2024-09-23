@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ルームNPCの制御クラス
-public class MaidController : MonoBehaviour, INPCController
+public class MaidController : MonoBehaviour
 {
 
     [Header("移動速度")]
