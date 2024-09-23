@@ -4,9 +4,6 @@ using UnityEngine;
 // ルームNPCの制御クラス
 public class MaidController : MonoBehaviour, INPCController
 {
-    public int BraverNum { get; private set; }
-
-    public int BaseRoom { get; private set; }
 
     [Header("移動速度")]
     [SerializeField] 
@@ -20,7 +17,7 @@ public class MaidController : MonoBehaviour, INPCController
     private Dictionary<RoomAIState, IRoomAIState> _states = new Dictionary<RoomAIState, IRoomAIState>();
 
     // 目標ルーム選定クラス
-    private BraverRoomSelecter _braverRoomSelecter;
+    //private BraverRoomSelecter _braverRoomSelecter;
     private RoomPosAllocation _roomPosAllocation;
     //private Animator _animator;
     // 滞在中の部屋番号を保持
@@ -49,16 +46,15 @@ public class MaidController : MonoBehaviour, INPCController
     void InitializeNPC()
     {
         InnNPCMover = new InnNPCMover(gameObject, _moveSpeed, _stoppingDistance);
-        StayRoomNum = BaseRoom;
-        _braverRoomSelecter = BraverRoomSelecter.Instance;
+        //_braverRoomSelecter = BraverRoomSelecter.Instance;
         _roomPosAllocation = RoomPosAllocation.Instance;
         //_animator = gameObject.GetComponent<Animator>();
 
         // 各状態のインスタンスを作成して登録
-        _states.Add(RoomAIState.STAY_ROOM, new BraverStayState(InnNPCMover, _roomPosAllocation.ErrorVector));
-        _states.Add(RoomAIState.EXIT_ROOM, new BraverExitState(InnNPCMover));
-        _states.Add(RoomAIState.LEAVE_ROOM, new BraverLeaveState(InnNPCMover));
-        _states.Add(RoomAIState.GO_TO_ROOM, new BraverGoToState(InnNPCMover));
+        _states.Add(RoomAIState.STAY_ROOM, new MaidStayState(InnNPCMover, _roomPosAllocation.ErrorVector));
+        _states.Add(RoomAIState.EXIT_ROOM, new MaidExitState(InnNPCMover));
+        _states.Add(RoomAIState.LEAVE_ROOM, new MaidLeaveState(InnNPCMover));
+        _states.Add(RoomAIState.GO_TO_ROOM, new MaidGoToState(InnNPCMover));
         // STAY_ROOMから開始
         CurrentState = RoomAIState.STAY_ROOM;
         _states[CurrentState].EnterState(_roomPosAllocation.ErrorVector, StayRoomNum);
@@ -80,7 +76,7 @@ public class MaidController : MonoBehaviour, INPCController
         switch (state)
         {
             case RoomAIState.STAY_ROOM:
-                _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, StayRoomNum);
+                //_nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, StayRoomNum);
                 newState = RoomAIState.EXIT_ROOM;
                 _targetPos = _roomPosAllocation.TargetPosSelection(StayRoomNum, RoomPosAllocation.PointKind.EXIT_POINT, transform.position.y);
                 break;
@@ -121,14 +117,14 @@ public class MaidController : MonoBehaviour, INPCController
 
     public void FinWarpHandler(int currentRoom)
     {
-        _nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, currentRoom);
+        //_nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, currentRoom);
         NextState(RoomAIState.EXIT_ROOM);
     }
 
     public void SetNumber(int braverNum, int roomNum)
     {
-        BraverNum = braverNum;
-        BaseRoom = roomNum;
+        // BraverNum = braverNum;
+        // BaseRoom = roomNum;
     }
 
 }

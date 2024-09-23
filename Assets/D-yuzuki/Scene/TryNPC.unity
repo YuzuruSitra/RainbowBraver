@@ -725,7 +725,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 2
   _stoppingDistance: 0.3
-  IsFreedom: 1
 --- !u!1 &162554567
 GameObject:
   m_ObjectHideFlags: 0
@@ -3921,7 +3920,7 @@ GameObject:
   - component: {fileID: 4594418072350155020}
   m_Layer: 0
   m_Name: MaidNPC
-  m_TagString: RoomNPC
+  m_TagString: RoomMaid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3940,7 +3939,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 2
   _stoppingDistance: 0.3
-  IsFreedom: 1
 --- !u!95 &740149902718681231
 Animator:
   serializedVersion: 5

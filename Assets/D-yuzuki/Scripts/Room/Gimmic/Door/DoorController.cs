@@ -26,7 +26,7 @@ public class DoorController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("RoomNPC") || other.CompareTag("Player"))
+        if (other.CompareTag("RoomBraver") || other.CompareTag("RoomMaid")  || other.CompareTag("Player"))
         {
             _inObjCount++;
         }
@@ -34,7 +34,7 @@ public class DoorController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("RoomNPC") || other.CompareTag("Player"))
+        if (other.CompareTag("RoomBraver") || other.CompareTag("RoomMaid") || other.CompareTag("Player"))
         {
             if (_isOpen) return;
             _isOpen = true;
@@ -49,7 +49,7 @@ public class DoorController : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("RoomNPC") || other.CompareTag("Player"))
+        if (other.CompareTag("RoomBraver") || other.CompareTag("RoomMaid") ||other.CompareTag("Player"))
         {
             _inObjCount--;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BraverGoToState : GoToRoomState
+public class MaidGoToState : GoToRoomState
 {
      // レイの距離
     private float _rayDistance = 1.0f;
@@ -9,7 +9,7 @@ public class BraverGoToState : GoToRoomState
     // 回避ステート判定閾値
     private const float AVOID_THRESHOLD = 1.5f;
 
-    public BraverGoToState(InnNPCMover mover) : base(mover)
+    public MaidGoToState(InnNPCMover mover) : base(mover)
     {
 
     }

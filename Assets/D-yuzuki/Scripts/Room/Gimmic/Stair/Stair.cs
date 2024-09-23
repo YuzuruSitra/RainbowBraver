@@ -12,8 +12,7 @@ public class Stair : MonoBehaviour
     private float _waitTime;
     private RoomDetails _roomDetails;
     public RoomDetails RoomDetails => _roomDetails;
-    private GameObject _targetObj;
-    private StairSelecter _stairSelecter;
+    private BraverStairSelecter _stairSelecter;
     
     private Vector3 _entryPos;
     public Vector3 EntryPos => _entryPos;
@@ -27,24 +26,29 @@ public class Stair : MonoBehaviour
         _roomDetails = GetComponent<RoomDetails>();
         _entryPos = _roomDetails.RoomInPoints.position;
         _npcOutPos = _roomDetails.RoomOutPoints.position;
-        _stairSelecter = StairSelecter.Instance;
+        _stairSelecter = BraverStairSelecter.Instance;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("RoomNPC"))
+        if (other.CompareTag("RoomBraver"))
         {
             // 手前からの侵入のみ許可
             Vector3 direction = (transform.position - other.transform.position).normalized;
             if (direction.z <= 0) return;
-            _targetObj = other.gameObject;
-            StartCoroutine(AutoMoving_NPC());
+            StartCoroutine(AutoMovingBraver(other.gameObject));
+        }
+        if (other.CompareTag("RoomMaid"))
+        {
+            // 手前からの侵入のみ許可
+            Vector3 direction = (transform.position - other.transform.position).normalized;
+            if (direction.z <= 0) return;
         }
     }
 
-    private IEnumerator AutoMoving_NPC()
+    private IEnumerator AutoMovingBraver(GameObject target)
     {
-        BraverController braver = _targetObj.GetComponent<BraverController>();
+        var braver = target.GetComponent<BraverController>();
         braver.IsFreedom = false;
 
         // エントリー 
@@ -57,7 +61,7 @@ public class Stair : MonoBehaviour
 
         // 階層のワープ
         Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor, braver.BaseRoom);
-        _targetObj.transform.position = targetFloor.EntryPos;
+        target.transform.position = targetFloor.EntryPos;
         
         yield return _waitTime;
 
@@ -72,6 +76,38 @@ public class Stair : MonoBehaviour
         braver.IsFreedom = true;
         int targetStairNum = targetFloor.RoomDetails.RoomNum;
         braver.FinWarpHandler(targetStairNum);
+    }
+
+    private IEnumerator AutoMovingMaid(GameObject target)
+    {
+        var maid = target.GetComponent<MaidController>();
+        maid.IsFreedom = false;
+
+        // エントリー 
+        maid.InnNPCMover.SetTarGetPos(_entryPos);
+        while (!maid.InnNPCMover.IsAchieved)
+        {
+            maid.InnNPCMover.Moving();
+            yield return null;
+        }
+
+        // 階層のワープ メイド用の処理にする
+        //Stair targetFloor = _stairSelecter.FloorSelecter(_roomFloor, maid.BaseRoom);
+        // target.transform.position = targetFloor.EntryPos;
+        
+        // yield return _waitTime;
+
+        // // 退出    
+        // maid.InnNPCMover.SetTarGetPos(targetFloor.NPCOutPos);
+        // while (!maid.InnNPCMover.IsAchieved)
+        // {
+        //     maid.InnNPCMover.Moving();
+        //     yield return null;
+        // }
+
+        // maid.IsFreedom = true;
+        // int targetStairNum = targetFloor.RoomDetails.RoomNum;
+        // maid.FinWarpHandler(targetStairNum);
     }
 
 }

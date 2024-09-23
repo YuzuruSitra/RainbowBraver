@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ŠK’i‚Ìã‰º’Tõ
-public class StairSelecter
+public class BraverStairSelecter
 {
     // ƒVƒ“ƒOƒ‹ƒgƒ“
-    private static StairSelecter instance;
-    public static StairSelecter Instance => instance ?? (instance = new StairSelecter());
+    private static BraverStairSelecter instance;
+    public static BraverStairSelecter Instance => instance ?? (instance = new BraverStairSelecter());
 
     private RoomBunker _roomBunker;
-    private StairSelecter()
+    private BraverStairSelecter()
     {
         _roomBunker = GameObject.FindWithTag("RoomBunker").GetComponent<RoomBunker>();
     }

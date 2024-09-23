@@ -14,7 +14,8 @@ TagManager:
   - ConfigPage
   - InnGameController
   - BraverParameter
-  - RoomNPC
+  - RoomBraver
+  - RoomMaid
   layers:
   - Default
   - TransparentFX

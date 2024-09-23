@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BraverStayState : StayRoomState
+public class MaidStayState : StayRoomState
 {
     private const float RAY_FACTOR = 1.5f;
     private float _rayDistance;
@@ -12,7 +12,7 @@ public class BraverStayState : StayRoomState
     private const float MAX_ANGLE = 180.0f;
     private const int MAX_ATTEMP = 100;
 
-    public BraverStayState(InnNPCMover mover, Vector3 errorVector) : base(mover, errorVector)
+    public MaidStayState(InnNPCMover mover, Vector3 errorVector) : base(mover, errorVector)
     {
         _rayDistance = _npc.GetComponent<SpriteRenderer>().bounds.size.x * RAY_FACTOR;
     }

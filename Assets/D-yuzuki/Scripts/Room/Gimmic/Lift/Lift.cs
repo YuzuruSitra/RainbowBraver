@@ -37,7 +37,7 @@ public class Lift : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // NPC Controller の共通インターフェースを使う
-        if (other.CompareTag("RoomNPC"))
+        if (other.CompareTag("RoomBraver") || other.CompareTag("RoomMaid"))
         {
             // 手前からの侵入のみ許可
             var direction = (transform.position - other.transform.position).normalized;

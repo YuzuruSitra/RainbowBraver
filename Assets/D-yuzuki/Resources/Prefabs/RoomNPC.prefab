@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8639307720965659740}
   m_Layer: 0
   m_Name: RoomNPC
-  m_TagString: RoomNPC
+  m_TagString: RoomBraver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

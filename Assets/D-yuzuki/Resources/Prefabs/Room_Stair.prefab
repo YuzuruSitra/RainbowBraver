@@ -711,6 +711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomNum: 0
   _roomType: 3
+  _remainTime: 0
   _roomInPoints: {fileID: 3800905220880123573}
   _roomExitPoints: {fileID: 41660630552294870}
   _roomOutPoints: {fileID: 492600055201794730}
