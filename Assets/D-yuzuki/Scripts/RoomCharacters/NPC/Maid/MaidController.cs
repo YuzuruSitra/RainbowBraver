@@ -4,7 +4,15 @@ using UnityEngine;
 // ルームNPCの制御クラス
 public class MaidController : MonoBehaviour
 {
-
+    public enum Mode
+    {
+        None,
+        Cleaning,
+        Feeding,
+        Barrier
+    }
+    private MaidRoomSelecter _maidRoomSelecter;
+    private Mode _currentMode = Mode.Cleaning;
     [Header("移動速度")]
     [SerializeField] 
     private float _moveSpeed;
@@ -12,22 +20,18 @@ public class MaidController : MonoBehaviour
     [Header("目標座標に対する許容誤差")]
     [SerializeField] 
     private float _stoppingDistance = 0.1f;
-
     public RoomAIState CurrentState { get; private set; }
     private Dictionary<RoomAIState, IRoomAIState> _states = new Dictionary<RoomAIState, IRoomAIState>();
 
-    // 目標ルーム選定クラス
-    //private BraverRoomSelecter _braverRoomSelecter;
     private RoomPosAllocation _roomPosAllocation;
     //private Animator _animator;
-    // 滞在中の部屋番号を保持
+    private List<int> _cleanRoomList;
+    private int _currentRoomID;
     public int StayRoomNum { get; private set; }
     // 次の部屋番号を保持
     private int _nextRoomNum;
     // ターゲット座標を保持
     private Vector3 _targetPos;
-    // 行動制限
-    public bool IsFreedom { get; set; }
     public InnNPCMover InnNPCMover { get; private set; }
     
     void Start()
@@ -37,7 +41,7 @@ public class MaidController : MonoBehaviour
 
     void Update()
     {
-        if (!IsFreedom) return;
+        if (_currentMode != Mode.Cleaning) return;
         _states[CurrentState].UpdateState();
         // ChangeAnimWalk(_states[_currentState].IsWalk);
         if (_states[CurrentState].IsStateFin) NextState(CurrentState);
@@ -46,7 +50,7 @@ public class MaidController : MonoBehaviour
     void InitializeNPC()
     {
         InnNPCMover = new InnNPCMover(gameObject, _moveSpeed, _stoppingDistance);
-        //_braverRoomSelecter = BraverRoomSelecter.Instance;
+        _maidRoomSelecter = MaidRoomSelecter.Instance;
         _roomPosAllocation = RoomPosAllocation.Instance;
         //_animator = gameObject.GetComponent<Animator>();
 
@@ -55,9 +59,12 @@ public class MaidController : MonoBehaviour
         _states.Add(RoomAIState.EXIT_ROOM, new MaidExitState(InnNPCMover));
         _states.Add(RoomAIState.LEAVE_ROOM, new MaidLeaveState(InnNPCMover));
         _states.Add(RoomAIState.GO_TO_ROOM, new MaidGoToState(InnNPCMover));
-        // STAY_ROOMから開始
-        CurrentState = RoomAIState.STAY_ROOM;
-        _states[CurrentState].EnterState(_roomPosAllocation.ErrorVector, StayRoomNum);
+
+        // 配置機能を実装するまでの仮置き
+        // _cleanRoomList = _maidRoomSelecter.CreateRoomList(1);
+        // _currentRoomID = 0;
+        // _nextRoomNum = _cleanRoomList[_currentRoomID];
+        // NextState(RoomAIState.LEAVE_ROOM);        
     }
 
     // アニメーションの遷移
@@ -76,7 +83,13 @@ public class MaidController : MonoBehaviour
         switch (state)
         {
             case RoomAIState.STAY_ROOM:
-                //_nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, StayRoomNum);
+                _currentRoomID ++;
+                if (_currentRoomID >= _cleanRoomList.Count) 
+                {
+                    _cleanRoomList.Reverse();
+                    _currentRoomID = 1;
+                }
+                _nextRoomNum = _cleanRoomList[_currentRoomID];
                 newState = RoomAIState.EXIT_ROOM;
                 _targetPos = _roomPosAllocation.TargetPosSelection(StayRoomNum, RoomPosAllocation.PointKind.EXIT_POINT, transform.position.y);
                 break;
@@ -98,7 +111,7 @@ public class MaidController : MonoBehaviour
                 newState = state;
                 break;
         }
-        if (_nextRoomNum == RoomBunker.ERROR_ROOM_NUM && state == RoomAIState.STAY_ROOM)
+        if ((_nextRoomNum == RoomBunker.ERROR_ROOM_NUM && state == RoomAIState.STAY_ROOM) || _cleanRoomList.Count <= 1)
         {
             _targetPos = _roomPosAllocation.ErrorVector;
             newState = RoomAIState.STAY_ROOM;
@@ -108,23 +121,19 @@ public class MaidController : MonoBehaviour
         CurrentState = newState;
     }
 
-    // 外部からの参照
-    
-    public float GetDistanceToTarget()
+    public void SetMode(Mode mode, Vector3 pos, Vector3 rot, int floor = 0)
     {
-        return Vector3.Distance(transform.position, _targetPos);
-    }
-
-    public void FinWarpHandler(int currentRoom)
-    {
-        //_nextRoomNum = _braverRoomSelecter.SelectNextRoomNum(BaseRoom, currentRoom);
-        NextState(RoomAIState.EXIT_ROOM);
-    }
-
-    public void SetNumber(int braverNum, int roomNum)
-    {
-        // BraverNum = braverNum;
-        // BaseRoom = roomNum;
+        _currentMode = mode;
+        transform.position = pos;
+        transform.rotation = Quaternion.Euler(rot);
+        if (_currentMode == Mode.Cleaning)
+        {
+            _cleanRoomList = _maidRoomSelecter.CreateRoomList(floor);
+            _currentRoomID = 0;
+            _nextRoomNum = _cleanRoomList[_currentRoomID];
+            NextState(RoomAIState.LEAVE_ROOM);
+        }
+        // 対応したアニメーションを再生予定
     }
 
 }

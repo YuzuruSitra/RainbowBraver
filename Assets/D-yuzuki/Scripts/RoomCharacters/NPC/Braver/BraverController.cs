@@ -62,6 +62,7 @@ public class BraverController : MonoBehaviour
         // STAY_ROOMから開始
         CurrentState = RoomAIState.STAY_ROOM;
         _states[CurrentState].EnterState(_roomPosAllocation.ErrorVector, StayRoomNum);
+        IsFreedom = true;
     }
 
     // アニメーションの遷移
