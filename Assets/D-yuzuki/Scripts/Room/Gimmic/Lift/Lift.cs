@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Lift : MonoBehaviour
@@ -9,20 +8,18 @@ public class Lift : MonoBehaviour
         UPPER,
         LOWER
     }
-    [SerializeField]
-    private LiftInfo _info;
+
+    [SerializeField] private LiftInfo _info;
     public LiftInfo Info => _info;
 
-    [SerializeField]
-    private Lift _pairLift;
+    [SerializeField] private Lift _pairLift;
 
     [Header("移動時の待機時間")]
-    [SerializeField] 
-    private float _waitTime;
+    [SerializeField] private float _waitTime;
+
     private RoomDetails _roomDetails;
     public RoomDetails RoomDetails => _roomDetails;
-    private GameObject _targetObj;
-    
+
     private Vector3 _entryPos;
     public Vector3 EntryPos => _entryPos;
 
@@ -39,43 +36,42 @@ public class Lift : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        // NPC Controller の共通インターフェースを使う
         if (other.CompareTag("RoomNPC"))
         {
             // 手前からの侵入のみ許可
-            Vector3 direction = (transform.position - other.transform.position).normalized;
+            var direction = (transform.position - other.transform.position).normalized;
             if (direction.z <= 0) return;
-            _targetObj = other.gameObject;
-            StartCoroutine(AutoMoving_NPC());
+            var target = other.gameObject;
+            StartCoroutine(AutoMoving(target));
         }
     }
 
-    private IEnumerator AutoMoving_NPC()
+    // 汎用的な自動移動処理
+    private IEnumerator AutoMoving(GameObject target)
     {
-        BraverController braver = _targetObj.GetComponent<BraverController>();
-        braver.IsFreedom = false;
+        var npc = target.GetComponent<INPCController>();
+        npc.IsFreedom = false;
 
-        // �G���g���[ 
-        braver.InnNPCMover.SetTarGetPos(_entryPos);
-        while (!braver.InnNPCMover.IsAchieved)
+        npc.InnNPCMover.SetTarGetPos(_entryPos);
+        while (!npc.InnNPCMover.IsAchieved)
         {
-            braver.InnNPCMover.Moving();
+            npc.InnNPCMover.Moving();
             yield return null;
         }
 
         // 階層のワープ
-        _targetObj.transform.position = _pairLift.EntryPos;
-        yield return _waitTime;
+        target.transform.position = _pairLift.EntryPos;
+        yield return new WaitForSeconds(_waitTime);
 
-        // �ޏo    
-        braver.InnNPCMover.SetTarGetPos(_pairLift.NPCOutPos);
-        while (!braver.InnNPCMover.IsAchieved)
+        npc.InnNPCMover.SetTarGetPos(_pairLift.NPCOutPos);
+        while (!npc.InnNPCMover.IsAchieved)
         {
-            braver.InnNPCMover.Moving();
+            npc.InnNPCMover.Moving();
             yield return null;
         }
 
-        braver.IsFreedom = true;
-        braver.FinWarpHandler(_pairLift.RoomDetails.RoomNum);
+        npc.IsFreedom = true;
+        npc.FinWarpHandler(_pairLift.RoomDetails.RoomNum);
     }
-
 }

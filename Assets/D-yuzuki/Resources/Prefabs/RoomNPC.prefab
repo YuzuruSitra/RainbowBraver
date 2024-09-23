@@ -70,7 +70,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 2
   _stoppingDistance: 0.3
-  IsFreedom: 1
 --- !u!212 &1990325152592395906
 SpriteRenderer:
   m_ObjectHideFlags: 0

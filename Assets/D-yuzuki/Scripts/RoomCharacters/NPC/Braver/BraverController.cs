@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ルームNPCの制御クラス
-public class BraverController : MonoBehaviour
+public class BraverController : MonoBehaviour, INPCController
 {
     public int BraverNum { get; private set; }
 
@@ -30,10 +30,8 @@ public class BraverController : MonoBehaviour
     // ターゲット座標を保持
     private Vector3 _targetPos;
     // 行動制限
-    public bool IsFreedom = true;
-    // 移動用クラス
-    private InnNPCMover _innNPCMover;
-    public InnNPCMover InnNPCMover => _innNPCMover;
+    public bool IsFreedom { get; set; }
+    public InnNPCMover InnNPCMover { get; private set; }
     
     void Start()
     {
@@ -50,17 +48,17 @@ public class BraverController : MonoBehaviour
 
     void InitializeNPC()
     {
-        _innNPCMover = new InnNPCMover(gameObject, _moveSpeed, _stoppingDistance);
+        InnNPCMover = new InnNPCMover(gameObject, _moveSpeed, _stoppingDistance);
         StayRoomNum = BaseRoom;
         _braverRoomSelecter = BraverRoomSelecter.Instance;
         _roomPosAllocation = RoomPosAllocation.Instance;
         //_animator = gameObject.GetComponent<Animator>();
 
         // 各状態のインスタンスを作成して登録
-        _states.Add(RoomAIState.STAY_ROOM, new BraverStayState(_innNPCMover, _roomPosAllocation.ErrorVector));
-        _states.Add(RoomAIState.EXIT_ROOM, new BraverExitState(_innNPCMover));
-        _states.Add(RoomAIState.LEAVE_ROOM, new BraverLeaveState(_innNPCMover));
-        _states.Add(RoomAIState.GO_TO_ROOM, new BraverGoToState(_innNPCMover));
+        _states.Add(RoomAIState.STAY_ROOM, new BraverStayState(InnNPCMover, _roomPosAllocation.ErrorVector));
+        _states.Add(RoomAIState.EXIT_ROOM, new BraverExitState(InnNPCMover));
+        _states.Add(RoomAIState.LEAVE_ROOM, new BraverLeaveState(InnNPCMover));
+        _states.Add(RoomAIState.GO_TO_ROOM, new BraverGoToState(InnNPCMover));
         // STAY_ROOMから開始
         CurrentState = RoomAIState.STAY_ROOM;
         _states[CurrentState].EnterState(_roomPosAllocation.ErrorVector, StayRoomNum);
