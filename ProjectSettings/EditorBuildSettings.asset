@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/D-Sakurai/Scenes/CombatPrepare.unity
     guid: d5e14de8639c9ae4f9aeccd85d7a1e44
+  - enabled: 1
+    path: Assets/D-Sakurai/Scenes/CombatSystem.unity
+    guid: 57943a0b3ae3d8c4b997a51bb3889771
   m_configObjects: {}
