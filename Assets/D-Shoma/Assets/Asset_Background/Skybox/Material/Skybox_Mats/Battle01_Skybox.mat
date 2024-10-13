@@ -133,7 +133,8 @@ Material:
     - _cloud_Far_Tiling: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Botomcolor: {r: 0.3019608, g: 0.19607843, b: 0.20563376, a: 0}
+    - _Botomcolor: {r: 0.5943396, g: 0.15979885, b: 0.19198693, a: 0}
+    - _CloudColor: {r: 0.509434, g: 0, b: 0.24207656, a: 0}
     - _Cloud_Offset: {r: 0.05, g: 1, b: 0, a: 0}
     - _Cloud_Tiling: {r: -0.08, g: 1, b: 0, a: 0}
     - _Cloud_speed: {r: 0.03, g: 0, b: 0, a: 0}
@@ -142,7 +143,7 @@ Material:
     - _EyeRay: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SunColor: {r: 1, g: 0.4074074, b: 0, a: 0.5019608}
-    - _SunHelocolor: {r: 0.5943396, g: 0.2262065, b: 0.058873262, a: 0}
+    - _SunHelocolor: {r: 1, g: 0.46598265, b: 0.2216981, a: 0}
     - _Sun_Position: {r: 1.18, g: 0.28, b: -0.25, a: 0}
     - _Topcolor: {r: 0.06553744, g: 0, b: 0.16037738, a: 0}
   m_BuildTextureStacks: []
