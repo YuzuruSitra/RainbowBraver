@@ -90,16 +90,16 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 5.4
+    m_Value: 37.3
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 121.8
+    m_Value: 70.3
   gaussianMaxRadius:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 1.003
   highQualitySampling:
     m_OverrideState: 0
     m_Value: 0
